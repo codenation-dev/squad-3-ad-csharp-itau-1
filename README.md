@@ -2,7 +2,7 @@
 
 ### Propósito do projeto
 
-Este projeto deve servir para capturar erros vindos de qualquer aplicação. Para permitir que isso aconteça,  disponibilizaremos endpoints REST para tratar as mensagens de erro capturadas em diversas plataformas, como mobile, site e o próprio backend desta aplicacao. Tentaremos seguir o mais próximo da teoria REST apresentada por Roy Fielding.
+Este projeto deve servir para capturar erros vindos de qualquer aplicação. Para permitir que isso aconteça,  disponibilizaremos endpoints REST para tratar as mensagens de erro capturadas em diversas plataformas, como: mobile, site e o próprio backend desta aplicão. Tentaremos seguir o mais próximo da teoria REST apresentada por Roy Fielding.
 
 #### Sobre conceitos descritos
 
@@ -74,5 +74,5 @@ Core | dotnet new classlib -n TryLog.Core -o ./src/Core
 Infraestructure | dotnet new classlib -n TryLog.Infraestructure -o ./src/Infraestructure
 UseCase | dotnet new classlib -n TryLog.UseCase -o ./src/UseCase
 WebApi | dotnet new webapi -n TryLog.WebApi -o ./src/WebApi
-MessageBroker | dotnet new console -n TryLog.MessageBroker ./src/MessageBroker
-Sentinela | dotnet new xunit -n TryLog.Sentinela ./tests/Sentinela
+MessageBroker | dotnet new console -n TryLog.MessageBroker -o ./src/MessageBroker
+Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela

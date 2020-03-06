@@ -27,7 +27,7 @@ São itens desta camada, aqueles relativos à:
 
 ##### Camada de Webapi
 
-Esta camada será responsável por receber as requisições dos clientes e endereça-las.
+Esta camada será responsável por receber as requisições dos clientes e endereçá-las.
 
 Vamos tratar aqui:
 
@@ -69,7 +69,7 @@ Por fim uma camada para separar os testes será utilizada.
 ## Criando as camadas
 
 Camada | Comando |
-_______|__________
+------ | --------
 Core | dotnet new classlib -n TryLog.Core -o ./src/Core
 Infraestructure | dotnet new classlib -n TryLog.Infraestructure -o ./src/Infraestructure
 UseCase | dotnet new classlib -n TryLog.UseCase -o ./src/UseCase

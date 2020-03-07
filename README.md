@@ -10,11 +10,11 @@ Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de 
 
 #### Arquitetura do sistema
 
-Decidimos separar as camadas de projeto, tendo como orientação o modelo Clean Architecture, de Bob Martin, mas usado aqui na visão de Steve Smith. Info: (Microsoft Docs)[https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures].
+Decidimos separar as camadas de projeto, tendo como orientação o modelo Clean Architecture, de Bob Martin, mas usado aqui na visão de Steve Smith. Info: [Microsoft Docs](https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures).
 
 Através desta modelo arquitetural, esperamos melhorar a forma como o projeto é separado e compreendido. Tendo também vantagens como uso de injeção de dependência, fazendo a inverção do controle e viabilizando testes automatizados (unitários a princípio).
 
-Também nos serviu de base o material apresentado no livro Asp.NET Core Architecture e-book, disponível em (sítio Microsoft)[https://dotnet.microsoft.com/download/e-book/aspnet/pdf].
+Também nos serviu de base o material apresentado no livro Asp.NET Core Architecture e-book, disponível em [sítio Microsoft](https://dotnet.microsoft.com/download/e-book/aspnet/pdf).
 
 ##### Camada de Infraestrutura
 

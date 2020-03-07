@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace TryLog.WebApi
 {
@@ -26,6 +27,13 @@ namespace TryLog.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Adiciona swagger no container de ingeção de dependência, com um documento OpenAPI
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new OpenApiInfo() { Title="TryLog", Version="v1"});
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +43,15 @@ namespace TryLog.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //Fornece um rota que entrega o Swagger como JSON
+            app.UseSwagger();
+
+            //Habilita o Swagger-ui
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "TryLog V1");
+            });
 
             app.UseHttpsRedirection();
 

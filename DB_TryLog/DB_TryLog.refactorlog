@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="01ca550a-f2b9-47ba-a49c-0af3e46defdc" ChangeDateTime="03/07/2020 19:57:28">
+    <Property Name="ElementName" Value="[dbo].[tbUsuario].[DataUltimaMudanca]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tbUsuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DataUltimaAtualizacao" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="02fbbb01-4a49-4754-a6e6-932e250b717d" ChangeDateTime="03/08/2020 02:35:50">
+    <Property Name="ElementName" Value="[dbo].[tbPlataforma].[Nome]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tbPlataforma]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Descricao" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2e4f304c-34ae-4c28-9841-02c942349121" ChangeDateTime="03/08/2020 02:38:13">
+    <Property Name="ElementName" Value="[dbo].[tbNotificacao].[DataUltimaAtulizacao]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tbNotificacao]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DataUltimaAtualizacao" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="09cb0466-7ce3-46ee-bf30-6be0f3c2005e" ChangeDateTime="03/08/2020 02:46:32">
+    <Property Name="ElementName" Value="[dbo].[tbSistema].[Descrição]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tbSistema]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Descricao" />
+  </Operation>
+</Operations>

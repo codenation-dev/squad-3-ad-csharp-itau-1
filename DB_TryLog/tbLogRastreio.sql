@@ -1,4 +1,0 @@
-﻿CREATE TABLE [dbo].[tbLogRastreio]
-(
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY
-)

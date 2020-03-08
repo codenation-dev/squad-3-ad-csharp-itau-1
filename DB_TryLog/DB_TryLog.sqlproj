@@ -56,22 +56,32 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Schemas" />
+    <Folder Include="Tabelas" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="tbUsuario.sql" />
-    <Build Include="tbAmbiente.sql" />
-    <Build Include="tbPlataforma.sql" />
-    <Build Include="tbLog.sql" />
-    <Build Include="tbSistema.sql" />
-    <Build Include="tbLogDetalheHardware.sql" />
-    <Build Include="tbLogDetalheSoftware.sql" />
-    <Build Include="tbPrioridade.sql" />
-    <Build Include="tbSeveridade.sql" />
-    <Build Include="tbSituacao.sql" />
-    <Build Include="tbNotificacao.sql" />
-    <Build Include="tbLogRastreio.sql" />
+    <Build Include="Schemas\sistema.sql" />
+    <Build Include="Schemas\usuario.sql" />
+    <Build Include="Tabelas\tbUsuario.sql" />
+    <Build Include="Tabelas\tbAmbiente.sql" />
+    <Build Include="Tabelas\tbLog.sql" />
+    <Build Include="Tabelas\tbLogDetalheHardware.sql" />
+    <Build Include="Tabelas\tbLogDetalheSoftware.sql" />
+    <Build Include="Tabelas\tbLogRastreio.sql" />
+    <Build Include="Tabelas\tbNotificacao.sql" />
+    <Build Include="Tabelas\tbPlataforma.sql" />
+    <Build Include="Tabelas\tbPrioridade.sql" />
+    <Build Include="Tabelas\tbSeveridade.sql" />
+    <Build Include="Tabelas\tbSistema.sql" />
+    <Build Include="Tabelas\tbSituacao.sql" />
+    <Build Include="Schemas\log.sql" />
+    <Build Include="Tabelas\tbAnexo.sql" />
+    <Build Include="Tabelas\tbAnexoTipo.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DB_TryLog.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagrama.pdf" />
   </ItemGroup>
 </Project>

@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="Schemas" />
     <Folder Include="Tabelas" />
+    <Folder Include="Arquivos" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\sistema.sql" />
@@ -82,6 +83,6 @@
     <RefactorLog Include="DB_TryLog.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Diagrama.pdf" />
+    <None Include="Arquivos\Diagrama.pdf" />
   </ItemGroup>
 </Project>

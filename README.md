@@ -8,6 +8,14 @@ Este projeto deve servir para capturar erros vindos de qualquer aplicação. Par
 
 Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de aprendizado/demonstração de conhecimento, nos propomos a descrever com detalhes os conceitos que vamos utilizar, mostrando como os entendemos.
 
+#### Pilares do TryLog
+
+Monitoramento
+Triagem
+Diagnóstico
+Ação
+Manutenção 
+
 #### Arquitetura do sistema
 
 Decidimos separar as camadas de projeto, tendo como orientação o modelo Clean Architecture, de Bob Martin, mas usado aqui na visão de Steve Smith. Info: [Microsoft Docs](https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures).
@@ -76,3 +84,16 @@ UseCase | dotnet new classlib -n TryLog.UseCase -o ./src/UseCase
 WebApi | dotnet new webapi -n TryLog.WebApi -o ./src/WebApi
 MessageBroker | dotnet new console -n TryLog.MessageBroker -o ./src/MessageBroker
 Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
+
+
+## Referências de Software
+
+Errbit - https://errbit.com/ (OpenSource)
+InstaBug - https://instabug.com/
+RayGun - https://raygun.com/landing
+SameBug - https://samebug.io/
+Sentry - https://sentry.io/welcome/
+
+
+
+

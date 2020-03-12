@@ -10,11 +10,16 @@ Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de 
 
 #### Pilares do TryLog
 
-Monitoramento
-Triagem
-Diagnóstico
-Ação
-Manutenção 
+Monitoramento - 
+
+Triagem -
+
+Diagnóstico -
+
+Ação -
+
+Manutenção -
+
 
 #### Arquitetura do sistema
 

@@ -15,7 +15,7 @@ Etapa     |  Descrição |
 Monitoramento | Armazenar e acompanhar, em tempo real, exceções que são geradas por todos os sistemas cadastrados
 Triagem | Separar as exceções recebidas pelo Monitoramento de acordo com o tipo de ambiente, severidade e prioridade de cada uma delas
 Diagnóstico | Identificar possíveis falhas de desenvolvimento ou intermitências dos sistemas conforme dados catalogados pela Triagem
-Ação | Agir de acordo com a necessidade identificada pela etapa de Diagnóstico, acionando os recursos disponíveis para a solução dos problemas, além de definir atualizar o status de cada exceção.
+Ação | Agir de acordo com a necessidade identificada pela etapa de Diagnóstico, acionando os recursos disponíveis para a solução dos problemas, além de definir e atualizar o status de cada exceção.
 Manutenção | Propor resoluções para inconsistências e utlizar os dados de todas as etapas anteriores para sugerir melhorias e manutenções preventivas
 
 #### Arquitetura do sistema

@@ -20,6 +20,6 @@ namespace TryLog.Core.Entities
     {
         Notificacao Get(Func<Notificacao, bool> predicado);
         bool Remove(Func<Notificacao, bool> predicado);
-        Notificacao Set(Usuario user, List<EnumSeveridade> severidades, List<EnumSituacao> situacoes, List<Plataforma> plataformas);
+        Notificacao Create(Usuario user, List<EnumSeveridade> severidades, List<EnumSituacao> situacoes, List<Plataforma> plataformas);
     }
 }

@@ -13,7 +13,7 @@ namespace TryLog.Core.Entities
         //Discutir necessidade desta prop  
         public bool IsRemoved { get; private set; }
 
-        public Plataforma GetPlataforma(Func<Plataforma, bool> predicate)
+        public Plataforma Get(Func<Plataforma, bool> predicate)
         {
             throw new NotImplementedException();
         }
@@ -23,7 +23,7 @@ namespace TryLog.Core.Entities
             throw new NotImplementedException();
         }
 
-        public Plataforma SetPlataforma(string codigo, string descricao)
+        public Plataforma Create(string codigo, string descricao)
         {
             throw new NotImplementedException();
         }
@@ -31,8 +31,8 @@ namespace TryLog.Core.Entities
 
     public interface IPlataforma
     {
-        Plataforma SetPlataforma(string codigo, string descricao);
+        Plataforma Create(string codigo, string descricao);
         bool Remove(Func<Plataforma, bool> predicate);
-        Plataforma GetPlataforma(Func<Plataforma, bool> predicate);
+        Plataforma Get(Func<Plataforma, bool> predicate);
     }
 }

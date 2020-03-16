@@ -28,6 +28,11 @@ namespace TryLog.Core.Entities
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Plataforma> Update(Func<Plataforma, bool> predicado, string codigoExterno = null, string descricao = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IPlataforma

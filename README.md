@@ -10,13 +10,13 @@ Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de 
 
 #### Pilares do TryLog
 
-Pilar     |  Descrição |
+Etapa     |  Descrição |
 --------- | -----------
-Monitoramento | Acompanhar, em tempo real, exceções que são geradas por todos os sistemas cadastrados
-Triagem | Separar as exceções de acordo com o tipo de ambiente, severidade e prioridade de cada uma delas
-Diagnóstico | Identificar possíveis falhas de desenvolvimento ou intermitências dos sistemas
-Ação | Agir de acordo com a necessidade identificada pela triagem, acionando os recursos disponíveis para a solução dos problemas
-Manutenção | Propor resoluções para inconsistências e utlizar os dados disponíveis para sugerir manutenções preventivas
+Monitoramento | Armazenar e acompanhar, em tempo real, exceções que são geradas por todos os sistemas cadastrados
+Triagem | Separar as exceções recebidas pelo Monitoramento de acordo com o tipo de ambiente, severidade e prioridade de cada uma delas
+Diagnóstico | Identificar possíveis falhas de desenvolvimento ou intermitências dos sistemas conforme dados catalogados pela Triagem
+Ação | Agir de acordo com a necessidade identificada pela etapa de Diagnóstico, acionando os recursos disponíveis para a solução dos problemas, além de definir atualizar o status de cada exceção.
+Manutenção | Propor resoluções para inconsistências e utlizar os dados de todas as etapas anteriores para sugerir melhorias e manutenções preventivas
 
 #### Arquitetura do sistema
 

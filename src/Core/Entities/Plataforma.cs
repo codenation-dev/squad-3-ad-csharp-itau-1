@@ -2,11 +2,8 @@
 
 namespace TryLog.Core.Entities
 {
-    public class Plataforma
+    public class Plataforma : IPlataforma
     {
-        public Plataforma()
-        {
-        }
         public long Id { get; private set; }
         //Discutir necessidade desta prop
         public string Codigo { get; private set; }
@@ -14,11 +11,28 @@ namespace TryLog.Core.Entities
         public bool IsAtivo { get; private set; }
         public DateTime DataCadastro { get; private set; }
         //Discutir necessidade desta prop  
-        public bool IsRemoved { get; private set; } 
+        public bool IsRemoved { get; private set; }
+
+        public Plataforma GetPlataforma(Func<Plataforma, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(Func<Plataforma, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Plataforma SetPlataforma(string codigo, string descricao)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public interface Plataforma
+    public interface IPlataforma
     {
-        Plataforma SetPlataforma(string Codigo, string Descricao);
+        Plataforma SetPlataforma(string codigo, string descricao);
+        bool Remove(Func<Plataforma, bool> predicate);
+        Plataforma GetPlataforma(Func<Plataforma, bool> predicate);
     }
 }

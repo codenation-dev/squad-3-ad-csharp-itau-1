@@ -13,6 +13,13 @@ namespace TryLog.Core.Entities
         public Usuario Usuario { get; private set; }
         public List<EnumSeveridade> NiveisSeveridadeAlerta { get; private set; }
         public List<EnumSituacao> SituacoesAlerta { get; private set; }
+        public List<Plataforma> Plataformas { get; set; }
+    }
 
+    public interface INotification
+    {
+        Notificacao Get(Func<Notificacao, bool> predicado);
+        bool Remove(Func<Notificacao, bool> predicado);
+        Notificacao Set(Usuario user, List<EnumSeveridade> severidades, List<EnumSituacao> situacoes, List<Plataforma> plataformas);
     }
 }

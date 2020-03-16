@@ -87,7 +87,7 @@ MessageBroker | dotnet new console -n TryLog.MessageBroker -o ./src/MessageBroke
 Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
 
 
-#### Referências de Software
+#### Referências de Software (Modelos)
 
 * Errbit - https://errbit.com/ (OpenSource)
 * InstaBug - https://instabug.com/

@@ -2,7 +2,5 @@
 
 namespace TryLog.Infraestructure
 {
-    public class Class1
-    {
-    }
+
 }

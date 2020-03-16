@@ -56,8 +56,9 @@ namespace TryLog.Core.Entities
 
     public interface IAmbiente
     {
-        Ambiente SetAmbiente(string Descricao);
-        Ambiente GetAmbiente(Func<Ambiente, bool> predicate);
-        Ambiente UpdateAmbiente(string CodigoExterno, string Descricao);
+        Ambiente Set(string Descricao);
+        Ambiente Get(Func<Ambiente, bool> predicate);
+        Ambiente Update(string CodigoExterno, string Descricao);
+        bool Remove(Func<Ambiente, bool> predicate);
     }
 }

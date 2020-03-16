@@ -7,7 +7,7 @@ namespace TryLog.Core.Entities
     {
         public long Id { get; set; }
         //Discutir necessidade desta prop
-        public string Codigo { get; set; }
+        public string CodigoExterno { get; set; }
         //Discutir necessidade desta prop
         public string Nome { get; set; }
         public string Descricao { get; set; }
@@ -21,5 +21,7 @@ namespace TryLog.Core.Entities
         Projeto Create(string nome, string descricao);
         IEnumerable<Projeto> Get(Func<Projeto, bool> predicate);
         long Remove(Func<Projeto, bool> predicate);
+        IEnumerable<Projeto> Update(Func<Projeto, bool> predicado, string codigoExterno = null, string descricao = null);
+
     }
 }

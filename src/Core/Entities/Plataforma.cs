@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TryLog.Core.Entities
 {
@@ -6,14 +7,14 @@ namespace TryLog.Core.Entities
     {
         public long Id { get; private set; }
         //Discutir necessidade desta prop
-        public string Codigo { get; private set; }
+        public string CodigoExterno { get; private set; }
         public string Descricao { get; private set; }
         public bool IsAtivo { get; private set; }
         public DateTime DataCadastro { get; private set; }
         //Discutir necessidade desta prop  
         public bool IsRemoved { get; private set; }
 
-        public Plataforma Get(Func<Plataforma, bool> predicate)
+        public IEnumerable<Plataforma> Get(Func<Plataforma, bool> predicate)
         {
             throw new NotImplementedException();
         }
@@ -33,6 +34,7 @@ namespace TryLog.Core.Entities
     {
         Plataforma Create(string codigo, string descricao);
         bool Remove(Func<Plataforma, bool> predicate);
-        Plataforma Get(Func<Plataforma, bool> predicate);
+        IEnumerable<Plataforma> Get(Func<Plataforma, bool> predicate);
+        IEnumerable<Plataforma> Update(Func<Plataforma, bool> predicado, string codigoExterno = null, string descricao = null);
     }
 }

@@ -18,8 +18,9 @@ namespace TryLog.Core.Entities
 
     public interface INotification
     {
-        Notificacao Get(Func<Notificacao, bool> predicado);
-        bool Remove(Func<Notificacao, bool> predicado);
+        IEnumerable<Notificacao> Get(Func<Notificacao, bool> predicado);
+        long Remove(Func<Notificacao, bool> predicado);
         Notificacao Create(Usuario user, List<EnumSeveridade> severidades, List<EnumSituacao> situacoes, List<Plataforma> plataformas);
+        IEnumerable<Notificacao> Update(Func<Notificacao, bool> predicado, string codigoExterno = null, string descricao = null);
     }
 }

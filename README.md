@@ -8,7 +8,7 @@ Este projeto deve servir para capturar erros vindos de qualquer aplicação. Par
 
 Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de aprendizado/demonstração de conhecimento, nos propomos a descrever com detalhes os conceitos que vamos utilizar, mostrando como os entendemos.
 
-#### Pilares do TryLog
+### Pilares do TryLog
 
 Etapa     |  Descrição |
 --------- | -----------

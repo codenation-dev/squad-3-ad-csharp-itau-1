@@ -4,4 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\" />
+    <Folder Include="UseCases\Eventos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\TryLog.Core.csproj" />
+  </ItemGroup>
 </Project>

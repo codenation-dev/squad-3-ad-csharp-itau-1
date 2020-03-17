@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace TryLog.Core.Entities
 {
-    public class Evento
+    public class Evento : IEvento
     {
         public Evento()
         {
@@ -26,7 +28,7 @@ namespace TryLog.Core.Entities
 
         public Ambiente Ambiente { get; private set; }
 
-        //public Plataforma Plataforma { get; set; }
+        public Plataforma Plataforma { get; set; }
 
         /// <summary>
         /// Indica a situação do evento
@@ -73,5 +75,34 @@ namespace TryLog.Core.Entities
         /// </summary>
         public bool IsRemovido { get; private set; }
 
+        public Evento Create(Usuario usuario, Plataforma plataforma, EnumSeveridade severiadade, EnumPrioridade prioridade, EnumSituacao situacao, string descricao = null, string codigoExterno = null, string localizacao = null, string stackTrace = null, string classe = null, string metodo = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Evento> Get(Func<Evento, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public long Remove(Func<Evento, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Evento> Update(Func<Evento, bool> predicado, Evento usuarioAlterado)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public interface IEvento
+    {
+        Evento Create(Usuario usuario, Plataforma plataforma, EnumSeveridade severiadade, EnumPrioridade prioridade, EnumSituacao situacao,
+                       string descricao = null, string codigoExterno = null, string localizacao = null, string stackTrace = null,
+                       string classe = null, string metodo = null
+                      );
+        IEnumerable<Evento> Get(Func<Evento, bool> predicate);
+        long Remove(Func<Evento, bool> predicate);
+        IEnumerable<Evento> Update(Func<Evento, bool> predicado, Evento usuarioAlterado);
     }
 }

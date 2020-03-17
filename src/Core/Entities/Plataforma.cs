@@ -13,6 +13,7 @@ namespace TryLog.Core.Entities
         public DateTime DataCadastro { get; private set; }
         //Discutir necessidade desta prop  
         public bool IsRemoved { get; private set; }
+        public string Token { get; set; }
 
         public IEnumerable<Plataforma> Get(Func<Plataforma, bool> predicate)
         {

@@ -28,27 +28,22 @@ namespace TryLog.Core.Entities
         /// </summary>
         public List<Evento> Eventos { get; }
 
-        public Ambiente GetAmbiente(Func<Ambiente, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Cria novo ambiente
-        /// </summary>
-        /// <param name="Descricao"></param>
-        /// <returns>Ambiente criado</returns>
-        public Ambiente SetAmbiente(string Descricao)
+        public Ambiente Create(string Descricao)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Atualiza ambiente
-        /// </summary>
-        /// <param name="CodigoExterno"></param>
-        /// <param name="Descricao"></param>
-        /// <returns></returns>
-        public Ambiente UpdateAmbiente(string CodigoExterno, string Descricao)
+        public IEnumerable<Ambiente> Get(Func<Ambiente, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(Func<Ambiente, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Ambiente> Update(Func<Ambiente, bool> predicate, string CodigoExterno = null, string Descricao = null)
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,10 @@
 # TryLog
 
+O TryLog é uma Central de Erros, responsável por centralizar os registros de erros de várias aplicações. Ele têm as principais funcionalidades das Centrais de Erro presentes no mercado, além de possuir características pertinentes ao Banco Itaú, conforme nossa interpretação do desafio proposto pela Codenation. 
+
+A inspiração para o desenvolvimento do TryLog foi atender ambientes complexos (vários serviços, diversas aplicações com diferentes camadas). Tais ambientes são comuns em grandes empresas como o Banco Itaú, por isso, imaginamos possíveis cenários em que o TryLog poderia ser utilizado, como por exemplo: identificar falhas, intermitências e gargalos. Estas informações contribuiriam na evolução das aplicações, tanto para desenvolvimento como no gerenciamento das mesmas.
+
+
 ### Propósito do projeto
 
 Este projeto deve servir para capturar erros vindos de qualquer aplicação. Para permitir que isso aconteça,  disponibilizaremos endpoints REST para tratar as mensagens de erro capturadas em diversas plataformas, como: mobile, site e o próprio backend desta aplicão. Tentaremos seguir o mais próximo da teoria REST apresentada por Roy Fielding.
@@ -12,10 +17,10 @@ Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de 
 
 Etapa     |  Descrição |
 --------- | -----------
-Monitoramento | Armazenar e acompanhar, em tempo real, exceções que são geradas por todos os sistemas cadastrados
-Triagem | Separar as exceções recebidas pelo Monitoramento de acordo com o tipo de ambiente, severidade e prioridade de cada uma delas
-Diagnóstico | Identificar possíveis falhas de desenvolvimento ou intermitências dos sistemas conforme dados catalogados pela Triagem
-Ação | Agir de acordo com a necessidade identificada pela etapa de Diagnóstico, acionando os recursos disponíveis para a solução dos problemas, além de definir e atualizar o status de cada exceção
+Monitoramento | Armazenar e acompanhar, em tempo real, eventos que são gerados por todas as aplicações cadastradas
+Triagem | Separar os eventos recebidos pelo Monitoramento de acordo com o tipo de ambiente, severidade e prioridade de cada um deles
+Diagnóstico | Identificar possíveis falhas de desenvolvimento ou intermitências das aplicações conforme dados catalogados pela Triagem
+Ação | Agir de acordo com a necessidade identificada pela etapa de Diagnóstico, acionando os recursos disponíveis para a solução dos problemas, além de definir e atualizar o status de cada evento
 Manutenção | Propor resoluções para inconsistências e utlizar os dados de todas as etapas anteriores para sugerir melhorias e manutenções preventivas
 
 #### Arquitetura do sistema

@@ -9,10 +9,6 @@ A inspiração para o desenvolvimento do TryLog foi atender ambientes complexos 
 
 Este projeto deve servir para capturar erros vindos de qualquer aplicação. Para permitir que isso aconteça,  disponibilizaremos endpoints REST para tratar as mensagens de erro capturadas em diversas plataformas, como: mobile, site e o próprio backend desta aplicão. Tentaremos seguir o mais próximo da teoria REST apresentada por Roy Fielding.
 
-#### Sobre conceitos descritos
-
-Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de aprendizado/demonstração de conhecimento, nos propomos a descrever com detalhes os conceitos que vamos utilizar, mostrando como os entendemos.
-
 ### Pilares do TryLog
 
 Etapa     |  Descrição |
@@ -22,6 +18,10 @@ Triagem | Separar os eventos recebidos pelo Monitoramento de acordo com o tipo d
 Diagnóstico | Identificar possíveis falhas de desenvolvimento ou intermitências das aplicações conforme dados catalogados pela Triagem
 Ação | Agir de acordo com a necessidade identificada pela etapa de Diagnóstico, acionando os recursos disponíveis para a solução dos problemas, além de definir e atualizar o status de cada evento
 Manutenção | Propor resoluções para inconsistências e utlizar os dados de todas as etapas anteriores para sugerir melhorias e manutenções preventivas
+
+#### Sobre conceitos descritos
+
+Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de aprendizado/demonstração de conhecimento, nos propomos a descrever com detalhes os conceitos que vamos utilizar, mostrando como os entendemos.
 
 #### Arquitetura do sistema
 

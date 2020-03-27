@@ -1,6 +1,6 @@
 # TryLog
 
-O TryLog é uma Central de Erros, responsável por centralizar os registros de erros de várias aplicações. Ele têm as principais funcionalidades das Centrais de Erro presentes no mercado, além de possuir características pertinentes ao Banco Itaú, conforme nossa interpretação do desafio proposto pela Codenation. 
+O [TryLog é uma Central de Erros](https://is.gd/y85CbV), responsável por centralizar os registros de erros de várias aplicações. Ele têm as principais funcionalidades das Centrais de Erro presentes no mercado, além de possuir características pertinentes ao Banco Itaú, conforme nossa interpretação do desafio proposto pela Codenation. 
 
 A inspiração para o desenvolvimento do TryLog foi atender ambientes complexos (vários serviços, diversas aplicações com diferentes camadas). Tais ambientes são comuns em grandes empresas como o Banco Itaú, por isso, imaginamos possíveis cenários em que o TryLog poderia ser utilizado, como por exemplo: identificar falhas, intermitências e gargalos. Estas informações contribuiriam na evolução das aplicações, tanto para desenvolvimento como no gerenciamento das mesmas.
 
@@ -91,16 +91,3 @@ UseCase | dotnet new classlib -n TryLog.UseCase -o ./src/UseCase
 WebApi | dotnet new webapi -n TryLog.WebApi -o ./src/WebApi
 MessageBroker | dotnet new console -n TryLog.MessageBroker -o ./src/MessageBroker
 Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
-
-
-#### Referências de Software (Modelos)
-
-* Errbit - https://errbit.com/ (OpenSource)
-* InstaBug - https://instabug.com/
-* RayGun - https://raygun.com/landing
-* SameBug - https://samebug.io/
-* Sentry - https://sentry.io/welcome/
-
-
-
-

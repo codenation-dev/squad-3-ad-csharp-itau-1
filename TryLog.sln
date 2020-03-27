@@ -1,23 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AF0C0107-A93C-4A2B-9555-1B3560257A4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryLog.Core", "src\Core\TryLog.Core.csproj", "{9E0D0CC3-3520-4FE8-ACD5-E3D74DAA8FD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryLog.Core", "src\Core\TryLog.Core.csproj", "{9E0D0CC3-3520-4FE8-ACD5-E3D74DAA8FD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryLog.Infraestructure", "src\Infraestructure\TryLog.Infraestructure.csproj", "{F22EB8BD-3CA9-4B7B-A4B1-1466FB887F7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryLog.Infraestructure", "src\Infraestructure\TryLog.Infraestructure.csproj", "{F22EB8BD-3CA9-4B7B-A4B1-1466FB887F7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryLog.UseCase", "src\UseCase\TryLog.UseCase.csproj", "{7C5DC821-B143-4B0C-A97B-CF2F67393A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryLog.UseCase", "src\UseCase\TryLog.UseCase.csproj", "{7C5DC821-B143-4B0C-A97B-CF2F67393A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryLog.WebApi", "src\WebApi\TryLog.WebApi.csproj", "{65801C73-B5B6-49F7-B938-559039D290CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryLog.WebApi", "src\WebApi\TryLog.WebApi.csproj", "{65801C73-B5B6-49F7-B938-559039D290CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E71CCD1F-4075-4B9D-BF7D-0BE38DE69A2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryLog.Sentinela", "tests\Sentinela\TryLog.Sentinela.csproj", "{61D90EE8-1C6B-442B-A3AA-FE85317533ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryLog.Sentinela", "tests\Sentinela\TryLog.Sentinela.csproj", "{61D90EE8-1C6B-442B-A3AA-FE85317533ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryLog.MessageBroker", "src\MessageBroker\TryLog.MessageBroker.csproj", "{1DC41724-0C4E-4FBF-AF2C-DD2D30C34176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryLog.MessageBroker", "src\MessageBroker\TryLog.MessageBroker.csproj", "{1DC41724-0C4E-4FBF-AF2C-DD2D30C34176}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9E0D0CC3-3520-4FE8-ACD5-E3D74DAA8FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -105,6 +102,9 @@ Global
 		{1DC41724-0C4E-4FBF-AF2C-DD2D30C34176}.Release|x86.ActiveCfg = Release|Any CPU
 		{1DC41724-0C4E-4FBF-AF2C-DD2D30C34176}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9E0D0CC3-3520-4FE8-ACD5-E3D74DAA8FD8} = {AF0C0107-A93C-4A2B-9555-1B3560257A4D}
 		{F22EB8BD-3CA9-4B7B-A4B1-1466FB887F7C} = {AF0C0107-A93C-4A2B-9555-1B3560257A4D}
@@ -112,5 +112,8 @@ Global
 		{65801C73-B5B6-49F7-B938-559039D290CB} = {AF0C0107-A93C-4A2B-9555-1B3560257A4D}
 		{61D90EE8-1C6B-442B-A3AA-FE85317533ED} = {E71CCD1F-4075-4B9D-BF7D-0BE38DE69A2B}
 		{1DC41724-0C4E-4FBF-AF2C-DD2D30C34176} = {AF0C0107-A93C-4A2B-9555-1B3560257A4D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1FAF5EB-81CB-462C-B21D-4C5F52FAAAC9}
 	EndGlobalSection
 EndGlobal

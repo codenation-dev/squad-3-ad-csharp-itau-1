@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace TryLog.Core.Interfaces
 {
-    public interface IEventRepository : IAbstractRepository<Event>
+    public interface IEventRepository : IDefaultRepository<Event>
     {
         
     }

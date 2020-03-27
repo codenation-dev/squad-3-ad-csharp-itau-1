@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TryLog.Core.Interfaces
 {
-    public interface IAbstractRepository<T>
+    public interface IDefaultRepository<T>
     {
         T Get(T entity);
         List<T> Find(Expression<Func<T, bool>> predicate);

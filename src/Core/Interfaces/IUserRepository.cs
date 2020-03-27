@@ -5,7 +5,7 @@ using TryLog.Core.Entities;
 
 namespace TryLog.Core.Interfaces
 {
-    public interface IUserRepository : IAbstractRepository<User>
+    public interface IUserRepository : IDefaultRepository<User>
     {
        
     }

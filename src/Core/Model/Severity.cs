@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TryLog.Infraestructure.Model
 {
+    /// <summary>
+    /// Demonstra a Severidade dos Eventos: Risco Alto, Risco Médio, Risco Baixo
+    /// </summary>
     public class Severity
     {
         public short Id { get; set; }

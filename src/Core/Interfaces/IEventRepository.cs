@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
-using TryLog.Infraestructure.Model;
+using TryLog.Core.Model;
 
 namespace TryLog.Core.Interfaces
 {

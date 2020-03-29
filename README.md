@@ -51,6 +51,22 @@ Vamos tratar aqui:
 * Bindings
 * Injeção de dependência
 * Ativação de serviços que afetam o pipeline HTTP
+* EF Core
+
+Para adicionar o EF Core, juntamente com os demais utilitarios, usamos o seguintes comandos:
+```
+//Adiciona na EF na camada de infraestrurura
+dotnet add .\src\Infraestructure\ package Microsoft.EntityFrameworkCore.SqlServer
+dotnet tool install --global dotnet-ef
+dotnet add .\src\Infraestructure\ package Microsoft.EntityFrameworkCore.Design
+dotnet add .\src\Infraestructure\ package Microsoft.EntityFrameworkCore.Tools
+
+//Adiciona na camada de webapi para fins de injeção de dependência
+dotnet add .\src\WebApi\ package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add .\src\WebApi\ package Microsoft.EntityFrameworkCore.InMemory
+```
+
+Uma condição verifica quando o Environment é igual a Development e trata de registrar no container de dependência o provider de InMemory para o EF, ou, se Production, registra o SqlServer.
 
 
 ##### Camada Core

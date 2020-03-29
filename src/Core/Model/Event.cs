@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TryLog.Infraestructure.Model
+namespace TryLog.Core.Model
 {
     /// <summary>
     /// Eventos reportados (Excessões, erros)

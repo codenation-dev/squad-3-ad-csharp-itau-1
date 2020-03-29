@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TryLog.Infraestructure.Model
+namespace TryLog.Core.Model
 {
     /// <summary>
     /// Possuí o Status dos Eventos, por exemplo: Arquivado, Pendente, Ignorado

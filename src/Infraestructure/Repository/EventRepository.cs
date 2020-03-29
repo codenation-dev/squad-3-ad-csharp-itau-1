@@ -2,14 +2,28 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-using TryLog.Core.Entities;
+using TryLog.Core.Model;
 using TryLog.Core.Interfaces;
-using TryLog.Infraestructure.Model;
+using Microsoft.EntityFrameworkCore;
+using TryLog.Infraestructure.EF;
+using System.Linq;
 
 namespace TryLog.Infraestructure.Repository
 {
-    class EventRepository : IEventRepository
+    public class EventRepository : IEventRepository
     {
+        TryLogContext _dbContext;
+        public EventRepository(TryLogContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public void Add(Event entity)
+        {
+            _dbContext.Events.Add(entity);
+            _dbContext.SaveChanges();
+        }
+
         public void Delete(Event entity)
         {
             throw new NotImplementedException();
@@ -17,7 +31,7 @@ namespace TryLog.Infraestructure.Repository
 
         public List<Event> Find(Expression<Func<Event, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dbContext.Events.Where(predicate).ToList();
         }
 
         public Event Get(Event entity)

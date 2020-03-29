@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\" />
+    <ProjectReference Include="..\Core\TryLog.Core.csproj" />
   </ItemGroup>
 
 </Project>

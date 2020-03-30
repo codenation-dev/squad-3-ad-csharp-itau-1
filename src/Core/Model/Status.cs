@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TryLog.Infraestructure.Model
 {
+    /// <summary>
+    /// Possuí o Status dos Eventos, por exemplo: Arquivado, Pendente, Ignorado
+    /// </summary>
     public class Status
     {
         public short Id { get; set; }

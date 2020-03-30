@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TryLog.Infraestructure.Model
 {
+    /// <summary>
+    /// Ambiente em qual ocorreu o Evento: Desenvolvimento, Homologação, Produção
+    /// </summary>
     public class Environment
     {
         public short Id { get; set; }

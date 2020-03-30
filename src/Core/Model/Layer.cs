@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TryLog.Infraestructure.Model
 {
+    /// <summary>
+    /// Diferentes camadas da aplicação: FrontEnd, Back-End, Mobile, Desktop
+    /// </summary>
     public class Layer
     {
         public short Id { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TryLog.Infraestructure.Model
+namespace TryLog.Core.Model
 {
     /// <summary>
     /// Demonstra a Severidade dos Eventos: Risco Alto, Risco Médio, Risco Baixo

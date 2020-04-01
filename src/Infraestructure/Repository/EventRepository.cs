@@ -26,7 +26,8 @@ namespace TryLog.Infraestructure.Repository
 
         public void Delete(Event entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Events.Remove(entity);
+            _dbContext.SaveChanges();
         }
 
         public List<Event> Find(Expression<Func<Event, bool>> predicate)

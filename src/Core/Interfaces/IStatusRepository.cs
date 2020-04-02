@@ -2,8 +2,7 @@
 
 namespace TryLog.Core.Interfaces
 {
-    public interface IEventRepository : IDefaultRepository<Event>
+    public interface IStatusRepository : IDefaultRepository<Status>
     {
-   
     }
 }

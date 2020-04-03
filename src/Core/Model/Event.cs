@@ -7,6 +7,10 @@ namespace TryLog.Core.Model
     /// </summary>
     public class Event
     {
+        public Event()
+        {
+        }
+
         public long Id { get; set; }
         public Severity Severity { get; set; }
         public Environment Environment { get; set; }

@@ -1,48 +1,38 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
-using TryLog.Core.Model;
 using TryLog.Core.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
-using System.Linq;
 
 namespace TryLog.Infraestructure.Repository
 {
-    public class EventRepository : IEventRepository
+    public class EventRepository : AbstractRepository<Event>, IEventRepository
     {
-        TryLogContext _dbContext;
-        public EventRepository(TryLogContext dbContext)
+        public EventRepository(TryLogContext context) : base(context)
         {
-            _dbContext = dbContext;
         }
-
-        public void Add(Event entity)
+        public void Create(Event @event)
         {
-            _dbContext.Events.Add(entity);
-            _dbContext.SaveChanges();
+            Add(@event);
         }
-
-        public void Delete(Event entity)
+        public Event Read(long eventId)
         {
-            _dbContext.Events.Remove(entity);
-            _dbContext.SaveChanges();
+            return Get(eventId);
         }
-
-        public List<Event> Find(Expression<Func<Event, bool>> predicate)
+        public List<Event> Filter(Expression<Func<Event, bool>> predicate)
         {
-            return _dbContext.Events.Where(predicate).ToList();
+            return Find(predicate);
         }
-
-        public Event Get(Event entity)
+        public void Remove(Expression<Func<Event, bool>> predicate)
         {
-            throw new NotImplementedException();
+            Delete(predicate);
         }
-
-        public void SaveOrUpdate(Event entity)
+        public void Update(Event @event)
         {
-            throw new NotImplementedException();
+            SaveOrUpdate(@event);
         }
     }
 }

@@ -1,61 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using TryLog.Core.Model;
+using TryLog.Infraestructure.EF;
 
-namespace TryLog.Infraestructure.Repositories
+namespace TryLog.Infraestructure.Repository
 {
-    class UserRepository
+    public class UserRepository : AbstractRepository<User>
     {
-        private List<User> _Users;
-        private int index;
-        public UserRepository()
-        {
-            _Users = new List<User>();
+        public UserRepository(TryLogContext context) : base(context){
         }
-        public long Add(User user)
+        public void Create(User user)
         {
-            index = _Users.FindIndex(u => u.Id.Equals(user.Id));
-            if (index.Equals(-1))
-            {
-                _Users.Add(user);
-                return user.Id;
-            }
-            else throw new Exception("Id must be unique.");
+            Add(user);
         }
-
+        public User Read(long userId)
+        {
+            return Get(userId);
+        }
+        public List<User> Filter(Expression<Func<User, bool>> predicate)
+        {
+            return Find(predicate);
+        }
+        public void Remove(Expression<Func<User, bool>> predicate)
+        {
+            Delete(predicate);
+        }
         public void Update(User user)
         {
-            index = _Users.FindIndex(u => u.Id.Equals(user.Id));
-            if (!index.Equals(-1))
-            {
-                _Users[index].FullName = user.FullName;
-                _Users[index].Nickname = user.Nickname;
-                _Users[index].Email = user.Email;
-                _Users[index].Password = user.Password;
-                _Users[index].UpdatedAt = DateTime.Now;
-            }
-            else throw new Exception("User not found.");
-        }
-
-        public void Remove(int id)
-        {
-            index = _Users.FindIndex(u => u.Id.Equals(id));
-            if (!index.Equals(-1))
-                _Users.RemoveAt(index);
-            else
-                throw new Exception("User not found.");
-        }
-
-        public User GetUser(int id)
-        {
-            var user = _Users.Find(u => u.Id.Equals(id));
-            if (!user.Equals(null))
-            {
-                return user;
-            }
-            else
-                throw new Exception("User not found.");
+            SaveOrUpdate(user);
         }
     }
 }
-

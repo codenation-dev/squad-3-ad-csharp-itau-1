@@ -16,7 +16,6 @@ namespace TryLog.Core.Model
         public Environment Environment { get; set; }
         public Layer Layer { get; set; }
         public Status Status { get; set; }
-        public string Code { get; set; }
         public string Description { get; set; }
         public DateTime DateRegister { get; set; }
         public bool Deleted { get; set; }

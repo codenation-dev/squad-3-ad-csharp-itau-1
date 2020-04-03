@@ -5,7 +5,7 @@ using TryLog.Core.Model;
 
 namespace TryLog.Core.Interfaces
 {
-    public interface ILayerRepository:IDefaultRepository<Layer>
+    public interface ILayerRepository
     {
     }
 }

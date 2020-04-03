@@ -7,17 +7,8 @@ namespace TryLog.Core.Model
     /// </summary>
     public class Event
     {
-        public Event(long id, Severity severity, Environment environment, Layer layer, Status status, string code, string description, DateTime dateRegister)
+        public Event()
         {
-            Id = id;
-            Severity = severity;
-            Environment = environment;
-            Layer = layer;
-            Status = status;
-            Code = code;
-            Description = description;
-            DateRegister = dateRegister;
-            Deleted = false;
         }
 
         public long Id { get; set; }

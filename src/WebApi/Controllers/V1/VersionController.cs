@@ -2,40 +2,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using TryLog.Core.Interfaces;
+using System.Web;
+using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
+using TryLog.Infraestructure.Repository;
 
 namespace TryLog.WebApi.Controllers.V1
 {
-    public class VersionController : ControllerBase
+
+    public class VersionController : Controller
     {
-        IConfiguration _config;
-        IEventRepository _eventRepo;
-        public VersionController(IConfiguration config, IEventRepository eventRepo)
+        private readonly UserRepository _userRepository;
+
+        public VersionController(UserRepository userRepository)
         {
-            _config = config;
-            _eventRepo = eventRepo;
+            _userRepository = userRepository;
         }
+
         [HttpGet]
         [Route("api/Version")]
         [AllowAnonymous]
         public string Get()
         {
-            _eventRepo.Add(new Core.Model.Event()
-            {
-                Layer = new Core.Model.Layer()
-                {
-                    Description = "Layer 1"
-                }
-            });
-
-            var allEvents = _eventRepo.Find(x => true);
-
-            return _config.GetSection("ApplicationVersion").Value;
+            var user = new User(
+                "Pedro","pe","pedro@gmail.com","123456", DateTime.Now, DateTime.Now
+                );
+            _userRepository.Create(user);
+            var userSearch = _userRepository.Find(u=>u.FullName.Equals("Pedro"));
+            
+            return userSearch[0].Email;
         }
     }
 }

@@ -7,6 +7,10 @@ namespace TryLog.Core.Model
     /// </summary>
     public class Environment
     {
+        public Environment()
+        {
+
+        }
         public Environment(short id, string code, string description, string active, DateTime dateRegister)
         {
             Id = id;

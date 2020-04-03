@@ -18,14 +18,14 @@ namespace TryLog.UseCase
         public void UpdateStatus(string IdEvent, string updateStatus)
         {
             long.TryParse(IdEvent, out var IdEventLong);
-            var evento = _repoEvent.Find(x => x.Id == IdEventLong).FirstOrDefault();
-            
-            evento.Status = new Core.Model.Status()
+            //var evento = _repoEvent.Find(x => x.Id == IdEventLong).FirstOrDefault();
+
+            /*evento.Status = new Core.Model.Status()
             {
                 Description = updateStatus,
             };
             
-            _repoEvent.SaveOrUpdate(evento);
+            _repoEvent.SaveOrUpdate(evento);*/
         }
     }
 }

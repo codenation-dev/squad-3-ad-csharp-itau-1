@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TryLog.Core.Interfaces;
+using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 using TryLog.Infraestructure.Repository;
 
@@ -32,15 +33,17 @@ namespace TryLog.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development"){
+            if(System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development"){
                 services.AddDbContext<TryLogContext>(op => op.UseInMemoryDatabase("TryLogDb.db"));
             }
             else
             {
                 services.AddDbContext<TryLogContext>(op => op.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
             }
-            services.AddScoped<IEventRepository,EventRepository>();
+            
 
+            //services.AddScoped<IEventRepository,EventRepository>();
+            services.AddScoped<UserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

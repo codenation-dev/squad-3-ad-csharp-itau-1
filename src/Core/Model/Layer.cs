@@ -7,6 +7,9 @@ namespace TryLog.Core.Model
     /// </summary>
     public class Layer
     {
+        public Layer()
+        {
+        }
         public Layer(short id, string code, string description, string active, DateTime dateRegister)
         {
             Id = id;

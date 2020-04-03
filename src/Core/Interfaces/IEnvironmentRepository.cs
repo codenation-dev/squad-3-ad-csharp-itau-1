@@ -2,7 +2,7 @@
 
 namespace TryLog.Core.Interfaces
 {
-    public interface IEnvironmentRepository : IDefaultRepository<Environment>
+    public interface IEnvironmentRepository
     {
     }
 }

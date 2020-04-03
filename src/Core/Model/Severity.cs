@@ -7,6 +7,10 @@ namespace TryLog.Core.Model
     /// </summary>
     public class Severity
     {
+        public Severity()
+        {
+
+        }
         public Severity(short id, string code, string description, string active, DateTime dateRegister)
         {
             Id = id;

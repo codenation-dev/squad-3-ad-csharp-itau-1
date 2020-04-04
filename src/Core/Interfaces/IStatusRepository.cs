@@ -2,7 +2,7 @@
 
 namespace TryLog.Core.Interfaces
 {
-    public interface IStatusRepository
+    public interface IStatusRepository : IDefaultRepository<Status>
     {
     }
 }

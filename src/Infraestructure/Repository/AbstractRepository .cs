@@ -27,13 +27,18 @@ namespace TryLog.Infraestructure.Repository
             _context.SaveChanges();
         }
 
-        public List<T> Find(Expression<Func<T, bool>> predicate)
+        public T Find(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>()
+                 .Where(predicate)
+                 .FirstOrDefault();
+        }
+        public List<T> FindAll(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>()
                  .Where(predicate)
                  .ToList();
         }
-
         public T Get(long entityId)
         {
             return _context.Set<T>().Find(entityId);

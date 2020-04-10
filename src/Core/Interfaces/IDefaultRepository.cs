@@ -9,7 +9,8 @@ namespace TryLog.Core.Interfaces
     {
         void Add(T entity);
         T Get(long entityId);
-        List<T> Find(Expression<Func<T, bool>> predicate);
+        T Find(Expression<Func<T, bool>> predicate);
+        List<T> FindAll(Expression<Func<T, bool>> predicate);
         void SaveOrUpdate(T entity);
         void Delete(Expression<Func<T, bool>> predicate);
     }

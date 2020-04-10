@@ -3,7 +3,7 @@
 namespace TryLog.Core.Model
 {
     /// <summary>
-    /// Ambiente em qual ocorreu o Evento: Desenvolvimento, Homologação, Produção
+    /// Ambiente em qual ocorreu o Log: Desenvolvimento, Homologação, Produção
     /// </summary>
     public class Environment
     {

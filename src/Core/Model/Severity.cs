@@ -3,7 +3,7 @@
 namespace TryLog.Core.Model
 {
     /// <summary>
-    /// Demonstra a Severidade dos Eventos: Risco Alto, Risco Médio, Risco Baixo
+    /// Demonstra a Severidade dos Logs: Risco Alto, Risco Médio, Risco Baixo
     /// </summary>
     public class Severity
     {

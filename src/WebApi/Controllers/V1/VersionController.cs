@@ -7,17 +7,18 @@ using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 using TryLog.Infraestructure.Repository;
+using TryLog.UseCase;
 
 namespace TryLog.WebApi.Controllers.V1
 {
 
     public class VersionController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly UserManagerUC _userUC;
 
-        public VersionController(IUserRepository userRepository)
+        public VersionController(UserManagerUC userUC)
         {
-            _userRepository = userRepository;
+            _userUC = userUC;
         }
 
         [HttpGet]
@@ -25,15 +26,18 @@ namespace TryLog.WebApi.Controllers.V1
         [AllowAnonymous]
         public string Get()
         {
-            var user = new User(
-                "Pedro","pe","pedro@gmail.com","123456", DateTime.Now, DateTime.Now
-                );
+            _userUC.CreateNew(new User("Pedro", "pe", "pedro@gmail.com", "Pedro12!", DateTime.Now, DateTime.Now));
 
-            _userRepository.Add(user);
-            var userSearch = _userRepository.Find(u=>u.FullName.Equals("Pedro"));
-            //Aquela nossa dúvida se fucnionaria
-            var teste = _userRepository.Get(1);
-            return userSearch[0].Email;
+            return "Tudo Certo!";
+            //var user = new User(
+            //    "Pedro","pe","pedro@gmail.com","123456", DateTime.Now, DateTime.Now
+            //    );
+
+            //_userUC.Add(user);
+            //var userSearch = _userUC.Find(u=>u.FullName.Equals("Pedro"));
+            ////Aquela nossa dúvida se fucnionaria
+            //var teste = _userUC.Get(1);
+            //return userSearch.Email;
         }
     }
 }

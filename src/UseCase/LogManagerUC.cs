@@ -21,7 +21,7 @@ namespace TryLog.UseCase
 
         public void UpdateSeverity(long idLog, string updateSeverity)
         {
-            var log = _repoLog.Find(x => x.Id == idLog).FirstOrDefault();
+            var log = _repoLog.Find(x => x.Id == idLog);
 
             log.Severity = new Severity()
             {
@@ -32,7 +32,7 @@ namespace TryLog.UseCase
 
         public void UpdateEnviroment(long idLog, string updateEnviroment)
         {
-            var log = _repoLog.Find(x => x.Id == idLog).FirstOrDefault();
+            var log = _repoLog.Find(x => x.Id == idLog);
 
             log.Environment = new Environment()
             {
@@ -43,7 +43,7 @@ namespace TryLog.UseCase
 
         public void UpdateLayer(long idLog, string updateLayer)
         {
-            var log = _repoLog.Find(x => x.Id == idLog).FirstOrDefault();
+            var log = _repoLog.Find(x => x.Id == idLog);
 
             log.Layer = new Layer()
             {
@@ -54,7 +54,7 @@ namespace TryLog.UseCase
 
         public void UpdateStatus(long idLog, string updateStatus)
         {
-            var log = _repoLog.Find(x => x.Id == idLog).FirstOrDefault();
+            var log = _repoLog.Find(x => x.Id == idLog);
 
             log.Status = new Status()
             {
@@ -66,7 +66,7 @@ namespace TryLog.UseCase
 
         public void UpdateDeleted(long idLog, bool updateDeleted)
         {
-            var log = _repoLog.Find(x => x.Id == idLog).FirstOrDefault();
+            var log = _repoLog.Find(x => x.Id == idLog);
 
             if (log.Deleted != updateDeleted)
             {

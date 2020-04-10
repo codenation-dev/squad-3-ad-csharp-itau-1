@@ -15,6 +15,7 @@ using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 using TryLog.Infraestructure.Repository;
+using TryLog.UseCase;
 
 namespace TryLog.WebApi
 {
@@ -44,6 +45,7 @@ namespace TryLog.WebApi
 
             //services.AddScoped<ILogRepository,LogRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<UserManagerUC>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

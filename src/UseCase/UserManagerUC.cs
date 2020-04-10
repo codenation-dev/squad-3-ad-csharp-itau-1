@@ -34,7 +34,7 @@ namespace TryLog.UseCase
             var checkProperty = repository.Find(expression);
             if (checkProperty != null)
             {
-                throw new Exception($"{propertyName} ja existe");
+                throw new Exception($"{propertyName} already exists");
             }
         }
         public void VerifyPassword(string password)
@@ -51,23 +51,23 @@ namespace TryLog.UseCase
 
             if (password.Length < minLength)
             {
-                throw new Exception("Minimo de 8 cacteres");
+                throw new Exception($"Minimum of {minLength} characters");
             }
             if (upper.Match(password).Length < numUpper)
             {
-                throw new Exception("Minimo de 1 letra maiscula");
+                throw new Exception($"Minimum of {numUpper} capital letter(s)");
             }
             if (lower.Match(password).Length < numLower)
             {
-                throw new Exception("Minimo de 1 letra minuscula");
+                throw new Exception($"Minimum of {numLower} lowercase letter(s)");
             }
             if (number.Match(password).Length < numNumbers)
             {
-                throw new Exception("Minimo de 1 numero");
+                throw new Exception($"Minimum of {numNumbers} number(s)");
             }
             if (special.Match(password).Length < numSpecial)
             {
-                throw new Exception("Minimo de 1 caracter especial");
+                throw new Exception($"Minimum of {numSpecial} special character(s)");
             }
         }
     }

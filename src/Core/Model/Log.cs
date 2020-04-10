@@ -3,11 +3,11 @@
 namespace TryLog.Core.Model
 {
     /// <summary>
-    /// Eventos reportados (Excessões, erros)
+    /// Logs reportados (Excessões, erros)
     /// </summary>
-    public class Event
+    public class Log
     {
-        public Event()
+        public Log()
         {
         }
 
@@ -19,5 +19,7 @@ namespace TryLog.Core.Model
         public string Description { get; set; }
         public DateTime DateRegister { get; set; }
         public bool Deleted { get; set; }
+        public string Token { get; set; }
+        public long User { get; set; }
     }
 }

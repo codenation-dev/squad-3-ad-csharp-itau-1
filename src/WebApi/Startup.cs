@@ -42,7 +42,7 @@ namespace TryLog.WebApi
             }
             
 
-            //services.AddScoped<IEventRepository,EventRepository>();
+            //services.AddScoped<ILogRepository,LogRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
         }
 

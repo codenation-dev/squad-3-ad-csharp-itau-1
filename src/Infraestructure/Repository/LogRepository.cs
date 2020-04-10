@@ -9,9 +9,9 @@ using TryLog.Infraestructure.EF;
 
 namespace TryLog.Infraestructure.Repository
 {
-    public class EventRepository : AbstractRepository<Event>, IEventRepository
+    public class LogRepository : AbstractRepository<Log>, ILogRepository
     {
-        public EventRepository(TryLogContext context) : base(context)
+        public LogRepository(TryLogContext context) : base(context)
         {
         }
     }

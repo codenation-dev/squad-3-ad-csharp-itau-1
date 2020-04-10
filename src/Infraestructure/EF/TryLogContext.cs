@@ -14,7 +14,7 @@ namespace TryLog.Infraestructure.EF
         {
         }
 
-        public DbSet<Event> Events { get; set; }
+        public DbSet<Log> Logs { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }

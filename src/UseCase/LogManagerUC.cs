@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 
@@ -7,6 +8,7 @@ namespace TryLog.UseCase
     public class LogManagerUC
     {
         private readonly ILogRepository _repoLog;
+        private readonly StatusManagerUC _statusManagerUC;
         public LogManagerUC(ILogRepository logRepository)
         {
             _repoLog = logRepository;
@@ -74,6 +76,12 @@ namespace TryLog.UseCase
             }
 
             _repoLog.SaveOrUpdate(log);
+        }
+
+        public List<Log> GetAll()
+        {
+            return _repoLog.FindAll(x => x.Deleted == false)
+                           .OrderByDescending(x => x.DateRegister).ToList();
         }
     }
 }

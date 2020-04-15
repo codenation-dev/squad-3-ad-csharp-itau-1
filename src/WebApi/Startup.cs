@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 using TryLog.Infraestructure.Repository;
 using TryLog.UseCase;
+
 
 namespace TryLog.WebApi
 {
@@ -36,16 +34,43 @@ namespace TryLog.WebApi
             services.AddControllers();
             if(System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development"){
                 services.AddDbContext<TryLogContext>(op => op.UseInMemoryDatabase("TryLogDb.db"));
-            }
-            else
+                services.AddDbContext<ApplicationDbContext>(op => op.UseInMemoryDatabase("IdentityTryLogDb.db"));
+
+            }else
             {
                 services.AddDbContext<TryLogContext>(op => op.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
+                services.AddDbContext<ApplicationDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("IdentityTryLogDb")));
             }
-            
 
-            //services.AddScoped<ILogRepository,LogRepository>();
+            services.AddSingleton(Configuration);
+
             services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<UserManager<User>>();
+            services.AddScoped<SignInManager<User>>();
             services.AddScoped<UserManagerUC>();
+
+
+
+            var key = Encoding.ASCII.GetBytes(Configuration.GetSection("SecretKey").ToString());
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true
+                };
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

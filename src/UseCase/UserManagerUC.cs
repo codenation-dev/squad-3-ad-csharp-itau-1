@@ -1,74 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using Microsoft.AspNetCore.Identity;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
+using TryLog.Core.Model.DTO;
 using TryLog.Core.Model;
-using TryLog.Infraestructure.EF;
-using TryLog.Infraestructure.Repository;
+using System;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace TryLog.UseCase
 {
     public class UserManagerUC
     {
-        private readonly TryLogContext _context;
-        public UserRepository repository;
-        public UserManagerUC(TryLogContext context)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private IConfiguration _configuration { get; set; }
+
+        public UserManagerUC(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
-            _context = context;
-            repository = new UserRepository(_context);
+            _userManager = userManager;
+            _signInManager= signInManager;
+            _configuration = _configuration;
         }
-
-        
-        public void CreateNew(User user)
+        public async Task<UserLoginDTO> Create(User user)
         {
-            ExistsOnDb(x => x.Nickname.ToLower() == user.Nickname.ToLower(), nameof(User.Nickname));
-            ExistsOnDb(x => x.Email.ToLower() == user.Email.ToLower(), nameof(User.Email));
-            VerifyPassword(user.Password);
-            repository.Add(user);
+
+            User newUser = new User(user.FullName, user.Nickname,
+                                    user.Email,user.Password,
+                                    DateTime.Now,DateTime.Now);
+
+            IdentityResult result = await _userManager.CreateAsync(newUser, newUser.Password);
+            
+
+            if (result.Succeeded)
+            {
+                var token = CreateToken(user);
+                var userLogin = new UserLoginDTO(email: newUser.Email,
+                                                password: newUser.Password,
+                                                token: token);
+                return userLogin;
+            }
+            return null;
         }
-
-
-        private void ExistsOnDb(Expression<Func<User,bool>> expression, string propertyName)
+        private string CreateToken(User user)
         {
-            var checkProperty = repository.Find(expression);
-            if (checkProperty != null)
-            {
-                throw new Exception($"{propertyName} already exists");
-            }
-        }
-        public void VerifyPassword(string password)
-        {
-            int minLength = 8;
-            int numUpper = 1;
-            int numLower = 1;
-            int numNumbers = 1;
-            int numSpecial = 1;
-            var upper = new Regex("[A-Z]");
-            var lower = new Regex("[a-z]");
-            var number = new Regex("[0-9]");
-            var special = new Regex("[^a-zA-Z0-9]");
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
-            if (password.Length < minLength)
+            byte[] key = Encoding.ASCII.GetBytes(_configuration.GetSection("SecretKey").ToString());
+            
+            double expireTime = double.Parse(_configuration.GetSection("TokenConfigurations:Hours").ToString());
+
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                throw new Exception($"Minimum of {minLength} characters");
-            }
-            if (upper.Match(password).Length < numUpper)
-            {
-                throw new Exception($"Minimum of {numUpper} capital letter(s)");
-            }
-            if (lower.Match(password).Length < numLower)
-            {
-                throw new Exception($"Minimum of {numLower} lowercase letter(s)");
-            }
-            if (number.Match(password).Length < numNumbers)
-            {
-                throw new Exception($"Minimum of {numNumbers} number(s)");
-            }
-            if (special.Match(password).Length < numSpecial)
-            {
-                throw new Exception($"Minimum of {numSpecial} special character(s)");
-            }
+                Subject = new ClaimsIdentity(new Claim[] {
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, "default_user")
+                }),
+                Expires = DateTime.UtcNow.AddHours(expireTime),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
+        };
+            var token= tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
+
 }
+

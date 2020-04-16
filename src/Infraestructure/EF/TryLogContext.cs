@@ -1,20 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TryLog.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TryLog.Core.Model;
+using Environment = TryLog.Core.Model.Environment;
 
 namespace TryLog.Infraestructure.EF
 {
     public class TryLogContext : DbContext
     {
         
-        public TryLogContext(DbContextOptions<TryLogContext> options) : base(options)
+        public TryLogContext(DbContextOptions<TryLogContext> options) 
+            : base(options)
         {
         }
-
+        public DbSet<Environment> Environments{ get; set; }
         public DbSet<Log> Logs { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Layer> Layers { get; set; }
+        public DbSet<Severity> Severities { get; set; }
+        public DbSet<Status> Statuses { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

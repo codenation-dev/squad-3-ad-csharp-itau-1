@@ -8,21 +8,20 @@ namespace TryLog.Core.Model
     /// Representa o usuário da aplicação.
     /// </summary>
 
-    public class User:IdentityUser
+    public class User:IdentityUser<string>
     {
-        public User(string fullName, string nickname, string email, string password, DateTime createdAt, DateTime updatedAt)
+        public User(string userName, string fullName,  string email, string password, DateTime createdAt, DateTime updatedAt)
+            :base(userName:userName)
         {
+            Id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
             FullName = fullName;
-            Nickname = nickname;
             Email = email;
             Password = password;
             CreatedAt = DateTime.Now ;
             UpdatedAt = DateTime.Now;
             Deleted = false;
         }
-
         public string FullName { get; set; }
-        public string Nickname { get; set; }
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

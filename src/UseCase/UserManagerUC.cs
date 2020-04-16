@@ -15,41 +15,38 @@ namespace TryLog.UseCase
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private IConfiguration _configuration { get; set; }
+        private readonly IConfiguration _configuration;
 
         public UserManagerUC(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager= signInManager;
-            _configuration = _configuration;
+            _configuration = configuration;
         }
-        public async Task<UserLoginDTO> Create(User user)
+        public async Task<dynamic> Create(User user)
         {
 
-            User newUser = new User(user.FullName, user.Nickname,
-                                    user.Email,user.Password,
-                                    DateTime.Now,DateTime.Now);
-
-            IdentityResult result = await _userManager.CreateAsync(newUser, newUser.Password);
+            IdentityResult result = await _userManager.CreateAsync(user, user.Password);
             
 
             if (result.Succeeded)
             {
                 var token = CreateToken(user);
-                var userLogin = new UserLoginDTO(email: newUser.Email,
-                                                password: newUser.Password,
+                var userLogin = new UserLoginDTO(email: user.Email,
+                                                password: string.Empty,
                                                 token: token);
                 return userLogin;
             }
-            return null;
+            return result;
         }
         private string CreateToken(User user)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
-            byte[] key = Encoding.ASCII.GetBytes(_configuration.GetSection("SecretKey").ToString());
-            
-            double expireTime = double.Parse(_configuration.GetSection("TokenConfigurations:Hours").ToString());
+            byte[] key = Encoding.ASCII.GetBytes(_configuration["SecretKey"]);
+
+
+            double expireTime = double.Parse(_configuration["TokenConfigurations:Hours"]);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

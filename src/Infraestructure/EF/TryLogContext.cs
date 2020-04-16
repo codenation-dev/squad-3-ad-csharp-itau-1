@@ -17,5 +17,9 @@ namespace TryLog.Infraestructure.EF
         public DbSet<Layer> Layers { get; set; }
         public DbSet<Severity> Severities { get; set; }
         public DbSet<Status> Statuses { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

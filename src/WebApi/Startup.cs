@@ -42,13 +42,15 @@ namespace TryLog.WebApi
                 services.AddDbContext<ApplicationDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("IdentityTryLogDb")));
             }
 
-            services.AddSingleton(Configuration);
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
 
-            services.AddScoped<IUserRepository,UserRepository>();
+
+            //services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
             services.AddScoped<UserManagerUC>();
-
 
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("SecretKey").ToString());
@@ -85,8 +87,11 @@ namespace TryLog.WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

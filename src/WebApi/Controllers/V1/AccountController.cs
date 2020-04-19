@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using TryLog.Core.Model;
+using TryLog.Core.Model.DTO;
 using TryLog.UseCase;
 
 namespace TryLog.WebApi.Controllers.V1
 {
     [ApiController]
-    public class AccountController : Controller
+    [Route("api/account/")]
+    public class AccountController : ControllerBase
     {
         private readonly UserManagerUC _userUC;
 
@@ -18,19 +20,23 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         [HttpPost]
-        [Route("api/account")]
+        [Route("create")]
         [AllowAnonymous]
-        public async Task<ActionResult<object>> Post()
+        public IActionResult Create([FromBody] User user)
         {
-            User newUser = new User("Nick", "Nicolas Silva", "nixc@gmail.com", "wdqd32$sd", DateTime.UtcNow, DateTime.UtcNow);
-            bool result = TryValidateModel(newUser);
-            if (result)
-            {
-                var x= await _userUC.Create(newUser);
-                return x;
-             }
-            return "Tudo Certo!";
+           return Ok(
+                    _userUC.Create(user)
+                );
+        }
 
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        public IActionResult Auth([FromBody] UserAuthDTO userAuth)
+        {
+            return Ok(
+                    _userUC.Login(userAuth)
+                );
         }
     }
 }

@@ -24,9 +24,7 @@ namespace TryLog.WebApi.Controllers.V1
         [AllowAnonymous]
         public IActionResult Create([FromBody] User user)
         {
-           return Ok(
-                    _userUC.Create(user)
-                );
+           return Ok(_userUC.Create(user));
         }
 
         [HttpPost]
@@ -34,9 +32,7 @@ namespace TryLog.WebApi.Controllers.V1
         [AllowAnonymous]
         public IActionResult Auth([FromBody] UserAuthDTO userAuth)
         {
-            return Ok(
-                    _userUC.Login(userAuth)
-                );
+            return Ok(_userUC.Login(userAuth));
         }
     }
 }

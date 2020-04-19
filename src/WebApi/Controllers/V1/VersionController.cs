@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-using System.Web;
-using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
-using TryLog.Infraestructure.EF;
-using TryLog.Infraestructure.Repository;
 using TryLog.UseCase;
 
 namespace TryLog.WebApi.Controllers.V1
@@ -15,20 +10,22 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class VersionController : ControllerBase
     {
-        private readonly UserManagerUC _userUC;
+        private readonly IConfiguration _config;
 
-        public VersionController(UserManagerUC userUC)
+        public VersionController(IConfiguration config)
         {
-            _userUC = userUC;
+            _config = config;
         }
 
+        //TODO: documentar o motivo deste endpoint
         [HttpGet]
         [Route("api/Version")]
-        [Authorize]
+        [AllowAnonymous]
         public string Get()
-        {            
+        {
+            //Resolvendo conflito, removi as demais ações neste endpoint.
+            //TODO: retornar de maneira anonima a versão da api
             return "Tudo Certo!";
-
         }
     }
 }

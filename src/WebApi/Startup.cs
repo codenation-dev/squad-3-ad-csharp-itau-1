@@ -10,12 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
 using System.Text;
-using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
-using TryLog.Infraestructure.Repository;
 using TryLog.UseCase;
-
 
 namespace TryLog.WebApi
 {
@@ -34,56 +31,48 @@ namespace TryLog.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                        .AddNewtonsoftJson(options=> 
-                        {
-                            options.SerializerSettings.ReferenceLoopHandling= ReferenceLoopHandling.Ignore;
-                            options.SerializerSettings.NullValueHandling= NullValueHandling.Ignore;
-                        });
+                    .AddNewtonsoftJson(options=> 
+                    {
+                        options.SerializerSettings.ReferenceLoopHandling= ReferenceLoopHandling.Ignore;
+                        options.SerializerSettings.NullValueHandling= NullValueHandling.Ignore;
+                    });
             services.AddCors();
-
-            if (System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development"){
+            if (System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
                 services.AddDbContext<TryLogContext>(op => op.UseInMemoryDatabase("TryLogDb.db"));
                 services.AddDbContext<ApplicationDbContext>(op => op.UseInMemoryDatabase("IdentityTryLogDb.db"));
 
-            }else
+            }
+            else
             {
                 services.AddDbContext<TryLogContext>(op => op.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
                 services.AddDbContext<ApplicationDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("IdentityTryLogDb")));
             }
 
+
             services.AddIdentity<User, IdentityRole>(options=>{
-                options.User.RequireUniqueEmail=true;
-                options.User. AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
-
+                options.User.RequireUniqueEmail=true;
+                options.User. AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredUniqueChars = 1;
                 options.Password.RequireNonAlphanumeric = true;
-
-
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedAccount = false;
-            })
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders();
-
-
-            //services.AddScoped<IUserRepository,UserRepository>();
+                .AddDefaultTokenProviders();
 
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
             services.AddScoped<UserManagerUC>();
 
-
-            services.AddCors();
-            services.AddControllers();
-
-            var key = Encoding.ASCII.GetBytes(Configuration["SecretKey"]);
+            var key = Encoding.ASCII.GetBytes(Configuration.GetSection("SecretKey").ToString());
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

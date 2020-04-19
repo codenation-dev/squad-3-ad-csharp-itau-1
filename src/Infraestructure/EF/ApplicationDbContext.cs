@@ -12,6 +12,22 @@ namespace TryLog.Infraestructure.EF
         { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .ToTable("Users")
+                .HasKey(k=>k.Email);
+
+            modelBuilder.Entity<IdentityUserRole<string>>()
+                .ToTable("UserRoles");
+
+            modelBuilder.Entity<IdentityUserLogin<string>>()
+                .ToTable("UserLogins");
+
+            modelBuilder.Entity<IdentityUserClaim<string>>()
+                .ToTable("UserClaims");
+
+            modelBuilder.Entity<IdentityRole>()
+                .ToTable("Roles");
+            
             base.OnModelCreating(modelBuilder);
         }
 

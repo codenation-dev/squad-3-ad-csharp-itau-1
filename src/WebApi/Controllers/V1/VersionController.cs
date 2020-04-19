@@ -8,26 +8,23 @@ using TryLog.UseCase;
 namespace TryLog.WebApi.Controllers.V1
 {
     [ApiController]
-    public class VersionController : Controller
+    public class VersionController : ControllerBase
     {
-        private readonly UserManagerUC _userUC;
+        private readonly IConfiguration _config;
 
-        public VersionController(UserManagerUC userUC)
+        public VersionController(IConfiguration config)
         {
-            _userUC = userUC;
+            _config = config;
         }
 
+        //TODO: documentar o motivo deste endpoint
         [HttpGet]
         [Route("api/Version")]
         [AllowAnonymous]
-        public async Task<ActionResult<object>> Get()
+        public string Get()
         {
-            User newUser = new User("Pedro", "pe", "pedro@gmail.com", "Pedro12!", DateTime.Now, DateTime.Now);
-            if (TryValidateModel(newUser))
-            {
-                return await _userUC.Create(newUser);
-
-            }
+            //Resolvendo conflito, removi as demais ações neste endpoint.
+            //TODO: retornar de maneira anonima a versão da api
             return "Tudo Certo!";
         }
     }

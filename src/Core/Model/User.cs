@@ -5,20 +5,20 @@ using Microsoft.AspNetCore.Identity;
 namespace TryLog.Core.Model
 {
     /// <summary>
-    /// Representa o usuário da aplicação.
+    /// Representa o usuï¿½rio da aplicaï¿½ï¿½o.
     /// </summary>
 
     public class User:IdentityUser<string>
     {
-        public User(string userName, string fullName,  string email, string password, DateTime createdAt, DateTime updatedAt)
+        public User(string fullName,  string userName, string password)
             :base(userName:userName)
         {
             Id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
             FullName = fullName;
-            Email = email;
+            Email = userName;
             Password = password;
-            CreatedAt = DateTime.Now ;
-            UpdatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow ;
+            UpdatedAt = CreatedAt;
             Deleted = false;
         }
         public string FullName { get; set; }

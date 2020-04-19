@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.IdentityModel.Tokens.Jwt;
-using System.Threading.Tasks;
-using TryLog.Core.Model.DTO;
-using TryLog.Core.Model;
-using System;
-using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
+using TryLog.Core.Model;
+using TryLog.Core.Model.DTO;
 
 namespace TryLog.UseCase
 {
@@ -20,45 +19,57 @@ namespace TryLog.UseCase
         public UserManagerUC(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
-            _signInManager= signInManager;
+
+            _signInManager = signInManager;
             _configuration = configuration;
         }
-        public async Task<dynamic> Create(User user)
+        public TokenDTO Create(User user)
         {
-
-            IdentityResult result = await _userManager.CreateAsync(user, user.Password);
-            
+            IdentityResult result = _userManager.CreateAsync(user, user.Password).Result;
 
             if (result.Succeeded)
-            {
-                var token = CreateToken(user);
-                var userLogin = new UserLoginDTO(email: user.Email,
-                                                password: string.Empty,
-                                                token: token);
-                return userLogin;
-            }
-            return result;
+                return CreateToken(new UserAuthDTO(user.Email,null, null));
+            return new TokenDTO(result.ToString());
         }
-        private string CreateToken(User user)
+
+        public TokenDTO Login(UserAuthDTO userAuth)
         {
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            var result = _signInManager.PasswordSignInAsync(userAuth.UserName,
+                                                            userAuth.Password,
+                                                            false, false).Result;
+            if (result.Succeeded)
+            {
+                userAuth.FullName = userAuth.Password = null;
+                return CreateToken(userAuth);
+            }
+                
 
-            byte[] key = Encoding.ASCII.GetBytes(_configuration["SecretKey"]);
+            return new TokenDTO(result.ToString());
+        }
 
+        private TokenDTO CreateToken(UserAuthDTO userAuth)
+        {
 
-            double expireTime = double.Parse(_configuration["TokenConfigurations:Hours"]);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["SecretKey"]);
+            var expiration = DateTime.UtcNow.AddHours(double.Parse(_configuration["TokenConfigurations:Hours"]));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, "default_user")
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Email, userAuth.UserName),
+                    new Claim(ClaimTypes.Role, "user_default")
                 }),
-                Expires = DateTime.UtcNow.AddHours(expireTime),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
-        };
-            var token= tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+                Expires = expiration,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return new TokenDTO(
+                token: tokenHandler.WriteToken(token),
+                expiration: expiration
+            );
         }
     }
 

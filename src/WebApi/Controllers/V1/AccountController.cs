@@ -22,7 +22,7 @@ namespace TryLog.WebApi.Controllers.V1
         [AllowAnonymous]
         public async Task<ActionResult<object>> Post()
         {
-            User newUser = new User("Nick", "Nicolas Silva", "nixc@gmail.com", "wdqd32$sd", DateTime.UtcNow, DateTime.UtcNow);
+            User newUser = new User("Nick", "Nicolas Silva", "nixc@gmail.com", "wdqD32$sd", DateTime.UtcNow, DateTime.UtcNow);
             bool result = TryValidateModel(newUser);
             if (result)
             {
@@ -30,7 +30,6 @@ namespace TryLog.WebApi.Controllers.V1
                 return x;
              }
             return "Tudo Certo!";
-
         }
     }
 }

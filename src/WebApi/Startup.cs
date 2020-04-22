@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -31,11 +32,12 @@ namespace TryLog.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                    .AddNewtonsoftJson(options=> 
+                    .AddNewtonsoftJson(options =>
                     {
-                        options.SerializerSettings.ReferenceLoopHandling= ReferenceLoopHandling.Ignore;
-                        options.SerializerSettings.NullValueHandling= NullValueHandling.Ignore;
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     });
+
             services.AddCors();
             if (System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
             {
@@ -49,13 +51,19 @@ namespace TryLog.WebApi
                 services.AddDbContext<ApplicationDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("IdentityTryLogDb")));
             }
 
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TryLog", Version = "v1" });
+            });
 
-            services.AddIdentity<User, IdentityRole>(options=>{
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
-                options.User.RequireUniqueEmail=true;
-                options.User. AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireLowercase = true;
@@ -64,7 +72,7 @@ namespace TryLog.WebApi
                 options.Password.RequireNonAlphanumeric = true;
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedAccount = false;
-                })
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -102,6 +110,16 @@ namespace TryLog.WebApi
             }
 
             app.UseHttpsRedirection();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TryLog");
+            });
 
             app.UseRouting();
 

@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
@@ -22,7 +20,7 @@ namespace TryLog.WebApi.ExtensionsMethods
             services.AddScoped<SignInManager<User>>();
             services.AddScoped<UserManagerUC>();
 
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddIdentity<User,IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.User.AllowedUserNameCharacters= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
@@ -39,7 +37,7 @@ namespace TryLog.WebApi.ExtensionsMethods
                 options.SignIn.RequireConfirmedAccount = false;
 
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<TryLogContext>()
                 .AddDefaultTokenProviders();
 
         }

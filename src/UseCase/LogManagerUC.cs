@@ -21,7 +21,7 @@ namespace TryLog.UseCase
             return log;
         }
 
-        public void UpdateSeverity(long idLog, string updateSeverity)
+        public void UpdateSeverity(short idLog, string updateSeverity)
         {
             var log = _repoLog.Find(x => x.Id == idLog);
 
@@ -32,14 +32,14 @@ namespace TryLog.UseCase
             _repoLog.SaveOrUpdate(log);
         }
 
-        public void UpdateEnviroment(long idLog, string updateEnviroment)
+        public void UpdateEnviroment(short idLog, string updateEnviroment)
         {
             var log = _repoLog.Find(x => x.Id == idLog);
+            
+            var env = log.Environment;
 
-            log.Environment = new Environment()
-            {
-                Description = updateEnviroment
-            };
+            log.Environment = new Environment(env.Id, log.Description, env.DateRegister);
+
             _repoLog.SaveOrUpdate(log);
         }
 

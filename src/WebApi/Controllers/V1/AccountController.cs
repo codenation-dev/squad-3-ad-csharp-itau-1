@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 using TryLog.Core.Model;
 using TryLog.Core.Model.DTO;
 using TryLog.UseCase;

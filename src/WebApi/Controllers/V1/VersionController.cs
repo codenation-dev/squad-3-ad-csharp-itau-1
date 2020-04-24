@@ -24,16 +24,5 @@ namespace TryLog.WebApi.Controllers.V1
             //TODO: retornar de maneira anonima a versão da api
             return "Tudo Certo!";
         }
-
-        //TODO: documentar o motivo deste endpoint
-        [HttpGet]
-        [Route("api/VersionAuth")]
-        [Authorize]
-        public string GetAuth()
-        {
-            //Resolvendo conflito, removi as demais ações neste endpoint.
-            //TODO: retornar de maneira anonima a versão da api
-            return "Tudo Certo!";
-        }
     }
 }

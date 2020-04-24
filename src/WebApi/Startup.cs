@@ -8,13 +8,6 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using TryLog.WebApi.ExtensionsMethods;
 using TryLog.Infraestructure.EF;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using TryLog.UseCase;
-using Microsoft.AspNetCore.Identity;
-using TryLog.Core.Model;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System;
 
 namespace TryLog.WebApi
 {
@@ -40,17 +33,8 @@ namespace TryLog.WebApi
                     });
 
             services.AddCors();
-            if (System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-            {
-                services.AddDbContext<TryLogContext>(op => op.UseInMemoryDatabase("TryLogDb.db"));
-                services.AddDbContext<ApplicationDbContext>(op => op.UseInMemoryDatabase("IdentityTryLogDb.db"));
 
-            }
-            else
-            {
-                services.AddDbContext<TryLogContext>(op => op.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
-                services.AddDbContext<ApplicationDbContext>(op => op.UseSqlServer(Configuration.GetConnectionString("IdentityTryLogDb")));
-            }
+            services.AddDbContext<TryLogContext>(op => op.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -60,8 +44,6 @@ namespace TryLog.WebApi
 
             services.AddIdentityConfiguration();
             services.AddTokenConfiguration(Configuration);
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

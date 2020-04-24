@@ -8,7 +8,7 @@ namespace TryLog.Core.Model
     /// Representa o usu�rio da aplica��o.
     /// </summary>
 
-    public class User:IdentityUser<string>
+    public class User:IdentityUser
     {
         public User(string fullName,  string userName, string password)
             :base(userName:userName)

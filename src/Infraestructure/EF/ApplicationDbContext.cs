@@ -5,7 +5,7 @@ using TryLog.Core.Model;
 
 namespace TryLog.Infraestructure.EF
 {
-    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
+    public class ApplicationDbContext :IdentityDbContext<User, IdentityRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             :base(options)

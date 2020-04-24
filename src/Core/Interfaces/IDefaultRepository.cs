@@ -13,5 +13,7 @@ namespace TryLog.Core.Interfaces
         List<T> FindAll(Expression<Func<T, bool>> predicate);
         void SaveOrUpdate(T entity);
         void Delete(Expression<Func<T, bool>> predicate);
+        List<T> SelectAll();
+
     }
 }

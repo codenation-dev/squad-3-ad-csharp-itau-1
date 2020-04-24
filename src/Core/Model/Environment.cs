@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TryLog.Core.Model
 {
@@ -11,7 +12,7 @@ namespace TryLog.Core.Model
         {
 
         }
-        public Environment(short id, string description, DateTime dateRegister)
+        public Environment(int id, string description, DateTime dateRegister)
         {
             Id = id;
             Description = description;
@@ -19,9 +20,10 @@ namespace TryLog.Core.Model
             Deleted = false;
         }
 
-        public short Id { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
         public DateTime DateRegister { get; set; }
         public bool Deleted { get; set; }
+        public IList<Log> Logs { get; set; }
     }
 }

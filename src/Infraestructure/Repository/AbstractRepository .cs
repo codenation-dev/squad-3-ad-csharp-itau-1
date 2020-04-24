@@ -49,5 +49,10 @@ namespace TryLog.Infraestructure.Repository
             _context.Set<T>().Update(entity);
             _context.SaveChanges();
         }
+
+        public List<T> SelectAll()
+        {
+            return _context.Set<T>().ToList();
+        }
     }
 }

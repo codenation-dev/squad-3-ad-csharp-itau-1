@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Threading.Tasks;
-using TryLog.Core.Model;
-using TryLog.UseCase;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -23,6 +19,17 @@ namespace TryLog.WebApi.Controllers.V1
         [Route("api/Version")]
         [AllowAnonymous]
         public string Get()
+        {
+            //Resolvendo conflito, removi as demais ações neste endpoint.
+            //TODO: retornar de maneira anonima a versão da api
+            return "Tudo Certo!";
+        }
+
+        //TODO: documentar o motivo deste endpoint
+        [HttpGet]
+        [Route("api/VersionAuth")]
+        [Authorize]
+        public string GetAuth()
         {
             //Resolvendo conflito, removi as demais ações neste endpoint.
             //TODO: retornar de maneira anonima a versão da api

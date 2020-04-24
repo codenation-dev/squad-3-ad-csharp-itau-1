@@ -49,10 +49,11 @@ namespace TryLog.UseCase
 
         private TokenDTO CreateToken(UserAuthDTO userAuth)
         {
-
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["SecretKey"]);
+            var key = Encoding.UTF8.GetBytes(_configuration["SecretKey"]);
             var expiration = DateTime.UtcNow.AddHours(double.Parse(_configuration["TokenConfigurations:Hours"]));
+            var signinKey = new SymmetricSecurityKey(key);
+            var signingCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -62,7 +63,7 @@ namespace TryLog.UseCase
                     new Claim(ClaimTypes.Role, "user_default")
                 }),
                 Expires = expiration,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = signingCredentials
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
 

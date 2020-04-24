@@ -1,19 +1,20 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using System;
-using System.Text;
-using TryLog.Core.Model;
+using TryLog.WebApi.ExtensionsMethods;
 using TryLog.Infraestructure.EF;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using TryLog.UseCase;
+using Microsoft.AspNetCore.Identity;
+using TryLog.Core.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System;
 
 namespace TryLog.WebApi
 {
@@ -57,48 +58,10 @@ namespace TryLog.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TryLog", Version = "v1" });
             });
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.Lockout.AllowedForNewUsers = true;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredUniqueChars = 1;
-                options.Password.RequireNonAlphanumeric = true;
-                options.SignIn.RequireConfirmedEmail = false;
-                options.SignIn.RequireConfirmedAccount = false;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentityConfiguration();
+            services.AddTokenConfiguration(Configuration);
 
-            services.AddScoped<UserManager<User>>();
-            services.AddScoped<SignInManager<User>>();
-            services.AddScoped<UserManagerUC>();
 
-            var key = Encoding.ASCII.GetBytes(Configuration.GetSection("SecretKey").ToString());
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = false;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,10 +86,14 @@ namespace TryLog.WebApi
 
             app.UseRouting();
 
+            app.UseCors(x => x
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

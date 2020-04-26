@@ -9,6 +9,8 @@ namespace TryLog.Core.Model
     {
         public Log()
         {
+            DateRegister = DateTime.Now;
+            Deleted = false;
         }
 
         public int Id { get; set; }   
@@ -16,7 +18,6 @@ namespace TryLog.Core.Model
         public DateTime DateRegister { get; set; }
         public bool Deleted { get; set; }
         public string Token { get; set; }
-        public long User { get; set; }
 
         public int IdEnvironment { get; set; }
         public Environment Environment { get; set; }

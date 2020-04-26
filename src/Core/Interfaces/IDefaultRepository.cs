@@ -7,11 +7,11 @@ namespace TryLog.Core.Interfaces
 {
     public interface IDefaultRepository<T>
     {
-        void Add(T entity);
-        T Get(long entityId);
+        T Add(T entity);
+        T Get(int entityId);
         T Find(Expression<Func<T, bool>> predicate);
         List<T> FindAll(Expression<Func<T, bool>> predicate);
-        void SaveOrUpdate(T entity);
+        void Update(T entity);
         void Delete(Expression<Func<T, bool>> predicate);
         List<T> SelectAll();
 

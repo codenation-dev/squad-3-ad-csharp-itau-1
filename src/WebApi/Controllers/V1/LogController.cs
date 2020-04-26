@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
+using TryLog.UseCase.DTO;
+using TryLog.UseCase.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -13,47 +15,52 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class LogController : ControllerBase
     {
-        private readonly ILogRepository _repo;
-        public LogController(ILogRepository repo)
+        private readonly ILogUC _uC;
+        public LogController(ILogUC uC)
         {
-            _repo = repo;
+            _uC = uC;
         }
         // GET: api/Log
         [HttpGet]
-        public IEnumerable<Log> Get()
+        public IActionResult Get()
         {
-            return _repo.SelectAll();
+            return Ok(_uC.SelectAll());
         }
 
         // GET: api/Log/5
         [HttpGet("{id}")]
-        public Log Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.Get(id);
+            var log = _uC.Get(id);
+            
+            if (log is null)
+                return NoContent();
+
+            return Ok(log); 
         }
 
         // POST: api/Log
         [HttpPost]
-        public Log Post([FromBody] Log log)
+        public IActionResult Post([FromBody] LogDTO logDTO)
         {
-            _repo.Add(log);
-            return log;
+            _uC.Add(logDTO);
+            return Ok();
         }
 
         // PUT: api/Log/5
         [HttpPut("{id}")]
-        public Log Put(int id, [FromBody] Log log)
+        public IActionResult Put(int id, [FromBody] LogDTO logDTO)
         {
-            _repo.SaveOrUpdate(log);
-            return log;
+            _uC.SaveOrUpdate(logDTO);
+            return Ok(logDTO);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public List<Log> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.Delete(x => x.Id == id);
-            return _repo.SelectAll();
+            _uC.Delete(id);
+            return Ok();
         }
     }
 }

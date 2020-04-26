@@ -12,11 +12,11 @@ namespace TryLog.Core.Model
         {
 
         }
-        public Severity(int id, string description, DateTime dateRegister)
+        public Severity(int id, string description)
         {
             Id = id;
             Description = description;
-            DateRegister = dateRegister;
+            DateRegister = DateTime.Now;
             Deleted = false;
         }
 

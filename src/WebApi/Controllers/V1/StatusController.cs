@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
+using TryLog.UseCase.DTO;
+using TryLog.UseCase.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -13,47 +15,53 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class StatusController : ControllerBase
     {
-        private readonly IStatusRepository _repo;
-        public StatusController(IStatusRepository repo)
+        private readonly IStatusUC _uC;
+        public StatusController(IStatusUC uC)
         {
-            _repo = repo;
+            _uC = uC;
         }
+
         // GET: api/Status
         [HttpGet]
-        public IEnumerable<Status> Get()
+        public IActionResult Get()
         {
-            return _repo.SelectAll();
+            return Ok(_uC.SelectAll());
         }
 
         // GET: api/Status/5
         [HttpGet("{id}")]
-        public Status Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.Get(id);
+            var status = _uC.Get(id);
+            
+            if (status is null)
+                return NoContent();
+            
+            return Ok(status);
         }
 
         // POST: api/Status
         [HttpPost]
-        public Status Post([FromBody] Status status)
+        public IActionResult Post([FromBody] StatusDTO statusDTO)
         {
-            _repo.Add(status);
-            return status;
+            _uC.Add(statusDTO);
+            return Ok();
         }
 
         // PUT: api/Status/5
         [HttpPut("{id}")]
-        public Status Put(int id, [FromBody] Status status)
+        public IActionResult Put(int id, [FromBody] StatusDTO statusDTO)
         {
-            _repo.SaveOrUpdate(status);
-            return status;
+            _uC.SaveOrUpdate(statusDTO);
+            return Ok(statusDTO);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public List<Status> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.Delete(x => x.Id == id);
-            return _repo.SelectAll();
+            _uC.Delete(id);
+            return Ok();
         }
     }
 }

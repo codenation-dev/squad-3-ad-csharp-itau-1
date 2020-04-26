@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
+using TryLog.UseCase.DTO;
+using TryLog.UseCase.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -13,47 +15,48 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class LayerController : ControllerBase
     {
-        private readonly ILayerRepository _repo;
-        public LayerController(ILayerRepository repo)
+        private readonly ILayerUC _uC;
+        public LayerController(ILayerUC uC)
         {
-            _repo = repo;
+            _uC = uC;
         }
+
         // GET: api/Layer
         [HttpGet]
-        public IEnumerable<Layer> Get()
+        public IActionResult Get()
         {
-            return _repo.SelectAll();
+            return Ok(_uC.SelectAll());
         }
 
         // GET: api/Layer/5
         [HttpGet("{id}")]
-        public Layer Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.Get(id);
+            return Ok(_uC.Get(id));
         }
 
         // POST: api/Layer
         [HttpPost]
-        public Layer Post([FromBody] Layer layer)
+        public IActionResult Post([FromBody] LayerDTO layerDTO)
         {
-            _repo.Add(layer);
-            return layer;
+            _uC.Add(layerDTO);
+            return Ok();
         }
 
         // PUT: api/Layer/5
         [HttpPut("{id}")]
-        public Layer Put(int id, [FromBody] Layer layer)
+        public IActionResult Put(int id, [FromBody] LayerDTO layerDTO)
         {
-            _repo.SaveOrUpdate(layer);
-            return layer;
+            _uC.SaveOrUpdate(layerDTO);
+            return Ok(layerDTO);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public List<Layer> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.Delete(x => x.Id == id);
-            return _repo.SelectAll();
+            _uC.Delete(id);
+            return Ok();
         }
     }
 }

@@ -14,10 +14,12 @@ namespace TryLog.Infraestructure.Repository
         {
             _context = context;
         }
-        public void Add(T entity)
+        public T Add(T entity)
         {
-            _context.Set<T>().Add(entity);
+           T e = _context.Set<T>().Add(entity).Entity;
             _context.SaveChanges();
+            return e;
+
         }
 
         public void Delete(Expression<Func<T, bool>> predicate)
@@ -39,12 +41,12 @@ namespace TryLog.Infraestructure.Repository
                  .Where(predicate)
                  .ToList();
         }
-        public T Get(long entityId)
+        public T Get(int entityId)
         {
             return _context.Set<T>().Find(entityId);
         }
 
-        public void SaveOrUpdate(T entity)
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
             _context.SaveChanges();

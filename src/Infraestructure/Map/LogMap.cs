@@ -31,11 +31,6 @@ namespace TryLog.Infraestructure.Map
                    .HasColumnType("bit")
                    .IsRequired();
 
-            builder.Property(x => x.User)
-                   .HasColumnName("user")
-                   .HasColumnType("integer")
-                   .IsRequired();
-
             builder.HasOne(x => x.Environment)
                    .WithMany(x => x.Logs)
                    .HasForeignKey(x => x.IdEnvironment);

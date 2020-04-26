@@ -11,11 +11,11 @@ namespace TryLog.Core.Model
         public Layer()
         {
         }
-        public Layer(int id, string description, DateTime dateRegister)
+        public Layer(int id, string description)
         {
             Id = id;
             Description = description;
-            DateRegister = dateRegister;
+            DateRegister = DateTime.Now;
             Deleted = false;
         }
 

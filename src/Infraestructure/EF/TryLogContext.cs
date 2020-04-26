@@ -20,12 +20,6 @@ namespace TryLog.Infraestructure.EF
         public DbSet<Severity> Severity { get; set; }
         public DbSet<Status> Status { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-NVE37DN\SQLEXPRESS;Database=TryLog;Trusted_Connection=True;");
-            base.OnConfiguring(optionsBuilder);
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new EnvironmentMap());

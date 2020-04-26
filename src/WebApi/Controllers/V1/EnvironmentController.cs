@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
+using TryLog.UseCase.DTO;
+using TryLog.UseCase.Interfaces;
 using Environment = TryLog.Core.Model.Environment;
 
 namespace TryLog.WebApi.Controllers.V1
@@ -13,47 +15,53 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class EnvironmentController : ControllerBase
     {
-        private readonly IEnvironmentRepository _repo;
-        public EnvironmentController(IEnvironmentRepository repo)
+        private readonly IEnvironmentUC _uC;
+        public EnvironmentController(IEnvironmentUC uC)
         {
-            _repo = repo;
+            _uC = uC;
         }
+
         // GET: api/Environment
         [HttpGet]
-        public IEnumerable<Environment> Get()
+        public IActionResult Get()
         {
-            return _repo.SelectAll();
+            return Ok(_uC.SelectAll());
         }
 
         // GET: api/Environment/5
         [HttpGet("{id}")]
-        public Environment Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.Get(id);
+            var environment =_uC.Get(id);
+            
+            if (environment is null)
+                return NoContent();
+
+            return Ok(environment);
         }
 
         // POST: api/Environment
         [HttpPost]
-        public Environment Post([FromBody] Environment environment)
+        public IActionResult Post([FromBody] EnvironmentDTO environmentDTO)
         {
-            _repo.Add(environment);
-            return environment;
+            var environment = _uC.Add(environmentDTO);
+            return CreatedAtAction(nameof(Post), new { environment.Id}, environment);
         }
 
         // PUT: api/Environment/5
         [HttpPut("{id}")]
-        public Environment Put(int id, [FromBody] Environment environment)
+        public IActionResult Put(int id, [FromBody] EnvironmentDTO environmentDTO)
         {
-            _repo.SaveOrUpdate(environment);
-            return environment;
+            _uC.SaveOrUpdate(environmentDTO);
+            return Ok(environmentDTO);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public List<Environment> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.Delete(x => x.Id == id);
-            return _repo.SelectAll();
+            _uC.Delete(id);
+            return Ok();
         }
     }
 }

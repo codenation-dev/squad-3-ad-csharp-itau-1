@@ -14,5 +14,7 @@ namespace TryLog.Infraestructure.Repository
         public LogRepository(TryLogContext context) : base(context)
         {
         }
+
+
     }
 }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
+using TryLog.UseCase.DTO;
+using TryLog.UseCase.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -13,47 +15,53 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class SeverityController : ControllerBase
     {
-        private readonly ISeverityRepository _repo;
-        public SeverityController(ISeverityRepository repo)
+        private readonly ISeverityUC _uC;
+        public SeverityController(ISeverityUC uC)
         {
-            _repo = repo;
+            _uC = uC;
         }
+
         // GET: api/Severity
         [HttpGet]
-        public IEnumerable<Severity> Get()
+        public IActionResult Get()
         {
-            return _repo.SelectAll();
+            return Ok(_uC.SelectAll());
         }
 
         // GET: api/Severity/5
         [HttpGet("{id}")]
-        public Severity Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.Get(id);
+            var severity = _uC.Get(id);
+
+            if (severity is null)
+                return NoContent();
+
+            return Ok(severity); 
         }
 
         // POST: api/Severity
         [HttpPost]
-        public Severity Post([FromBody] Severity severity)
+        public IActionResult Post([FromBody] SeverityDTO severityDTO)
         {
-            _repo.Add(severity);
-            return severity;
+            _uC.Add(severityDTO);
+            return Ok(severityDTO);
         }
 
         // put: api/severity/5
         [HttpPut("{id}")]
-        public Severity Put(int id, [FromBody] Severity severity)
+        public IActionResult Put(int id, [FromBody] SeverityDTO severityDTO)
         {
-            _repo.SaveOrUpdate(severity);
-            return severity;
+            _uC.SaveOrUpdate(severityDTO);
+            return Ok(severityDTO);
         }
 
         // delete: api/apiwithactions/5
         [HttpDelete("{id}")]
-        public List<Severity> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.Delete(x => x.Id == id);
-            return _repo.SelectAll();
+            _uC.Delete(id);
+            return Ok();
         }
     }
 }

@@ -11,11 +11,11 @@ namespace TryLog.Core.Model
         public Status()
         {
         }
-        public Status(int id, string description, DateTime dateRegister)
+        public Status(int id, string description)
         {
             Id = id;
             Description = description;
-            DateRegister = dateRegister;
+            DateRegister = DateTime.Now;
             Deleted = false;
         }
 

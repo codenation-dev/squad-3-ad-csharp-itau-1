@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TryLog.Core.Model;
-using TryLog.Core.Model.DTO;
+using TryLog.UseCase.DTO;
 
 namespace TryLog.UseCase
 {

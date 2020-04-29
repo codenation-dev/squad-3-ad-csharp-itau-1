@@ -43,16 +43,24 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         public IActionResult Post([FromBody] LogDTO logDTO)
         {
-            _uC.Add(logDTO);
-            return Ok();
+            var log = _uC.Add(logDTO);
+
+            if (log is null)
+                return NoContent();
+
+            return CreatedAtAction(nameof(Get), new { log.Id }, log);
         }
 
         // PUT: api/Log/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] LogDTO logDTO)
         {
-            _uC.SaveOrUpdate(logDTO);
-            return Ok(logDTO);
+            bool resultUpdate = _uC.Update(logDTO);
+
+            if (!resultUpdate)
+                return NoContent();
+            
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5

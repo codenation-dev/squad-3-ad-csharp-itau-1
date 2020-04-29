@@ -12,7 +12,7 @@ namespace TryLog.UseCase.Interfaces
         EnvironmentDTO Get(int entityId);
         EnvironmentDTO Find(int entityId);
         List<EnvironmentDTO> FindAll(int entityId);
-        void SaveOrUpdate(EnvironmentDTO entity);
+        bool Update(EnvironmentDTO entity);
         void Delete(int entityId);
         List<EnvironmentDTO> SelectAll();
     }

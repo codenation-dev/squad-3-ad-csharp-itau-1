@@ -19,9 +19,10 @@ namespace TryLog.UseCase.App
             _mapper = mapper;
         }
 
-        public void Add(LogDTO entity)
+        public LogDTO Add(LogDTO entity)
         {
-            _repo.Add(_mapper.Map<Log>(entity));
+            var log =_repo.Add(_mapper.Map<Log>(entity));
+            return _mapper.Map<LogDTO>(log);
         }
 
         public void Delete(int entityId)
@@ -47,9 +48,10 @@ namespace TryLog.UseCase.App
             return _mapper.Map<LogDTO>(log);
         }
 
-        public void SaveOrUpdate(LogDTO entity)
+        public bool Update(LogDTO entity)
         {
-            _repo.Update(_mapper.Map<Log>(entity));
+            bool resultUpdate = _repo.Update(_mapper.Map<Log>(entity));
+            return resultUpdate;
         }
 
         public List<LogDTO> SelectAll()

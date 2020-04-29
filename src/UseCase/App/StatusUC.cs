@@ -18,9 +18,10 @@ namespace TryLog.UseCase.App
             _repo = repo;
             _mapper = mapper;
         }
-        public void Add(StatusDTO entity)
+        public StatusDTO Add(StatusDTO entity)
         {
-            _repo.Add(_mapper.Map<Status>(entity));
+            var status = _repo.Add(_mapper.Map<Status>(entity));
+            return _mapper.Map<StatusDTO>(status);
         }
 
         public void Delete(int entityId)
@@ -30,31 +31,32 @@ namespace TryLog.UseCase.App
 
         public StatusDTO Find(int entityId)
         {
-            var entity = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<StatusDTO>(entity);
+            var status = _repo.Find(x => x.Id == entityId);
+            return _mapper.Map<StatusDTO>(status);
         }
 
         public List<StatusDTO> FindAll(int entityId)
         {
-            var entity = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<StatusDTO>>(entity);
+            var status = _repo.FindAll(x => x.Id == entityId);
+            return _mapper.Map<List<StatusDTO>>(status);
         }
 
         public StatusDTO Get(int entityId)
         {
-            var entity = _repo.Get(entityId);
-            return _mapper.Map<StatusDTO>(entity);
+            var status = _repo.Get(entityId);
+            return _mapper.Map<StatusDTO>(status);
         }
 
-        public void SaveOrUpdate(StatusDTO entity)
+        public bool Update(StatusDTO entity)
         {
-            _repo.Update(_mapper.Map<Status>(entity));
+            bool resultUpdate = _repo.Update(_mapper.Map<Status>(entity));
+            return resultUpdate;
         }
 
         public List<StatusDTO> SelectAll()
         {
-            var entity = _repo.SelectAll();
-            return _mapper.Map<List<StatusDTO>>(entity);
+            var status = _repo.SelectAll();
+            return _mapper.Map<List<StatusDTO>>(status);
         }
     }
 }

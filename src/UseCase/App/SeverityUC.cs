@@ -18,9 +18,10 @@ namespace TryLog.UseCase.App
             _repo = repo;
             _mapper = mapper;
         }
-        public void Add(SeverityDTO entity)
+        public SeverityDTO Add(SeverityDTO entity)
         {
-            _repo.Add(_mapper.Map<Severity>(entity));
+            var severity = _repo.Add(_mapper.Map<Severity>(entity));
+            return _mapper.Map<SeverityDTO>(severity);
         }
 
         public void Delete(int entityId)
@@ -30,31 +31,32 @@ namespace TryLog.UseCase.App
 
         public SeverityDTO Find(int entityId)
         {
-            var entity = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<SeverityDTO>(entity);
+            var severity = _repo.Find(x => x.Id == entityId);
+            return _mapper.Map<SeverityDTO>(severity);
         }
 
         public List<SeverityDTO> FindAll(int entityId)
         {
-            var entity = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<SeverityDTO>>(entity);
+            var severities = _repo.FindAll(x => x.Id == entityId);
+            return _mapper.Map<List<SeverityDTO>>(severities);
         }
 
         public SeverityDTO Get(int entityId)
         {
-            var entity = _repo.Get(entityId);
-            return _mapper.Map<SeverityDTO>(entity);
+            var severity = _repo.Get(entityId);
+            return _mapper.Map<SeverityDTO>(severity);
         }
 
-        public void SaveOrUpdate(SeverityDTO entity)
+        public bool Update(SeverityDTO entity)
         {
-            _repo.Update(_mapper.Map<Severity>(entity));
+            bool resultUpdate = _repo.Update(_mapper.Map<Severity>(entity));
+            return resultUpdate;
         }
 
         public List<SeverityDTO> SelectAll()
         {
-            var entity = _repo.SelectAll();
-            return _mapper.Map<List<SeverityDTO>>(entity);
+            var severities = _repo.SelectAll();
+            return _mapper.Map<List<SeverityDTO>>(severities);
         }
     }
 }

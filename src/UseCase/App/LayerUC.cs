@@ -18,9 +18,10 @@ namespace TryLog.UseCase.App
             _repo = repo;
             _mapper = mapper;
         }
-        public void Add(LayerDTO entity)
+        public LayerDTO Add(LayerDTO entity)
         {
-            _repo.Add(_mapper.Map<Layer>(entity));
+            var layer = _repo.Add(_mapper.Map<Layer>(entity));
+            return _mapper.Map<LayerDTO>(layer);
         }
 
         public void Delete(int entityId)
@@ -30,31 +31,32 @@ namespace TryLog.UseCase.App
 
         public LayerDTO Find(int entityId)
         {
-            var entity = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<LayerDTO>(entity);
+            var layer = _repo.Find(x => x.Id == entityId);
+            return _mapper.Map<LayerDTO>(layer);
         }
 
         public List<LayerDTO> FindAll(int entityId)
         {
-            var entity = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<LayerDTO>>(entity);
+            var layers = _repo.FindAll(x => x.Id == entityId);
+            return _mapper.Map<List<LayerDTO>>(layers);
         }
 
         public LayerDTO Get(int entityId)
         {
-            var entity = _repo.Get(entityId);
-            return _mapper.Map<LayerDTO>(entity);
+            var layer = _repo.Get(entityId);
+            return _mapper.Map<LayerDTO>(layer);
         }
 
-        public void SaveOrUpdate(LayerDTO entity)
+        public bool Update(LayerDTO entity)
         {
-            _repo.Update(_mapper.Map<Layer>(entity));
+            bool resultUpdate = _repo.Update(_mapper.Map<Layer>(entity));
+            return resultUpdate;
         }
 
         public List<LayerDTO> SelectAll()
         {
-            var entity = _repo.SelectAll();
-            return _mapper.Map<List<LayerDTO>>(entity);
+            var layers = _repo.SelectAll();
+            return _mapper.Map<List<LayerDTO>>(layers);
         }
     }
 }

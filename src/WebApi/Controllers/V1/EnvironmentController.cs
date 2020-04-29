@@ -45,15 +45,23 @@ namespace TryLog.WebApi.Controllers.V1
         public IActionResult Post([FromBody] EnvironmentDTO environmentDTO)
         {
             var environment = _uC.Add(environmentDTO);
-            return CreatedAtAction(nameof(Post), new { environment.Id}, environment);
+            
+            if (environment is null)
+                return NoContent();
+
+            return CreatedAtAction(nameof(Get), new { environment.Id}, environment);
         }
 
         // PUT: api/Environment/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] EnvironmentDTO environmentDTO)
         {
-            _uC.SaveOrUpdate(environmentDTO);
-            return Ok(environmentDTO);
+           bool resultUpdate = _uC.Update(environmentDTO);
+           
+            if (!resultUpdate)
+                return NoContent();
+            
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5

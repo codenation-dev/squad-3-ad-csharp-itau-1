@@ -11,7 +11,7 @@ namespace TryLog.Core.Interfaces
         T Get(int entityId);
         T Find(Expression<Func<T, bool>> predicate);
         List<T> FindAll(Expression<Func<T, bool>> predicate);
-        void Update(T entity);
+        bool Update(T entity);
         void Delete(Expression<Func<T, bool>> predicate);
         List<T> SelectAll();
 

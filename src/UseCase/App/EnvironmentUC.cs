@@ -36,25 +36,26 @@ namespace TryLog.UseCase.App
 
         public EnvironmentDTO Find(int entityId)
         {
-            var entity = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<EnvironmentDTO>(entity);
+            var environment = _repo.Find(x => x.Id == entityId);
+            return _mapper.Map<EnvironmentDTO>(environment);
         }
 
         public List<EnvironmentDTO> FindAll(int entityId)
         {
-            var entity = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<EnvironmentDTO>>(entity);
+            var environment = _repo.FindAll(x => x.Id == entityId);
+            return _mapper.Map<List<EnvironmentDTO>>(environment);
         }
 
         public EnvironmentDTO Get(int entityId)
         {
-            var entity = _repo.Get(entityId);
-            return _mapper.Map<EnvironmentDTO>(entity);
+            var environment = _repo.Get(entityId);
+            return _mapper.Map<EnvironmentDTO>(environment);
         }
 
-        public void SaveOrUpdate(EnvironmentDTO entityDTO)
+        public bool Update(EnvironmentDTO entityDTO)
         {
-            _repo.Update(_mapper.Map<Environment>(entityDTO));
+            bool resultUpdate = _repo.Update(_mapper.Map<Environment>(entityDTO));
+            return resultUpdate;
         }
 
         public List<EnvironmentDTO> SelectAll()

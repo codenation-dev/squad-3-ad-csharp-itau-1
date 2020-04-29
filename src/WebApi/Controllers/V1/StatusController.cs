@@ -44,16 +44,24 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         public IActionResult Post([FromBody] StatusDTO statusDTO)
         {
-            _uC.Add(statusDTO);
-            return Ok();
+            var status = _uC.Add(statusDTO);
+            
+            if (status is null)
+                return NoContent();
+
+            return CreatedAtAction(nameof(Get), new { status.Id }, status);
         }
 
         // PUT: api/Status/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] StatusDTO statusDTO)
         {
-            _uC.SaveOrUpdate(statusDTO);
-            return Ok(statusDTO);
+            bool resultUpdate = _uC.Update(statusDTO);
+            
+            if (!resultUpdate)
+                return NoContent();
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5

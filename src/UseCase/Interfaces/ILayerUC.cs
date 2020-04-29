@@ -8,11 +8,11 @@ namespace TryLog.UseCase.Interfaces
 {
     public interface ILayerUC
     {
-        void Add(LayerDTO entity);
+        LayerDTO Add(LayerDTO entity);
         LayerDTO Get(int entityId);
         LayerDTO Find(int entityId);
         List<LayerDTO> FindAll(int entityId);
-        void SaveOrUpdate(LayerDTO entity);
+        bool Update(LayerDTO entity);
         void Delete(int entityId);
         List<LayerDTO> SelectAll();
     }

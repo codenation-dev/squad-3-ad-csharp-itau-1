@@ -39,16 +39,24 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         public IActionResult Post([FromBody] LayerDTO layerDTO)
         {
-            _uC.Add(layerDTO);
-            return Ok();
+            var layer = _uC.Add(layerDTO);
+            
+            if (layer is null)
+                return NoContent();
+
+            return CreatedAtAction(nameof(Get), new { layer.Id }, layer);
         }
 
         // PUT: api/Layer/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] LayerDTO layerDTO)
         {
-            _uC.SaveOrUpdate(layerDTO);
-            return Ok(layerDTO);
+            bool updateResult = _uC.Update(layerDTO);
+
+            if (!updateResult)
+                return NoContent();
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5

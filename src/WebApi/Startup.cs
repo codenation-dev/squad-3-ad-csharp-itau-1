@@ -8,6 +8,12 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using TryLog.WebApi.ExtensionsMethods;
 using TryLog.Infraestructure.EF;
+using TryLog.Infraestructure.Repository;
+using TryLog.Core.Interfaces;
+using TryLog.UseCase.Interfaces;
+using TryLog.UseCase.App;
+using TryLog.UseCase.Mapper;
+using AutoMapper;
 
 namespace TryLog.WebApi
 {
@@ -44,6 +50,21 @@ namespace TryLog.WebApi
 
             services.AddIdentityConfiguration();
             services.AddTokenConfiguration(Configuration);
+
+            services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
+            services.AddScoped<ILayerRepository, LayerRepository>();
+            services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ISeverityRepository, SeverityRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<ILogRepository, LogRepository>();
+
+            services.AddScoped<IEnvironmentUC, EnvironmentUC>();
+            services.AddScoped<ILayerUC, LayerUC>();
+            services.AddScoped<ISeverityUC, SeverityUC>();
+            services.AddScoped<IStatusUC, StatusUC>();
+            services.AddScoped<ILogUC, LogUC>();
+
+            services.AddAutoMapper(typeof(AutoMapperConfig));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

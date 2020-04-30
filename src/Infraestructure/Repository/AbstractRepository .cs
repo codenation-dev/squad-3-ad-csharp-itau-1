@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Linq;
 using TryLog.Core.Interfaces;
 using TryLog.Infraestructure.EF;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace TryLog.Infraestructure.Repository
 {
@@ -14,10 +15,12 @@ namespace TryLog.Infraestructure.Repository
         {
             _context = context;
         }
-        public void Add(T entity)
+        public T Add(T entity)
         {
-            _context.Set<T>().Add(entity);
+           T resultEntity = _context.Set<T>().Add(entity).Entity;
             _context.SaveChanges();
+            return resultEntity;
+
         }
 
         public void Delete(Expression<Func<T, bool>> predicate)
@@ -39,15 +42,20 @@ namespace TryLog.Infraestructure.Repository
                  .Where(predicate)
                  .ToList();
         }
-        public T Get(long entityId)
+        public T Get(int entityId)
         {
             return _context.Set<T>().Find(entityId);
         }
 
-        public void SaveOrUpdate(T entity)
+        public bool Update(T entity)
         {
-            _context.Set<T>().Update(entity);
-            _context.SaveChanges();
+            var e =_context.Set<T>().Update(entity);           
+            return _context.SaveChanges() == 1;
+        }
+
+        public List<T> SelectAll()
+        {
+            return _context.Set<T>().ToList();
         }
     }
 }

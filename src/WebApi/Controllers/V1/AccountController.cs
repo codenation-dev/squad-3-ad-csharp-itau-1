@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Model;
-using TryLog.Core.Model.DTO;
 using TryLog.UseCase;
+using TryLog.UseCase.DTO;
 
 namespace TryLog.WebApi.Controllers.V1
 {

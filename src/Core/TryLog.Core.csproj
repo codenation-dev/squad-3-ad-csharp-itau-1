@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Model\DTO\UserLoginInDTO.cs" />
-    <Compile Remove="Model\DTO\UserLoginOutDTO.cs" />
+    <Compile Remove="Model\DTO\**" />
+    <EmbeddedResource Remove="Model\DTO\**" />
+    <None Remove="Model\DTO\**" />
   </ItemGroup>
 
   <ItemGroup>

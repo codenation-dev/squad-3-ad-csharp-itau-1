@@ -17,13 +17,13 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.3" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Infraestructure\TryLog.Infraestructure.csproj" />
     <ProjectReference Include="..\MessageBroker\TryLog.MessageBroker.csproj" />
-    <ProjectReference Include="..\UseCase\TryLog.UseCase.csproj" />
+    <ProjectReference Include="..\Services\TryLog.Services.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

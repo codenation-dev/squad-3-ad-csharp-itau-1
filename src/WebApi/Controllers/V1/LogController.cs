@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -15,35 +15,35 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class LogController : ControllerBase
     {
-        private readonly ILogUC _uC;
-        public LogController(ILogUC uC)
+        private readonly ILogService _service;
+        public LogController(ILogService service)
         {
-            _uC = uC;
+            _service = service;
         }
         // GET: api/Log
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_uC.SelectAll());
+            return Ok(_service.SelectAll());
         }
 
         // GET: api/Log/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var log = _uC.Get(id);
-            
+            var log = _service.Get(id);
+
             if (log is null)
                 return NoContent();
 
-            return Ok(log); 
+            return Ok(log);
         }
 
         // POST: api/Log
         [HttpPost]
-        public IActionResult Post([FromBody] LogDTO logDTO)
+        public IActionResult Post([FromBody] LogViewModel logViewModel)
         {
-            var log = _uC.Add(logDTO);
+            var log = _service.Add(logViewModel);
 
             if (log is null)
                 return NoContent();
@@ -53,13 +53,13 @@ namespace TryLog.WebApi.Controllers.V1
 
         // PUT: api/Log/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] LogDTO logDTO)
+        public IActionResult Put(int id, [FromBody] LogViewModel logViewModel)
         {
-            bool resultUpdate = _uC.Update(logDTO);
+            bool resultUpdate = _service.Update(logViewModel);
 
             if (!resultUpdate)
                 return NoContent();
-            
+
             return Ok();
         }
 
@@ -67,7 +67,7 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _uC.Delete(id);
+            _service.Delete(id);
             return Ok();
         }
     }

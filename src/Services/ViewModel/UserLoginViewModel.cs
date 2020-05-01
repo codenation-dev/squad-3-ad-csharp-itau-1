@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace TryLog.UseCase.DTO
+namespace TryLog.Services.ViewModel
 {
-    public class UserLoginDTO
+    public class UserLoginViewModel
     {
-        public UserLoginDTO(string email, string password, string token)
+        public UserLoginViewModel(string email, string password, string token)
         {
             Email = email;
             Password = password;

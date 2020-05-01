@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -15,37 +15,37 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class SeverityController : ControllerBase
     {
-        private readonly ISeverityUC _uC;
-        public SeverityController(ISeverityUC uC)
+        private readonly ISeverityService _service;
+        public SeverityController(ISeverityService service)
         {
-            _uC = uC;
+            _service = service;
         }
 
         // GET: api/Severity
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_uC.SelectAll());
+            return Ok(_service.SelectAll());
         }
 
         // GET: api/Severity/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var severity = _uC.Get(id);
+            var severity = _service.Get(id);
 
             if (severity is null)
                 return NoContent();
 
-            return Ok(severity); 
+            return Ok(severity);
         }
 
         // POST: api/Severity
         [HttpPost]
-        public IActionResult Post([FromBody] SeverityDTO severityDTO)
+        public IActionResult Post([FromBody] SeverityViewModel severityViewModel)
         {
-            var severity = _uC.Add(severityDTO);
-            
+            var severity = _service.Add(severityViewModel);
+
             if (severity is null)
                 return NoContent();
 
@@ -54,10 +54,10 @@ namespace TryLog.WebApi.Controllers.V1
 
         // put: api/severity/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] SeverityDTO severityDTO)
+        public IActionResult Put(int id, [FromBody] SeverityViewModel severityViewModel)
         {
-            bool resultUpdate = _uC.Update(severityDTO);
-            
+            bool resultUpdate = _service.Update(severityViewModel);
+
             if (!resultUpdate)
                 return NoContent();
 
@@ -68,7 +68,7 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _uC.Delete(id);
+            _service.Delete(id);
             return Ok();
         }
     }

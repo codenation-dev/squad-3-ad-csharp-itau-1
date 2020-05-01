@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TryLog.Core.Model;
-using TryLog.UseCase.App;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.App;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 using Environment = TryLog.Core.Model.Environment;
 
 namespace TryLog.UseCase.Mapper
@@ -18,11 +18,11 @@ namespace TryLog.UseCase.Mapper
         }
         public AutoMapperConfig()
         {
-            CreateMap<Environment, EnvironmentDTO>().ReverseMap();
-            CreateMap<Layer, LayerDTO>().ReverseMap();
-            CreateMap<Log, LogDTO>().ReverseMap();
-            CreateMap<Severity, SeverityDTO>().ReverseMap();
-            CreateMap<Status, StatusDTO>().ReverseMap();
+            CreateMap<Environment, EnvironmentViewModel>().ReverseMap();
+            CreateMap<Layer, LayerViewModel>().ReverseMap();
+            CreateMap<Log, LogViewModel>().ReverseMap();
+            CreateMap<Severity, SeverityViewModel>().ReverseMap();
+            CreateMap<Status, StatusViewModel>().ReverseMap();
         }
     }
 }

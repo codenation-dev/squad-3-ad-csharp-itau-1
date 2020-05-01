@@ -5,28 +5,28 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Linq;
 using TryLog.Core.Interfaces;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 using Environment = TryLog.Core.Model.Environment;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TryLog.UseCase.App
+namespace TryLog.Services.App
 {
-    public class EnvironmentUC : IEnvironmentUC
+    public class EnvironmentService : IEnvironmentService
     {
         private readonly IEnvironmentRepository _repo;
         private readonly IMapper _mapper;
-        public EnvironmentUC(IEnvironmentRepository repo, IMapper mapper)
+        public EnvironmentService(IEnvironmentRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
-        public EnvironmentDTO Add(EnvironmentDTO entity)
+        public EnvironmentViewModel Add(EnvironmentViewModel entity)
         {
            var environment = _repo.Add(_mapper.Map<Environment>(entity));
-            return _mapper.Map<EnvironmentDTO>(environment); 
+            return _mapper.Map<EnvironmentViewModel>(environment); 
         }
 
         public void Delete(int entityId)
@@ -34,33 +34,33 @@ namespace TryLog.UseCase.App
             _repo.Delete(x => x.Id == entityId);
         }
 
-        public EnvironmentDTO Find(int entityId)
+        public EnvironmentViewModel Find(int entityId)
         {
             var environment = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<EnvironmentDTO>(environment);
+            return _mapper.Map<EnvironmentViewModel>(environment);
         }
 
-        public List<EnvironmentDTO> FindAll(int entityId)
+        public List<EnvironmentViewModel> FindAll(int entityId)
         {
             var environment = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<EnvironmentDTO>>(environment);
+            return _mapper.Map<List<EnvironmentViewModel>>(environment);
         }
 
-        public EnvironmentDTO Get(int entityId)
+        public EnvironmentViewModel Get(int entityId)
         {
             var environment = _repo.Get(entityId);
-            return _mapper.Map<EnvironmentDTO>(environment);
+            return _mapper.Map<EnvironmentViewModel>(environment);
         }
 
-        public bool Update(EnvironmentDTO entityDTO)
+        public bool Update(EnvironmentViewModel entityDTO)
         {
             bool resultUpdate = _repo.Update(_mapper.Map<Environment>(entityDTO));
             return resultUpdate;
         }
 
-        public List<EnvironmentDTO> SelectAll()
+        public List<EnvironmentViewModel> SelectAll()
         {
-            return _mapper.Map<List<EnvironmentDTO>>(_repo.SelectAll());
+            return _mapper.Map<List<EnvironmentViewModel>>(_repo.SelectAll());
         }
     }
 }

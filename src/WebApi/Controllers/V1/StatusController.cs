@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -15,37 +15,37 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class StatusController : ControllerBase
     {
-        private readonly IStatusUC _uC;
-        public StatusController(IStatusUC uC)
+        private readonly IStatusService _service;
+        public StatusController(IStatusService service)
         {
-            _uC = uC;
+            _service = service;
         }
 
         // GET: api/Status
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_uC.SelectAll());
+            return Ok(_service.SelectAll());
         }
 
         // GET: api/Status/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var status = _uC.Get(id);
-            
+            var status = _service.Get(id);
+
             if (status is null)
                 return NoContent();
-            
+
             return Ok(status);
         }
 
         // POST: api/Status
         [HttpPost]
-        public IActionResult Post([FromBody] StatusDTO statusDTO)
+        public IActionResult Post([FromBody] StatusViewModel statusViewModel)
         {
-            var status = _uC.Add(statusDTO);
-            
+            var status = _service.Add(statusViewModel);
+
             if (status is null)
                 return NoContent();
 
@@ -54,10 +54,10 @@ namespace TryLog.WebApi.Controllers.V1
 
         // PUT: api/Status/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] StatusDTO statusDTO)
+        public IActionResult Put(int id, [FromBody] StatusViewModel statusViewModel)
         {
-            bool resultUpdate = _uC.Update(statusDTO);
-            
+            bool resultUpdate = _service.Update(statusViewModel);
+
             if (!resultUpdate)
                 return NoContent();
 
@@ -68,7 +68,7 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _uC.Delete(id);
+            _service.Delete(id);
             return Ok();
         }
     }

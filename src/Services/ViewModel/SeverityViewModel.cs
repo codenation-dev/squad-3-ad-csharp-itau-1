@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TryLog.UseCase.DTO
+namespace TryLog.Services.ViewModel
 {
-    public class EnvironmentDTO
+    public class SeverityViewModel
     {
         public int Id { get; set; }
         public string Description { get; set; }

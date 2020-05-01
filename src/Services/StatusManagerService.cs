@@ -4,12 +4,12 @@ using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 
 
-namespace TryLog.UseCase
+namespace TryLog.Services
 {
-    public class StatusManagerUC
+    public class StatusManagerService
     {
         private readonly IStatusRepository _repoStatus;
-        public StatusManagerUC(IStatusRepository statusRepository)
+        public StatusManagerService(IStatusRepository statusRepository)
         {
             _repoStatus = statusRepository;
         }

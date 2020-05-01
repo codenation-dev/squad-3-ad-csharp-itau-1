@@ -1,14 +1,14 @@
 ﻿using System;
-namespace TryLog.UseCase.DTO
+namespace TryLog.Services.ViewModel
 {
-    public class TokenDTO
+    public class TokenViewModel
     {
-        public TokenDTO(string result)
+        public TokenViewModel(string result)
         {
             Result = result;
         }
 
-        public TokenDTO(string token, DateTime expiration)
+        public TokenViewModel(string token, DateTime expiration)
         {
             Token = token;
             Expiration = expiration;

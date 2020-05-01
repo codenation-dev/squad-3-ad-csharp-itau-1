@@ -6,33 +6,33 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TryLog.Core.Model;
-using TryLog.UseCase.DTO;
+using TryLog.Services.ViewModel;
 
-namespace TryLog.UseCase
+namespace TryLog.Services
 {
-    public class UserManagerUC
+    public class UserManagerService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public UserManagerUC(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public UserManagerService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
 
             _signInManager = signInManager;
             _configuration = configuration;
         }
-        public TokenDTO Create(User user)
+        public TokenViewModel Create(User user)
         {
             IdentityResult result = _userManager.CreateAsync(user, user.Password).Result;
 
             if (result.Succeeded)
-                return CreateToken(new UserAuthDTO(user.Email,null, null));
-            return new TokenDTO(result.ToString());
+                return CreateToken(new UserAuthViewModel(user.Email,null, null));
+            return new TokenViewModel(result.ToString());
         }
 
-        public TokenDTO Login(UserAuthDTO userAuth)
+        public TokenViewModel Login(UserAuthViewModel userAuth)
         {
             var result = _signInManager.PasswordSignInAsync(userAuth.UserName,
                                                             userAuth.Password,
@@ -44,10 +44,10 @@ namespace TryLog.UseCase
             }
                 
 
-            return new TokenDTO(result.ToString());
+            return new TokenViewModel(result.ToString());
         }
 
-        private TokenDTO CreateToken(UserAuthDTO userAuth)
+        private TokenViewModel CreateToken(UserAuthViewModel userAuth)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration["SecretKey"]);
@@ -67,7 +67,7 @@ namespace TryLog.UseCase
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return new TokenDTO(
+            return new TokenViewModel(
                 token: tokenHandler.WriteToken(token),
                 expiration: expiration
             );

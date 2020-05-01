@@ -1,8 +1,8 @@
-﻿namespace TryLog.UseCase.DTO
+﻿namespace TryLog.Services.ViewModel
 {
-    public class UserLoginInDTO
+    public class UserLoginInViewModel
     {
-        public UserLoginInDTO(string email, string password)
+        public UserLoginInViewModel(string email, string password)
         {
             Email = email;
             Password = password;

@@ -4,25 +4,25 @@ using System.Collections.Generic;
 using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 
-namespace TryLog.UseCase.App
+namespace TryLog.Services.App
 {
-    public class LogUC : ILogUC
+    public class LogService : ILogService
     {
         private readonly ILogRepository _repo;
         private readonly IMapper _mapper;
-        public LogUC(ILogRepository repo, IMapper mapper)
+        public LogService(ILogRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
-        public LogDTO Add(LogDTO entity)
+        public LogViewModel Add(LogViewModel entity)
         {
             var log =_repo.Add(_mapper.Map<Log>(entity));
-            return _mapper.Map<LogDTO>(log);
+            return _mapper.Map<LogViewModel>(log);
         }
 
         public void Delete(int entityId)
@@ -30,34 +30,34 @@ namespace TryLog.UseCase.App
             _repo.Delete(x => x.Id == entityId);
         }
 
-        public LogDTO Find(int entityId)
+        public LogViewModel Find(int entityId)
         {
             var log = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<LogDTO>(log);
+            return _mapper.Map<LogViewModel>(log);
         }
 
-        public List<LogDTO> FindAll(int entityId)
+        public List<LogViewModel> FindAll(int entityId)
         {
             var logs = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<LogDTO>>(logs);
+            return _mapper.Map<List<LogViewModel>>(logs);
         }
 
-        public LogDTO Get(int entityId)
+        public LogViewModel Get(int entityId)
         {
             var log = _repo.Get(entityId);
-            return _mapper.Map<LogDTO>(log);
+            return _mapper.Map<LogViewModel>(log);
         }
 
-        public bool Update(LogDTO entity)
+        public bool Update(LogViewModel entity)
         {
             bool resultUpdate = _repo.Update(_mapper.Map<Log>(entity));
             return resultUpdate;
         }
 
-        public List<LogDTO> SelectAll()
+        public List<LogViewModel> SelectAll()
         {
             var logs = _repo.SelectAll();
-            return _mapper.Map<List<LogDTO>>(logs);
+            return _mapper.Map<List<LogViewModel>>(logs);
         }
     }
 }

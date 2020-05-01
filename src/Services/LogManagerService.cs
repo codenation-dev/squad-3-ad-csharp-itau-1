@@ -3,13 +3,13 @@ using System.Linq;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 
-namespace TryLog.UseCase
+namespace TryLog.Services
 {
-    public class LogManagerUC
+    public class LogManagerService
     {
         private readonly ILogRepository _repoLog;
-        private readonly StatusManagerUC _statusManagerUC;
-        public LogManagerUC(ILogRepository logRepository)
+        private readonly StatusManagerService _statusManagerUC;
+        public LogManagerService(ILogRepository logRepository)
         {
             _repoLog = logRepository;
         }

@@ -10,8 +10,8 @@ using TryLog.WebApi.ExtensionsMethods;
 using TryLog.Infraestructure.EF;
 using TryLog.Infraestructure.Repository;
 using TryLog.Core.Interfaces;
-using TryLog.UseCase.Interfaces;
-using TryLog.UseCase.App;
+using TryLog.Services.Interfaces;
+using TryLog.Services.App;
 using TryLog.UseCase.Mapper;
 using AutoMapper;
 
@@ -58,11 +58,11 @@ namespace TryLog.WebApi
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
 
-            services.AddScoped<IEnvironmentUC, EnvironmentUC>();
-            services.AddScoped<ILayerUC, LayerUC>();
-            services.AddScoped<ISeverityUC, SeverityUC>();
-            services.AddScoped<IStatusUC, StatusUC>();
-            services.AddScoped<ILogUC, LogUC>();
+            services.AddScoped<IEnvironmentService, EnvironmentService>();
+            services.AddScoped<ILayerService, LayerService>();
+            services.AddScoped<ISeverityService, SeverityService>();
+            services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<ILogService, LogService>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
         }

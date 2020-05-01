@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Model;
-using TryLog.UseCase;
-using TryLog.UseCase.DTO;
+using TryLog.Services;
+using TryLog.Services.ViewModel;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -10,11 +10,11 @@ namespace TryLog.WebApi.Controllers.V1
     [Route("api/account/")]
     public class AccountController : ControllerBase
     {
-        private readonly UserManagerUC _userUC;
+        private readonly UserManagerService _service;
 
-        public AccountController(UserManagerUC userUC)
+        public AccountController(UserManagerService service)
         {
-            _userUC = userUC;
+            _service = service;
         }
 
         [HttpPost]
@@ -22,15 +22,15 @@ namespace TryLog.WebApi.Controllers.V1
         [AllowAnonymous]
         public IActionResult Create([FromBody] User user)
         {
-           return Ok(_userUC.Create(user));
+            return Ok(_service.Create(user));
         }
 
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public IActionResult Auth([FromBody] UserAuthDTO userAuth)
+        public IActionResult Auth([FromBody] UserAuthViewModel userAuth)
         {
-            return Ok(_userUC.Login(userAuth));
+            return Ok(_service.Login(userAuth));
         }
     }
 }

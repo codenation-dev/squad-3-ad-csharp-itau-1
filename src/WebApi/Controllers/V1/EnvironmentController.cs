@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 using Environment = TryLog.Core.Model.Environment;
 
 namespace TryLog.WebApi.Controllers.V1
@@ -15,25 +15,25 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class EnvironmentController : ControllerBase
     {
-        private readonly IEnvironmentUC _uC;
-        public EnvironmentController(IEnvironmentUC uC)
+        private readonly IEnvironmentService _service;
+        public EnvironmentController(IEnvironmentService service)
         {
-            _uC = uC;
+            _service = service;
         }
 
         // GET: api/Environment
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_uC.SelectAll());
+            return Ok(_service.SelectAll());
         }
 
         // GET: api/Environment/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var environment =_uC.Get(id);
-            
+            var environment = _service.Get(id);
+
             if (environment is null)
                 return NoContent();
 
@@ -42,25 +42,25 @@ namespace TryLog.WebApi.Controllers.V1
 
         // POST: api/Environment
         [HttpPost]
-        public IActionResult Post([FromBody] EnvironmentDTO environmentDTO)
+        public IActionResult Post([FromBody] EnvironmentViewModel environmentDTO)
         {
-            var environment = _uC.Add(environmentDTO);
-            
+            var environment = _service.Add(environmentDTO);
+
             if (environment is null)
                 return NoContent();
 
-            return CreatedAtAction(nameof(Get), new { environment.Id}, environment);
+            return CreatedAtAction(nameof(Get), new { environment.Id }, environment);
         }
 
         // PUT: api/Environment/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] EnvironmentDTO environmentDTO)
+        public IActionResult Put(int id, [FromBody] EnvironmentViewModel environmentDTO)
         {
-           bool resultUpdate = _uC.Update(environmentDTO);
-           
+            bool resultUpdate = _service.Update(environmentDTO);
+
             if (!resultUpdate)
                 return NoContent();
-            
+
             return Ok();
         }
 
@@ -68,7 +68,7 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _uC.Delete(id);
+            _service.Delete(id);
             return Ok();
         }
     }

@@ -4,24 +4,24 @@ using System.Collections.Generic;
 using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 
-namespace TryLog.UseCase.App
+namespace TryLog.Services.App
 {
-    public class SeverityUC : ISeverityUC
+    public class SeverityService : ISeverityService
     {
         private readonly ISeverityRepository _repo;
         private readonly IMapper _mapper;
-        public SeverityUC(ISeverityRepository repo, IMapper mapper)
+        public SeverityService(ISeverityRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
-        public SeverityDTO Add(SeverityDTO entity)
+        public SeverityViewModel Add(SeverityViewModel entity)
         {
             var severity = _repo.Add(_mapper.Map<Severity>(entity));
-            return _mapper.Map<SeverityDTO>(severity);
+            return _mapper.Map<SeverityViewModel>(severity);
         }
 
         public void Delete(int entityId)
@@ -29,34 +29,34 @@ namespace TryLog.UseCase.App
             _repo.Delete(x => x.Id == entityId);
         }
 
-        public SeverityDTO Find(int entityId)
+        public SeverityViewModel Find(int entityId)
         {
             var severity = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<SeverityDTO>(severity);
+            return _mapper.Map<SeverityViewModel>(severity);
         }
 
-        public List<SeverityDTO> FindAll(int entityId)
+        public List<SeverityViewModel> FindAll(int entityId)
         {
             var severities = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<SeverityDTO>>(severities);
+            return _mapper.Map<List<SeverityViewModel>>(severities);
         }
 
-        public SeverityDTO Get(int entityId)
+        public SeverityViewModel Get(int entityId)
         {
             var severity = _repo.Get(entityId);
-            return _mapper.Map<SeverityDTO>(severity);
+            return _mapper.Map<SeverityViewModel>(severity);
         }
 
-        public bool Update(SeverityDTO entity)
+        public bool Update(SeverityViewModel entity)
         {
             bool resultUpdate = _repo.Update(_mapper.Map<Severity>(entity));
             return resultUpdate;
         }
 
-        public List<SeverityDTO> SelectAll()
+        public List<SeverityViewModel> SelectAll()
         {
             var severities = _repo.SelectAll();
-            return _mapper.Map<List<SeverityDTO>>(severities);
+            return _mapper.Map<List<SeverityViewModel>>(severities);
         }
     }
 }

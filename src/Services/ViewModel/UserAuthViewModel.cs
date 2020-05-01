@@ -1,8 +1,8 @@
-﻿namespace TryLog.UseCase.DTO
+﻿namespace TryLog.Services.ViewModel
 {
-    public class UserAuthDTO
+    public class UserAuthViewModel
     {
-        public UserAuthDTO(string userName, string password, string fullName)
+        public UserAuthViewModel(string userName, string password, string fullName)
         {
             UserName = userName;
             Password = password;

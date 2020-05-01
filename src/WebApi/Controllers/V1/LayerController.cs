@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
-using TryLog.UseCase.DTO;
-using TryLog.UseCase.Interfaces;
+using TryLog.Services.ViewModel;
+using TryLog.Services.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -15,32 +15,32 @@ namespace TryLog.WebApi.Controllers.V1
     [ApiController]
     public class LayerController : ControllerBase
     {
-        private readonly ILayerUC _uC;
-        public LayerController(ILayerUC uC)
+        private readonly ILayerService _service;
+        public LayerController(ILayerService service)
         {
-            _uC = uC;
+            _service = service;
         }
 
         // GET: api/Layer
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_uC.SelectAll());
+            return Ok(_service.SelectAll());
         }
 
         // GET: api/Layer/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_uC.Get(id));
+            return Ok(_service.Get(id));
         }
 
         // POST: api/Layer
         [HttpPost]
-        public IActionResult Post([FromBody] LayerDTO layerDTO)
+        public IActionResult Post([FromBody] LayerViewModel layerViewModel)
         {
-            var layer = _uC.Add(layerDTO);
-            
+            var layer = _service.Add(layerViewModel);
+
             if (layer is null)
                 return NoContent();
 
@@ -49,9 +49,9 @@ namespace TryLog.WebApi.Controllers.V1
 
         // PUT: api/Layer/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] LayerDTO layerDTO)
+        public IActionResult Put(int id, [FromBody] LayerViewModel layerViewModel)
         {
-            bool updateResult = _uC.Update(layerDTO);
+            bool updateResult = _service.Update(layerViewModel);
 
             if (!updateResult)
                 return NoContent();
@@ -63,7 +63,7 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _uC.Delete(id);
+            _service.Delete(id);
             return Ok();
         }
     }

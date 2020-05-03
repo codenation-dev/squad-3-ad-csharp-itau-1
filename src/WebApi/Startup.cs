@@ -14,6 +14,7 @@ using TryLog.Services.Interfaces;
 using TryLog.Services.App;
 using TryLog.UseCase.Mapper;
 using AutoMapper;
+using System.Collections.Generic;
 
 namespace TryLog.WebApi
 {
@@ -46,8 +47,33 @@ namespace TryLog.WebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TryLog", Version = "v1" });
-            });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"Please enter into field the word 'Bearer' following by space and JWT",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
 
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                    }
+                });
+            });
             services.AddIdentityConfiguration();
             services.AddTokenConfiguration(Configuration);
 

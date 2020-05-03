@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace TryLog.WebApi.Controllers.V1
 {
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [ApiController]
     public class VersionController : ControllerBase
     {
@@ -19,6 +21,17 @@ namespace TryLog.WebApi.Controllers.V1
         [Route("api/Version")]
         [AllowAnonymous]
         public string Get()
+        {
+            //Resolvendo conflito, removi as demais ações neste endpoint.
+            //TODO: retornar de maneira anonima a versão da api
+            return "Tudo Certo!";
+        }
+
+        //TODO: documentar o motivo deste endpoint
+        [HttpGet]
+        [Route("api/VersionWithAuthirization")]
+        [Authorize]
+        public string GetWithAuthirization()
         {
             //Resolvendo conflito, removi as demais ações neste endpoint.
             //TODO: retornar de maneira anonima a versão da api

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,16 +16,20 @@ namespace TryLog.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public UserManagerService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public UserManagerService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, IMapper mapper)
         {
             _userManager = userManager;
-
             _signInManager = signInManager;
             _configuration = configuration;
+            _mapper = mapper;
         }
-        public TokenViewModel Create(User user)
+
+        public TokenViewModel Create(UserCreateInView userCreateInView)
         {
+            User user = _mapper.Map<User>(userCreateInView);
+
             IdentityResult result = _userManager.CreateAsync(user, user.Password).Result;
 
             if (result.Succeeded)
@@ -43,7 +48,6 @@ namespace TryLog.Services
                 return CreateToken(userAuth);
             }
                 
-
             return new TokenViewModel(result.ToString());
         }
 

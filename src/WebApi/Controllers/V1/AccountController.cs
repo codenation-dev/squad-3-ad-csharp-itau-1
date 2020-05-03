@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TryLog.Core.Model;
 using TryLog.Services;
 using TryLog.Services.ViewModel;
 
 namespace TryLog.WebApi.Controllers.V1
 {
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [ApiController]
     [Route("api/account/")]
     public class AccountController : ControllerBase
@@ -20,9 +21,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         [Route("create")]
         [AllowAnonymous]
-        public IActionResult Create([FromBody] User user)
+        public IActionResult Create([FromBody] UserCreateInView userCreate)
         {
-            return Ok(_service.Create(user));
+            return Ok(_service.Create(userCreate));
         }
 
         [HttpPost]

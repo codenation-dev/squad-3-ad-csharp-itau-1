@@ -11,6 +11,8 @@ using TryLog.Services.Interfaces;
 
 namespace TryLog.WebApi.Controllers.V1
 {
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class StatusController : ControllerBase

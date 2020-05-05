@@ -11,13 +11,13 @@ using TryLog.UseCase.Mapper;
 using TryLog.WebApi.Controllers.V1;
 using Xunit;
 
-namespace TryLog.Sentinela
+namespace TryLog.Sentinela.ControllerUnitTest.LogUnitTest
 {
     public class LogUnitTestController
     {
         private readonly ILogRepository _repository;
-        private readonly IMapper _mapper;
-        AutoMapperConfig mapperConfig;
+        //private readonly IMapper _mapper;
+        //AutoMapperConfig mapperConfig;
         IMapper mockMapper;
 
         public static DbContextOptions<TryLogContext> dbContextOptions { get; }
@@ -54,10 +54,10 @@ namespace TryLog.Sentinela
             var controller = new LogController(logService);
 
             LogViewModel log = new LogViewModel();
-            var logId = log.Id = 20;
+            log.Id = 20;
 
             //Act
-            var data = controller.Get(logId);
+            var data = controller.Get(log.Id);
 
             //Assert
             Assert.IsType<OkObjectResult>(data);
@@ -71,12 +71,12 @@ namespace TryLog.Sentinela
             var controller = new LogController(logService);
 
             LogViewModel log = new LogViewModel();
-            log.Description = "ABC";
+            log.Description = "POST";
             log.IdEnvironment = 1;
             log.IdLayer = 1;
             log.IdSeverity = 1;
             log.IdStatus = 1;
-            log.Token = "teste";
+            log.Token = "TOKENPOST";
 
             //Act
             var data = controller.Post(log);
@@ -91,18 +91,18 @@ namespace TryLog.Sentinela
             //Arrange
             LogService logService = new LogService(_repository, mockMapper);
             var controller = new LogController(logService);
-            var logId = 2;
 
             LogViewModel log = new LogViewModel();
+            log.Id = 2;
             log.Description = "PUT";
             log.IdEnvironment = 1;
             log.IdLayer = 1;
             log.IdSeverity = 1;
             log.IdStatus = 1;
-            log.Token = "teste";
+            log.Token = "TOKENPUT";
 
             //Act
-            var data = controller.Put(logId, log);
+            var data = controller.Put(log.Id, log);
 
             //Assert
             Assert.IsType<OkResult>(data);
@@ -116,10 +116,10 @@ namespace TryLog.Sentinela
             var controller = new LogController(logService);
 
             LogViewModel log = new LogViewModel();
-            var logId = log.Id = 23;
+            log.Id = 20;
 
             //Act
-            var data = controller.Delete(logId);
+            var data = controller.Delete(log.Id);
 
             //Assert
             Assert.IsType<OkResult>(data);

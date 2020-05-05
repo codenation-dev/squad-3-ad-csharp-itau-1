@@ -7,7 +7,7 @@ A inspiração para o desenvolvimento do TryLog foi atender ambientes complexos 
 
 ### Propósito do projeto
 
-Este projeto deve servir para capturar erros vindos de qualquer aplicação. Para permitir que isso aconteça,  disponibilizaremos endpoints REST para tratar as mensagens de erro capturadas em diversas plataformas, como: mobile, site e o próprio backend desta aplicão. Tentaremos seguir o mais próximo da teoria REST apresentada por Roy Fielding.
+Este projeto deve servir para capturar erros vindos de qualquer aplicação. Para permitir que isso aconteça,  disponibilizaremos endpoints REST para tratar as mensagens de erro capturadas em diversas plataformas, como: mobile, site e o próprio backend desta aplicação. Tentaremos seguir o mais próximo da teoria REST apresentada por Roy Fielding.
 
 ### Pilares do TryLog
 
@@ -17,7 +17,7 @@ Monitoramento | Armazenar e acompanhar, em tempo real, eventos que são gerados 
 Triagem | Separar os eventos recebidos pelo Monitoramento de acordo com o tipo de ambiente, severidade e prioridade de cada um deles
 Diagnóstico | Identificar possíveis falhas de desenvolvimento ou intermitências das aplicações conforme dados catalogados pela Triagem
 Ação | Agir de acordo com a necessidade identificada pela etapa de Diagnóstico, acionando os recursos disponíveis para a solução dos problemas, além de definir e atualizar o status de cada evento
-Manutenção | Propor resoluções para inconsistências e utlizar os dados de todas as etapas anteriores para sugerir melhorias e manutenções preventivas
+Manutenção | Propor resoluções para inconsistências e utilizar os dados de todas as etapas anteriores para sugerir melhorias e manutenções preventivas
 
 #### Sobre conceitos descritos
 
@@ -27,7 +27,7 @@ Como se trata de um projeto vinculado a Codenation/Itaú e possui um intuito de 
 
 Decidimos separar as camadas de projeto, tendo como orientação o modelo Clean Architecture, de Bob Martin, mas usado aqui na visão de Steve Smith. Info: [Microsoft Docs](https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures).
 
-Através desta modelo arquitetural, esperamos melhorar a forma como o projeto é separado e compreendido. Tendo também vantagens como uso de injeção de dependência, fazendo a inverção do controle e viabilizando testes automatizados (unitários a princípio).
+Através desta modelo arquitetural, esperamos melhorar a forma como o projeto é separado e compreendido. Tendo também vantagens como uso de injeção de dependência, fazendo a inversão do controle e viabilizando testes automatizados (unitários a princípio).
 
 Também nos serviu de base o material apresentado no livro Asp.NET Core Architecture e-book, disponível em [sítio Microsoft](https://dotnet.microsoft.com/download/e-book/aspnet/pdf).
 
@@ -77,7 +77,7 @@ Nesta camada você vai encontrar os seguintes itens:
 
 * Entidades
 * Interfaces
-* Servicos
+* Services
 * DTOs
 
 
@@ -91,7 +91,7 @@ Embora não esteja descrita nos materiais de arquitetura mencionados, achamos po
 
 Vamos utilizar o conceito de MessageBroker para dar confiabilidade na entrega e gravação dos logs, fazendo com que nossa API apenas faça uma publicação do log em sistema de fila. Este, por sua vez, será o responsável por acionar a gravação do banco de dados.
 
-Esperamos assim, resolver possíveis problemas com não gravação de log, ou incosistência e perda de logs.
+Esperamos assim, resolver possíveis problemas com não gravação de log, ou inconsistência e perda de logs.
 
 #### Tests
 

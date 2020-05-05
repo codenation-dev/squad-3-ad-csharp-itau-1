@@ -12,7 +12,6 @@ namespace TryLog.Services.ViewModel
         public int IdEnvironment { get; set; }
         public int IdLayer { get; set; }
         public int IdSeverity { get; set; }
-        public int IdStatus { get; set; }
-       
+        public int IdStatus { get; set; }       
     }
 }

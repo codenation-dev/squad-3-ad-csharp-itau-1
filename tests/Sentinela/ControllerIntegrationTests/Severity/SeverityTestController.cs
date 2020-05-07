@@ -13,7 +13,7 @@ using Xunit;
 
 namespace TryLog.Sentinela.ControllerUnitTest.SeverityUnitTest
 {
-    public class SeverityUnitTestController
+    public class SeverityTestController
     {
         private readonly ISeverityRepository _repository;
         IMapper mockMapper;
@@ -22,7 +22,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.SeverityUnitTest
         public static readonly IConfiguration Configuration;
         public static string connectionString = "Server=MAH-DELL\\SQLEXPRESS;Database=TryLog;Trusted_Connection=True;";
 
-        static SeverityUnitTestController()
+        static SeverityTestController()
         {
 
             dbContextOptions = new DbContextOptionsBuilder<TryLogContext>()
@@ -30,7 +30,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.SeverityUnitTest
                 .Options;
         }
 
-        public SeverityUnitTestController()
+        public SeverityTestController()
         {
             var context = new TryLogContext(dbContextOptions);
 
@@ -58,6 +58,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.SeverityUnitTest
             var data = controller.Get(severity.Id);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkObjectResult>(data);
         }
 
@@ -75,6 +76,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.SeverityUnitTest
             var data = controller.Post(severity);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<CreatedAtActionResult>(data);
         }
 
@@ -93,6 +95,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.SeverityUnitTest
             var data = controller.Put(severity.Id, severity);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
 
@@ -110,6 +113,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.SeverityUnitTest
             var data = controller.Delete(severity.Id);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
     }

@@ -13,24 +13,25 @@ using Xunit;
 
 namespace TryLog.Sentinela.ControllerUnitTest.EnvironmentUnitTest
 {
-    public class EnvironmentUnitTestController
+    public class EnvironmentTestController
     {
         private readonly IEnvironmentRepository _repository;
         IMapper mockMapper;
 
         public static DbContextOptions<TryLogContext> dbContextOptions { get; }
         public static readonly IConfiguration Configuration;
-        public static string connectionString = "Server=MAH-DELL\\SQLEXPRESS;Database=TryLog;Trusted_Connection=True;";
+        //public static string connectionString = "Server=MAH-DELL\\SQLEXPRESS;Database=TryLog;Trusted_Connection=True;";
 
-        static EnvironmentUnitTestController()
+        static EnvironmentTestController()
         {
 
             dbContextOptions = new DbContextOptionsBuilder<TryLogContext>()
-                .UseSqlServer(connectionString)
+                .UseInMemoryDatabase("TryLogDb")
+                //.UseSqlServer(connectionString)
                 .Options;
         }
 
-        public EnvironmentUnitTestController()
+        public EnvironmentTestController()
         {
             var context = new TryLogContext(dbContextOptions);
 
@@ -42,23 +43,6 @@ namespace TryLog.Sentinela.ControllerUnitTest.EnvironmentUnitTest
             mockMapper = mappingConfig.CreateMapper();
 
             _repository = new EnvironmentRepository(context);
-        }
-
-        [Fact]
-        public void Task_GetEnvironmentById_Return_OkResult()
-        {
-            //Arrange
-            EnvironmentService environmentService = new EnvironmentService(_repository, mockMapper);
-            var controller = new EnvironmentController(environmentService);
-
-            EnvironmentViewModel environment = new EnvironmentViewModel();
-            var environmentId = environment.Id = 2;
-
-            //Act
-            var data = controller.Get(environmentId);
-
-            //Assert
-            Assert.IsType<OkObjectResult>(data);
         }
 
         [Fact]
@@ -75,8 +59,47 @@ namespace TryLog.Sentinela.ControllerUnitTest.EnvironmentUnitTest
             var data = controller.Post(environment);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<CreatedAtActionResult>(data);
         }
+
+        [Fact]
+        public void Task_GetEnvironmentById_Return_OkResult()
+        {
+            //Arrange
+            EnvironmentService environmentService = new EnvironmentService(_repository, mockMapper);
+            var controller = new EnvironmentController(environmentService);
+
+            EnvironmentViewModel environment = new EnvironmentViewModel();
+            environment.Id = 1;
+
+            //Act
+            var data = controller.Get(environment.Id);
+
+            //Assert
+            Assert.NotNull(data);
+            Assert.IsType<OkObjectResult>(data);
+        }
+        
+        //[Theory]
+        //[InlineData(1)]
+        //[InlineData(2)]
+        //[InlineData(3)]
+        //public void Task_GetEnvironmentByNonExistingId_Return_OkResult(int environmentId)
+        //{
+        //    //Arrange
+        //    EnvironmentService environmentService = new EnvironmentService(_repository, mockMapper);
+        //    var controller = new EnvironmentController(environmentService);
+
+        //    EnvironmentViewModel environment = new EnvironmentViewModel();
+
+        //    //Act
+        //    var data = controller.Get(environmentId);
+
+        //    //Assert
+        //    Assert.NotNull(data);
+        //    Assert.Equal(1, environmentId);
+        //}
 
         [Fact]
         public void Task_PutEnvironment_Return_OkResult()
@@ -84,15 +107,16 @@ namespace TryLog.Sentinela.ControllerUnitTest.EnvironmentUnitTest
             //Arrange
             EnvironmentService environmentService = new EnvironmentService(_repository, mockMapper);
             var controller = new EnvironmentController(environmentService);
-            var environmentId = 2;
 
             EnvironmentViewModel environment = new EnvironmentViewModel();
+            environment.Id = 1;
             environment.Description = "PUT";
 
             //Act
-            var data = controller.Put(environmentId, environment);
+            var data = controller.Put(environment.Id, environment);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
 
@@ -104,12 +128,13 @@ namespace TryLog.Sentinela.ControllerUnitTest.EnvironmentUnitTest
             var controller = new EnvironmentController(environmentService);
 
             EnvironmentViewModel environment = new EnvironmentViewModel();
-            var environmentId = environment.Id = 2;
+            environment.Id = 1;
 
             //Act
-            var data = controller.Delete(environmentId);
+            var data = controller.Delete(environment.Id);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
     }

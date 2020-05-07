@@ -13,7 +13,7 @@ using Xunit;
 
 namespace TryLog.Sentinela.ControllerUnitTest.StatusUnitTest
 {
-    public class StatusUnitTestController
+    public class StatusTestController
     {
         private readonly IStatusRepository _repository;
         IMapper mockMapper;
@@ -22,7 +22,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.StatusUnitTest
         public static readonly IConfiguration Configuration;
         public static string connectionString = "Server=MAH-DELL\\SQLEXPRESS;Database=TryLog;Trusted_Connection=True;";
 
-        static StatusUnitTestController()
+        static StatusTestController()
         {
 
             dbContextOptions = new DbContextOptionsBuilder<TryLogContext>()
@@ -30,7 +30,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.StatusUnitTest
                 .Options;
         }
 
-        public StatusUnitTestController()
+        public StatusTestController()
         {
             var context = new TryLogContext(dbContextOptions);
 
@@ -58,6 +58,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.StatusUnitTest
             var data = controller.Get(status.Id);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkObjectResult>(data);
         }
 
@@ -75,6 +76,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.StatusUnitTest
             var data = controller.Post(status);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<CreatedAtActionResult>(data);
         }
 
@@ -93,6 +95,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.StatusUnitTest
             var data = controller.Put(status.Id, status);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
 
@@ -110,6 +113,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.StatusUnitTest
             var data = controller.Delete(status.Id);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
     }

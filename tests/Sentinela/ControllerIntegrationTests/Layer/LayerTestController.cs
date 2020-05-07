@@ -13,7 +13,7 @@ using Xunit;
 
 namespace TryLog.Sentinela.ControllerUnitTest.LayerUnitTest
 {
-    public class LayerUnitTestController
+    public class LayerTestController
     {
         private readonly ILayerRepository _repository;
         IMapper mockMapper;
@@ -22,7 +22,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.LayerUnitTest
         public static readonly IConfiguration Configuration;
         public static string connectionString = "Server=MAH-DELL\\SQLEXPRESS;Database=TryLog;Trusted_Connection=True;";
 
-        static LayerUnitTestController()
+        static LayerTestController()
         {
 
             dbContextOptions = new DbContextOptionsBuilder<TryLogContext>()
@@ -30,7 +30,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.LayerUnitTest
                 .Options;
         }
 
-        public LayerUnitTestController()
+        public LayerTestController()
         {
             var context = new TryLogContext(dbContextOptions);
 
@@ -58,6 +58,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.LayerUnitTest
             var data = controller.Get(layer.Id);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkObjectResult>(data);
         }
 
@@ -75,6 +76,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.LayerUnitTest
             var data = controller.Post(layer);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<CreatedAtActionResult>(data);
         }
 
@@ -93,6 +95,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.LayerUnitTest
             var data = controller.Put(layer.Id, layer);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
 
@@ -110,6 +113,7 @@ namespace TryLog.Sentinela.ControllerUnitTest.LayerUnitTest
             var data = controller.Delete(layer.Id);
 
             //Assert
+            Assert.NotNull(data);
             Assert.IsType<OkResult>(data);
         }
     }

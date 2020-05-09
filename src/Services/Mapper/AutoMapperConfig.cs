@@ -27,9 +27,7 @@ namespace TryLog.UseCase.Mapper
                 .ForCtorParam("fullName", opt => opt.MapFrom(x => x.FullName))
                 .ForCtorParam("userName", opt => opt.MapFrom(x => x.Email))
                 .ForCtorParam("password", opt => opt.MapFrom(x => x.Password)).ReverseMap();
-            /*User(string fullName, string userName, string password)
-            :base(userName: userName)*/
-        
-            }
+            CreateMap<User, UserGetView>();
+        }
     }
 }

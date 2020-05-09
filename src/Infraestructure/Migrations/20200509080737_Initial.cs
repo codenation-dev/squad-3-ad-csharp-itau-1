@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TryLog.Infraestructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -109,6 +109,31 @@ namespace TryLog.Infraestructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_status", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    NormalizedUserName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    NormalizedEmail = table.Column<string>(nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,7 +252,6 @@ namespace TryLog.Infraestructure.Migrations
                     DateRegister = table.Column<DateTime>(nullable: false),
                     deleted = table.Column<bool>(type: "bit", nullable: false),
                     token = table.Column<string>(type: "varchar(500)", nullable: false),
-                    user = table.Column<long>(type: "integer", nullable: false),
                     IdEnvironment = table.Column<int>(nullable: false),
                     IdLayer = table.Column<int>(nullable: false),
                     IdSeverity = table.Column<int>(nullable: false),
@@ -341,6 +365,9 @@ namespace TryLog.Infraestructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "log");
+
+            migrationBuilder.DropTable(
+                name: "user");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

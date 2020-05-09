@@ -15,12 +15,15 @@ using TryLog.Services.App;
 using TryLog.UseCase.Mapper;
 using AutoMapper;
 using System.Collections.Generic;
+using TryLog.Services;
+using TryLog.Services.SettingObjects;
+using Microsoft.AspNetCore.Http;
 
 namespace TryLog.WebApi
 {
     public class Startup
     {
-        private IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
@@ -38,11 +41,10 @@ namespace TryLog.WebApi
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     });
-
             services.AddCors();
 
-            services.AddDbContext<TryLogContext>(op => op.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
-
+            services.AddDbContext<TryLogContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
+            
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -74,8 +76,7 @@ namespace TryLog.WebApi
                     }
                 });
             });
-            services.AddIdentityConfiguration();
-            services.AddTokenConfiguration(Configuration);
+
 
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<ILayerRepository, LayerRepository>();
@@ -91,6 +92,27 @@ namespace TryLog.WebApi
             services.AddScoped<ILogService, LogService>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
+
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.AddTransient<EmailService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<AuthenticatedUser>();
+
+
+            services.AddIdentityConfiguration();
+
+            var tokenConfiguration = Configuration.GetSection("TokenConfigurations");
+            services.Configure<TokenSettings>(tokenConfiguration);
+            services.AddTokenConfiguration(tokenConfiguration);
+
+
+            services.AddRouting(opt =>
+            {
+                opt.LowercaseQueryStrings = false;
+                opt.LowercaseUrls = true;
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

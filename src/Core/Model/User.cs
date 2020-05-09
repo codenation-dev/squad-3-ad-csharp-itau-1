@@ -8,9 +8,9 @@ namespace TryLog.Core.Model
     /// Representa o usu�rio da aplica��o.
     /// </summary>
 
-    public class User:IdentityUser
+    public class User:IdentityUser<string>
     {
-        public User(string fullName,  string userName, string password)
+        public User(string fullName, string userName, string password)
             :base(userName:userName)
         {
             Id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);

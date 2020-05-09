@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Text;
 using TryLog.Services.ViewModel;
 
-namespace TryLog.Services.Interfaces 
+namespace TryLog.Services.Interfaces
 {
     public interface IEnvironmentService
     {

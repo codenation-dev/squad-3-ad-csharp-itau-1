@@ -6,14 +6,7 @@ using TryLog.Services.ViewModel;
 
 namespace TryLog.Services.Interfaces
 {
-    public interface ILayerService
+    public interface ILayerService : IDefaultService<LayerViewModel>
     {
-        LayerViewModel Add(LayerViewModel entity);
-        LayerViewModel Get(int entityId);
-        LayerViewModel Find(int entityId);
-        List<LayerViewModel> FindAll(int entityId);
-        bool Update(LayerViewModel entity);
-        void Delete(int entityId);
-        List<LayerViewModel> SelectAll();
     }
 }

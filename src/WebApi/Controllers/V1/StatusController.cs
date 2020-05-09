@@ -46,6 +46,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         public IActionResult Post([FromBody] StatusViewModel statusViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var status = _service.Add(statusViewModel);
 
             if (status is null)
@@ -58,6 +61,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] StatusViewModel statusViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             bool resultUpdate = _service.Update(statusViewModel);
 
             if (!resultUpdate)

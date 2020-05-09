@@ -41,6 +41,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         public IActionResult Post([FromBody] LayerViewModel layerViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var layer = _service.Add(layerViewModel);
 
             if (layer is null)
@@ -53,6 +56,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] LayerViewModel layerViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             bool updateResult = _service.Update(layerViewModel);
 
             if (!updateResult)

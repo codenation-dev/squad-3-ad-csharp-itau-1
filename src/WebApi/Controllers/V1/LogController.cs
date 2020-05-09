@@ -8,6 +8,8 @@ using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
+using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -15,6 +17,7 @@ namespace TryLog.WebApi.Controllers.V1
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LogController : ControllerBase
     {
         private readonly ILogService _service;
@@ -45,6 +48,13 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         public IActionResult Post([FromBody] LogViewModel logViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            Request.Headers.TryGetValue("Authorization", out StringValues token);
+
+            var test = token.ToString().Replace("Bearer ","");
+
             var log = _service.Add(logViewModel);
 
             if (log is null)
@@ -57,6 +67,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] LogViewModel logViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             bool resultUpdate = _service.Update(logViewModel);
 
             if (!resultUpdate)

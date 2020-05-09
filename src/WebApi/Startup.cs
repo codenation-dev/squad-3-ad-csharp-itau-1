@@ -15,6 +15,7 @@ using TryLog.Services.App;
 using TryLog.UseCase.Mapper;
 using AutoMapper;
 using System.Collections.Generic;
+using TryLog.Core.Model;
 
 namespace TryLog.WebApi
 {
@@ -89,6 +90,9 @@ namespace TryLog.WebApi
             services.AddScoped<ISeverityService, SeverityService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<ILogService, LogService>();
+
+            services.AddScoped(typeof(IDefaultService<>), typeof(AbstractService<>));
+            services.AddScoped<IDefaultService<Environment>, AbstractService < Environment>>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
         }

@@ -46,6 +46,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPost]
         public IActionResult Post([FromBody] SeverityViewModel severityViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var severity = _service.Add(severityViewModel);
 
             if (severity is null)
@@ -58,6 +61,9 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] SeverityViewModel severityViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             bool resultUpdate = _service.Update(severityViewModel);
 
             if (!resultUpdate)

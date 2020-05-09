@@ -39,9 +39,6 @@ namespace TryLog.Sentinela.Scenarios
 
             mockMapper = mappingConfig.CreateMapper();
             _repository = new EnvironmentRepository(context);
-
-            //context.Database.EnsureDeleted();
-            //context.Database.Migrate();
         }
 
         [Fact(DisplayName = "POST")]

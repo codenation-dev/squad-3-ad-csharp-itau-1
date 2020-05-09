@@ -12,10 +12,9 @@ namespace TryLog.Services.App
         private readonly IDefaultRepository<T> _repo;
         private readonly IMapper _mapper;
 
-        public AbstractService(IDefaultRepository<T> repo, IMapper mapper)
+        public AbstractService(IDefaultRepository<T> repo)
         {
             _repo = repo;
-            _mapper = mapper;
         }
 
         public T Add(T entity)

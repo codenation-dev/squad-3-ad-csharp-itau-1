@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace TryLog.Services.ViewModel
 {
-    public class UserCreateInView
+    public class UserDeleteViewModel
     {
-        [Required(ErrorMessage = "Full name is required")]
-        public string FullName { get; set; }
-
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         public string Email { get; set; }

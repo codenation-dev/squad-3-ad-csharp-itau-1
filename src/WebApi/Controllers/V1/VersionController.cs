@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -22,20 +23,19 @@ namespace TryLog.WebApi.Controllers.V1
         [AllowAnonymous]
         public string Get()
         {
-            //Resolvendo conflito, removi as demais ações neste endpoint.
             //TODO: retornar de maneira anonima a versão da api
-            return "Tudo Certo!";
+            return _config.GetValue<string>("ApplicationVersion");
         }
 
         //TODO: documentar o motivo deste endpoint
         [HttpGet]
-        [Route("api/VersionWithAuthirization")]
+        [Route("api/VersionWithAuthorization")]
         [Authorize]
-        public string GetWithAuthirization()
-        {
-            //Resolvendo conflito, removi as demais ações neste endpoint.
-            //TODO: retornar de maneira anonima a versão da api
-            return "Tudo Certo!";
+        public string GetWithAuthorization() {
+            Request.Headers.TryGetValue("Authorization", out StringValues token);
+            //TODO: retornar de maneira autenticada a versão da api
+            return string.Format("Version : {0},Token do Usuário Logado:{1}",
+                _config.GetValue<string>("ApplicationVersion"), token.ToString());
         }
     }
 }

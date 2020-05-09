@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TryLog.Services;
 using TryLog.Services.ViewModel;
 
 namespace TryLog.WebApi.Controllers.V1
 {
+    [Authorize]
     [Consumes("application/json")]
     [Produces("application/json")]
     [ApiController]
-    [Route("api/account/")]
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly UserManagerService _service;
@@ -19,19 +21,33 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         [HttpPost]
-        [Route("create")]
         [AllowAnonymous]
-        public IActionResult Create([FromBody] UserCreateInView userCreate)
+        public async Task<IActionResult> Post([FromBody] UserCreateInView user)
         {
-            return Ok(_service.Create(userCreate));
+            string callBack = Url.Action("EmailConfirm", "User", null, Request.Scheme);  
+            var userCreateOut = await _service.Create(user, callBack);
+
+            if (userCreateOut is null) 
+                return NotFound(new { message = "Invalid username or password."});
+
+            return Ok(new { message = userCreateOut.Description });
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _service.Get());
         }
 
-        [HttpPost]
-        [Route("login")]
-        [AllowAnonymous]
-        public IActionResult Auth([FromBody] UserAuthViewModel userAuth)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UserUpdateView user)
         {
-            return Ok(_service.Login(userAuth));
+            return Ok(await _service.Update(user));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(UserDeleteViewModel user)
+        {
+            return  Ok(await _service.Delete(user));
         }
     }
 }

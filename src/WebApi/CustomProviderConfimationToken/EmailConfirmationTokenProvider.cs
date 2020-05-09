@@ -21,9 +21,8 @@ namespace TryLog.WebApi.CustomProviderConfimationToken
     {
         public EmailConfirmationTokenProviderOptions()
         {
-            Name = "EmailDataProtectorTokenProvider";
-            TokenLifespan = TimeSpan.FromHours(4);
-
+            //Name = "EmailDataProtectorTokenProvider";
+            //TokenLifespan = TimeSpan.FromDays(2);
         }
     }
 }

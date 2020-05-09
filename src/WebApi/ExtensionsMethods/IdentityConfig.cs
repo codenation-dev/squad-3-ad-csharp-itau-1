@@ -8,6 +8,8 @@ using System.Text;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 using TryLog.Services;
+using TryLog.Services.SettingObjects;
+using TryLog.WebApi.CustomProviderConfimationToken;
 
 namespace TryLog.WebApi.ExtensionsMethods
 {
@@ -19,6 +21,13 @@ namespace TryLog.WebApi.ExtensionsMethods
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
             services.AddScoped<UserManagerService>();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt=>
+                opt.TokenLifespan = TimeSpan.FromHours(2)
+            );
+            services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromDays(2)
+            );
 
             services.AddIdentity<User, IdentityRole>(options =>
              {
@@ -33,18 +42,17 @@ namespace TryLog.WebApi.ExtensionsMethods
                  options.Password.RequireUppercase = true;
                  options.Password.RequiredUniqueChars = 1;
                  options.Password.RequireNonAlphanumeric = true;
-                 options.SignIn.RequireConfirmedEmail = false;
+                 options.SignIn.RequireConfirmedEmail = true;
                  options.SignIn.RequireConfirmedAccount = false;
 
              })
                 .AddEntityFrameworkStores<TryLogContext>()
                 .AddDefaultTokenProviders();
-
         }
 
-        public static void AddTokenConfiguration(this IServiceCollection services, IConfiguration _configuration)
+        public static void AddTokenConfiguration(this IServiceCollection services, IConfiguration _configuration )
         {
-            var strKey = _configuration.GetSection("SecretKey").Value;
+            var strKey = _configuration.GetValue<string>("SecretKey");
             var key = Encoding.UTF8.GetBytes(strKey);
             var signinKey = new SymmetricSecurityKey(key);
             services.AddAuthentication(x =>

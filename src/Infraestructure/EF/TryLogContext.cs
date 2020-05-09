@@ -28,6 +28,18 @@ namespace TryLog.Infraestructure.EF
             modelBuilder.ApplyConfiguration(new SeverityMap());
             modelBuilder.ApplyConfiguration(new StatusMap());
 
+            modelBuilder.Entity<User>()
+                .ToTable("user")
+                .HasKey(k => k.Id);
+
+            modelBuilder.Entity<IdentityUser>()
+                .ToTable("user")
+                .HasKey(k => k.Id);
+
+            
+
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("Role");
+
             base.OnModelCreating(modelBuilder);
         }
     }

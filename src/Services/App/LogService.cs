@@ -21,7 +21,7 @@ namespace TryLog.Services.App
 
         public LogViewModel Add(LogViewModel entity)
         {
-            var log =_repo.Add(_mapper.Map<Log>(entity));
+            var log = _repo.Add(_mapper.Map<Log>(entity));
             return _mapper.Map<LogViewModel>(log);
         }
 

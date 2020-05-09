@@ -1,69 +1,90 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
+using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
-namespace TryLog.Services.App
+namespace TryLog.WebApi.Controllers.V1
 {
-    public class LogService : ILogService
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class LogController : ControllerBase
     {
-        private readonly ILogRepository _repo;
+        private readonly ILogService _service;
         private readonly IMapper _mapper;
-        public LogService(ILogRepository repo, IMapper mapper)
+        public LogController(ILogService service, IMapper mapper)
         {
-            _repo = repo;
+            _service = service;
             _mapper = mapper;
         }
-
-        private LogViewModel Add(LogViewModel entity)
+        // GET: api/Log
+        [HttpGet]
+        public IActionResult Get()
         {
-            var log =_repo.Add(_mapper.Map<Log>(entity));
-            return _mapper.Map<LogViewModel>(log);
-        }
-        public LogViewModel Add(LogViewModel entity, string token)
-        {
-            var logToken = token.Replace("Bearer ", "", StringComparison.OrdinalIgnoreCase);
-            entity.Token = logToken;
-            return Add(entity);   
+            return Ok(_service.SelectAll());
         }
 
-        public void Delete(int entityId)
+        // GET: api/Log/5
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
-            _repo.Delete(x => x.Id == entityId);
+            var log = _service.Get(id);
+
+            if (log is null)
+                return NoContent();
+
+            return Ok(log);
         }
 
-        public LogViewModel Find(int entityId)
+        // POST: api/Log
+        [HttpPost]
+        public IActionResult Post([FromBody] LogViewModel logViewModel)
         {
-            var log = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<LogViewModel>(log);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Request.Headers.TryGetValue("Authorization", out StringValues token);
+
+            var log = _service.Add(logViewModel, token.ToString());
+
+            if (log is null)
+                return NoContent();
+
+            return CreatedAtAction(nameof(Get), new { log.Id }, log);
         }
 
-        public List<LogViewModel> FindAll(int entityId)
+        // PUT: api/Log/5
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] LogViewModel logViewModel)
         {
-            var logs = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<LogViewModel>>(logs);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool resultUpdate = _service.Update(logViewModel);
+
+            if (!resultUpdate)
+                return NoContent();
+
+            return Ok();
         }
 
-        public LogViewModel Get(int entityId)
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            var log = _repo.Get(entityId);
-            return _mapper.Map<LogViewModel>(log);
-        }
-
-        public bool Update(LogViewModel entity)
-        {
-            bool resultUpdate = _repo.Update(_mapper.Map<Log>(entity));
-            return resultUpdate;
-        }
-
-        public List<LogViewModel> SelectAll()
-        {
-            var logs = _repo.SelectAll();
-            return _mapper.Map<List<LogViewModel>>(logs);
+            _service.Delete(id);
+            return Ok();
         }
     }
 }

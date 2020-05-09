@@ -93,10 +93,10 @@ namespace TryLog.WebApi
 
             //services.AddScoped(typeof(IDefaultService<>), typeof(AbstractService<>));
             //services.AddScoped<IDefaultService<Environment>, AbstractService < Environment>>();
-            services.AddScoped<IDefaultService<Environment>>(opt => {
-                return new AbstractService<Environment>(opt.GetService(typeof(IDefaultRepository<Environment>)).);
+            //services.AddScoped<IDefaultService<Environment>>(opt => {
+            //    return new AbstractService<Environment>(opt.GetService(typeof(IDefaultRepository<Environment>)).);
 
-            });
+            //});
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
         }

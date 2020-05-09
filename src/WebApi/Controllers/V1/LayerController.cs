@@ -58,7 +58,9 @@ namespace TryLog.WebApi.Controllers.V1
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            
+            layerViewModel.Id = id;
+            
             bool updateResult = _service.Update(layerViewModel);
 
             if (!updateResult)

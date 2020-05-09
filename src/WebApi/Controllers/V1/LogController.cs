@@ -10,6 +10,7 @@ using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -21,9 +22,11 @@ namespace TryLog.WebApi.Controllers.V1
     public class LogController : ControllerBase
     {
         private readonly ILogService _service;
-        public LogController(ILogService service)
+        private readonly IMapper _mapper;
+        public LogController(ILogService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
         // GET: api/Log
         [HttpGet]
@@ -53,9 +56,7 @@ namespace TryLog.WebApi.Controllers.V1
             
             Request.Headers.TryGetValue("Authorization", out StringValues token);
 
-            var test = token.ToString().Replace("Bearer ","");
-
-            var log = _service.Add(logViewModel);
+            var log = _service.Add(logViewModel, token.ToString());
 
             if (log is null)
                 return NoContent();

@@ -10,7 +10,6 @@ namespace TryLog.Services.ViewModel
         public int Id { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required]
         public string Token { get; set; }
         [Required]
         public int IdEnvironment { get; set; }

@@ -19,10 +19,16 @@ namespace TryLog.Services.App
             _mapper = mapper;
         }
 
-        public LogViewModel Add(LogViewModel entity)
+        private LogViewModel Add(LogViewModel entity)
         {
             var log =_repo.Add(_mapper.Map<Log>(entity));
             return _mapper.Map<LogViewModel>(log);
+        }
+        public LogViewModel Add(LogViewModel entity, string token)
+        {
+            var logToken = token.Replace("Bearer ", "", StringComparison.OrdinalIgnoreCase);
+            entity.Token = logToken;
+            return Add(entity);   
         }
 
         public void Delete(int entityId)

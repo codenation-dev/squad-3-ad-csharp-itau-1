@@ -22,25 +22,28 @@ namespace TryLog.Infraestructure.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+         
             modelBuilder.ApplyConfiguration(new EnvironmentMap());
             modelBuilder.ApplyConfiguration(new LayerMap());
             modelBuilder.ApplyConfiguration(new LogMap());
             modelBuilder.ApplyConfiguration(new SeverityMap());
             modelBuilder.ApplyConfiguration(new StatusMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
 
-            modelBuilder.Entity<User>()
-                .ToTable("user")
-                .HasKey(k => k.Id);
+            modelBuilder.Ignore<IdentityRole>();
 
-            modelBuilder.Entity<IdentityUser>()
-                .ToTable("user")
-                .HasKey(k => k.Id);
+            modelBuilder.Ignore<IdentityUserRole<string>>();
 
-            
+            modelBuilder.Ignore<IdentityUserToken<string>>();
 
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("Role");
+            modelBuilder.Ignore<IdentityRoleClaim<string>>();
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Ignore<IdentityUserLogin<string>>();
+
+            modelBuilder.Ignore<IdentityUserClaim<string>>();
+
+            modelBuilder.Ignore<IdentityUserToken<string>>();
         }
     }
 }

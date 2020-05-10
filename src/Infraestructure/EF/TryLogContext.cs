@@ -29,35 +29,21 @@ namespace TryLog.Infraestructure.EF
             modelBuilder.ApplyConfiguration(new LogMap());
             modelBuilder.ApplyConfiguration(new SeverityMap());
             modelBuilder.ApplyConfiguration(new StatusMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
 
-            modelBuilder.Entity<User>()
-                .ToTable("users")
-                .HasKey(x => x.Id);
+            modelBuilder.Ignore<IdentityRole>();
 
-            modelBuilder.Entity<IdentityRole>()
-                .ToTable("roles")
-                .HasKey(x => x.Id);
+            modelBuilder.Ignore<IdentityUserRole<string>>();
 
-            modelBuilder.Entity<IdentityUserRole<string>>()
-                .ToTable("userroles");
+            modelBuilder.Ignore<IdentityUserToken<string>>();
 
-            modelBuilder.Entity<IdentityUserToken<string>>()
-                .ToTable("usertokens");
+            modelBuilder.Ignore<IdentityRoleClaim<string>>();
 
-            modelBuilder.Entity<IdentityRoleClaim<string>>()
-                .ToTable("roleclaims");
+            modelBuilder.Ignore<IdentityUserLogin<string>>();
 
-            modelBuilder.Entity<IdentityUserLogin<string>>()
-                .ToTable("userlogins");
+            modelBuilder.Ignore<IdentityUserClaim<string>>();
 
-            modelBuilder.Entity<IdentityUserClaim<string>>()
-                .ToTable("userclaims");
-
-            modelBuilder.Entity<IdentityRoleClaim<string>>()
-                .ToTable("roleclaims");
-
-            modelBuilder.Entity<IdentityUserToken<string>>()
-                .ToTable("usertokens");
+            modelBuilder.Ignore<IdentityUserToken<string>>();
         }
     }
 }

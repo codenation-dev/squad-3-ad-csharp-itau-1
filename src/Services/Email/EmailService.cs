@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using TryLog.Services.SettingObjects;
 
 namespace TryLog.Services
 {
-    public class EmailService : IIdentityMessageService
+    public class EmailService 
     {
         private readonly EmailSettings _emailSettings;
         public EmailService(IOptions<EmailSettings> emailSettings)
@@ -14,7 +13,7 @@ namespace TryLog.Services
             _emailSettings = emailSettings.Value;
         }
         
-        public Task SendAsync(IdentityMessage message)
+        public Task SendAsync(string sentTo, string subject, string body)
         {
             var credentialUserName = _emailSettings.Email;
             var sentFrom = _emailSettings.FromEmail;
@@ -34,13 +33,14 @@ namespace TryLog.Services
             client.EnableSsl = true;
             client.Credentials = credentials;
 
-            var mail = new MailMessage(sentFrom, message.Destination)
+            var mail = new MailMessage()
             {
-                Subject = message.Subject,
-                Body = message.Body,
+                From=new MailAddress(sentFrom),
+                Subject = subject,
+                Body = body,
                 IsBodyHtml = true
             };
-
+            mail.To.Add(sentTo);
             return client.SendMailAsync(mail);
         }
     }

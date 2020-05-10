@@ -50,21 +50,9 @@ namespace TryLog.Services
             string callBack = string.Format("{0}?id={1}&token={2}", linkCallback, user.Id, code);
             string bodyMessage = string.Format(Messages.AccountEmailConfirmation, user.FullName, callBack);
 
-            SendEmail(user.Email, "Account email confirmation.", bodyMessage);
+            await _emailService.SendAsync(user.Email, "Account email confirmation.", bodyMessage);
 
             return new UserCreateOutView(201, "Waiting for activation.");
-        }
-
-        private void SendEmail(string destination, string subject, string bodyMessage)
-        {
-            
-            var msg = new Microsoft.AspNet.Identity.IdentityMessage()
-            {
-                Body = bodyMessage,
-                Destination = destination,
-                Subject = subject               
-            };
-            _ = _emailService.SendAsync(msg);
         }
 
         public async Task<bool> Update(UserUpdateView userUpdate)
@@ -97,9 +85,8 @@ namespace TryLog.Services
             var result = await _userManager.ResetPasswordAsync(user, tokenDecoded, newPassword);
             if (result.Succeeded) {
                 string body = string.Format(Messages.PasswordChangeConfirmation, user.UserName,user.CreatedAt.ToLocalTime(),newPassword);
-                SendEmail(user.Email, "Password change confirmation", body);
+                await _emailService.SendAsync(user.Email, "Password change confirmation", body);
             }
-
             return result.Succeeded;
         }
 
@@ -109,7 +96,6 @@ namespace TryLog.Services
             List<int> minusculas = new List<int>(26);
             List<int> numeros = new List<int>(10);
             List<int> especiais = new List<int>(31);
-
 
             for (int i = 65; i <= 90; i++) maiusculas.Add(i);
             for (int i = 97; i <= 122; i++) minusculas.Add(i);
@@ -128,11 +114,10 @@ namespace TryLog.Services
                 strB.Append(Convert.ToChar(RandomDrop(ref minusculas)));
                 strB.Append(Convert.ToChar(RandomDrop(ref especiais)));
                 strB.Append(Convert.ToChar(RandomDrop(ref numeros)));
-         
             }
             return strB.ToString();
-
         }
+
         private int RandomDrop(ref List<int> list)
         {
             var letra = list[new Random().Next(list.Count)];
@@ -162,7 +147,7 @@ namespace TryLog.Services
             string link = string.Format("{0}?id={1}&token={2}", linkCallback, user.Id, tokenEncoded);
             string body = string.Format(Messages.PasswordResetConfirmation, link, user.UserName, user.CreatedAt.ToLocalTime());
 
-            SendEmail(email, "Password Reset Confirmation", body);
+            await _emailService.SendAsync(email, "Password Reset Confirmation", body);
 
             return true;
         }
@@ -197,7 +182,8 @@ namespace TryLog.Services
             user.Deleted = true;
 
             var result= await _userManager.UpdateAsync(user);
-            _ =  _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
+
             return result.ToString();
         }
 

@@ -23,7 +23,7 @@ namespace TryLog.UseCase.Mapper
             CreateMap<Log, LogViewModel>().ReverseMap();
             CreateMap<Severity, SeverityViewModel>().ReverseMap();
             CreateMap<Status, StatusViewModel>().ReverseMap();
-            CreateMap<UserCreateInView, User>()
+            CreateMap<UserCreateView, User>()
                 .ForCtorParam("fullName", opt => opt.MapFrom(x => x.FullName))
                 .ForCtorParam("userName", opt => opt.MapFrom(x => x.Email))
                 .ForCtorParam("password", opt => opt.MapFrom(x => x.Password)).ReverseMap();

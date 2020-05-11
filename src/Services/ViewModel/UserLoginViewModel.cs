@@ -2,9 +2,9 @@
 
 namespace TryLog.Services.ViewModel
 {
-    public class UserLoginInViewModel
+    public class UserLoginViewModel
     {
-        public UserLoginInViewModel(string email, string password)
+        public UserLoginViewModel(string email, string password)
         {
             Email = email;
             Password = password;

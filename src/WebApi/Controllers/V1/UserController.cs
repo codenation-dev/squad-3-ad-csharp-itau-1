@@ -22,7 +22,7 @@ namespace TryLog.WebApi.Controllers.V1
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginInViewModel user)
+        public async Task<IActionResult> Login([FromBody] UserLoginViewModel user)
         {
             var userLoginOut = await _service.Login(user);
             return Ok(userLoginOut);
@@ -47,10 +47,10 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         [HttpGet]
-        [Route("EmailConfirm")]
-        public async Task<IActionResult> EmailConfirm(string id, string token)
+        [Route("Activate")]
+        public async Task<IActionResult> Activate(string email, string token)
         {
-            return Ok(await _service.ConfirmTokenEmail(id, token));
+            return Ok(await _service.Activate(email, token));
         }
     }
 }

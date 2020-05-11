@@ -8,7 +8,6 @@ using System.Text;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 using TryLog.Services;
-using TryLog.Services.SettingObjects;
 using TryLog.WebApi.CustomProviderConfimationToken;
 
 namespace TryLog.WebApi.ExtensionsMethods
@@ -17,7 +16,6 @@ namespace TryLog.WebApi.ExtensionsMethods
     {
         public static void AddIdentityConfiguration(this IServiceCollection services)
         {
-
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
             services.AddScoped<UserManagerService>();

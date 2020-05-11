@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Environment = TryLog.Core.Model.Environment;
 
 namespace TryLog.Infraestructure.Map
 {
-    using Environment = Core.Model.Environment;
     public class EnvironmentMap : IEntityTypeConfiguration<Environment>
     {
         public void Configure(EntityTypeBuilder<Environment> builder)

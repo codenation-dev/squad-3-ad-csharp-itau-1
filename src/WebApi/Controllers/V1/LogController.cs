@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using TryLog.Core.Interfaces;
-using TryLog.Core.Model;
+﻿using Microsoft.AspNetCore.Mvc;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 

@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
@@ -59,5 +57,10 @@ namespace TryLog.Services.App
             var logs = _repo.SelectAll();
             return _mapper.Map<List<LogViewModel>>(logs);
         }
+        /*public List<LogViewModel> Filter()
+        {
+            //var logs = _repo.();
+            return _mapper.Map<List<LogViewModel>>(logs);
+        }*/
     }
 }

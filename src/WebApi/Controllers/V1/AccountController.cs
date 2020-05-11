@@ -20,11 +20,18 @@ namespace TryLog.WebApi.Controllers.V1
             _service = service;
         }
 
+        /// <summary>
+        /// Cria um conta de usuário.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>ActionResult</returns>
+        /// <response code="201">Se a conta de usuário foi criada com sucesso.</response>
+        /// <response code="404">Se os dados para cadastro não forem válidos.</response>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post([FromBody] UserCreateInView user)
+        public async Task<IActionResult> Post([FromBody] UserCreateView user)
         {
-            string callBack = Url.Action("EmailConfirm", "User", null, Request.Scheme);  
+            string callBack = Url.Action("Activate", "User", null, Request.Scheme);  
             var userCreateOut = await _service.Create(user, callBack);
 
             if (userCreateOut is null) 
@@ -37,13 +44,18 @@ namespace TryLog.WebApi.Controllers.V1
         {
             return Ok(await _service.Get());
         }
-
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UserUpdateView user)
         {
             return Ok(await _service.Update(user));
         }
-
+        // DELETE api/account
+        /// <summary>
+        /// Define a propriedade Delete e EmailConfirmed para false.
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna string indicando sucesso.</response>
+        /// <response code="204">Se o usuário não existir ou não estiver autenticado.</response>  
         [HttpDelete]
         public async Task<IActionResult> Delete(UserDeleteViewModel user)
         {

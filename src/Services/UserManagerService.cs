@@ -37,20 +37,20 @@ namespace TryLog.Services
             _authenticatedUser = authenticatedUser;
         }
 
-        public async Task<UserCreateOutView> Create(UserCreateInView userCreateInView, string linkCallback)
+        public async Task<UserCreateOutView> Create(UserCreateView userCreateInView, string linkCallback)
         {
             User user = _mapper.Map<User>(userCreateInView);
 
             IdentityResult result = await _userManager.CreateAsync(user, user.Password);
             if (!result.Succeeded)
-                return new UserCreateOutView(StatusCodes.Status400BadRequest, result.ToString());
+                return new UserCreateOutView(400, result.ToString());
 
             var code = await CreateTokenEmailConfirmation(user);
 
-            string callBack = string.Format("{0}?id={1}&token={2}", linkCallback, user.Id, code);
-            string bodyMessage = string.Format(Messages.AccountEmailConfirmation, user.FullName, callBack);
+            string callBack = string.Format("{0}?email={1}&token={2}", linkCallback, user.Email, code);
+            string bodyMessage = string.Format(Messages.AccountEmailActivation, user.FullName, callBack);
 
-            await _emailService.SendAsync(user.Email, "Account email confirmation.", bodyMessage);
+            _emailService.SendAsync(user.FullName, user.Email, "Account activation.", bodyMessage);
 
             return new UserCreateOutView(201, "Waiting for activation.");
         }
@@ -80,12 +80,12 @@ namespace TryLog.Services
             User user = await _userManager.FindByIdAsync(id);
 
             if (user is null) return false;
-            string tokenDecoded = TokenDecode(token);
+            string tokenDecoded = DecodeFromWeb(token);
             string newPassword = RandomPassword();
             var result = await _userManager.ResetPasswordAsync(user, tokenDecoded, newPassword);
             if (result.Succeeded) {
-                string body = string.Format(Messages.PasswordChangeConfirmation, user.UserName,user.CreatedAt.ToLocalTime(),newPassword);
-                await _emailService.SendAsync(user.Email, "Password change confirmation", body);
+                string body = string.Format(Messages.PasswordChangeConfirmation, user.UserName, user.CreatedAt.ToLocalTime(),newPassword);
+                _emailService.SendAsync(user.FullName, user.Email, "Password change confirmation", body);
             }
             return result.Succeeded;
         }
@@ -125,13 +125,13 @@ namespace TryLog.Services
             return letra;
         }
 
-        public async Task<bool> ConfirmTokenEmail(string id, string code)
+        public async Task<bool> Activate(string email, string code)
         {
-            User user = await _userManager.FindByIdAsync(id);
+            User user = await _userManager.FindByEmailAsync(email);
             
             if (user is null) return false;
             if (await _userManager.IsEmailConfirmedAsync(user)) return true;
-            string token = TokenDecode(code);
+            string token = DecodeFromWeb(code);
             var result = await _userManager.ConfirmEmailAsync(user, token);
 
             return result.Succeeded;
@@ -143,19 +143,19 @@ namespace TryLog.Services
 
             if (user is null) return false;
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            string tokenEncoded = TokenEncode(token);
+            string tokenEncoded = EncodeForWeb(token);
             string link = string.Format("{0}?id={1}&token={2}", linkCallback, user.Id, tokenEncoded);
             string body = string.Format(Messages.PasswordResetConfirmation, link, user.UserName, user.CreatedAt.ToLocalTime());
 
-            await _emailService.SendAsync(email, "Password Reset Confirmation", body);
+            _emailService.SendAsync(user.FullName, email, "Password Reset Confirmation", body);
 
             return true;
         }
 
-        public async Task<UserLoginOutViewModel> Login(UserLoginInViewModel userLoginInView)
+        public async Task<UserLoginOutViewModel> Login(UserLoginViewModel userLoginInView)
         {
             if (_authenticatedUser.IsAuthenticated())
-                return new UserLoginOutViewModel("Sucess", "User is already authenticated.");
+                return new UserLoginOutViewModel("Sucess", "User already authenticated.");
 
             User user = await _userManager.FindByEmailAsync(userLoginInView.Email);            
 
@@ -179,7 +179,9 @@ namespace TryLog.Services
 
             var confirmPass = await _userManager.CheckPasswordAsync(user, userDelete.Password);
             if (!confirmPass) return null;
+            
             user.Deleted = true;
+            user.EmailConfirmed = false;
 
             var result= await _userManager.UpdateAsync(user);
             await _signInManager.SignOutAsync();
@@ -222,19 +224,19 @@ namespace TryLog.Services
         private async Task<string> CreateTokenEmailConfirmation(User user)
         {
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            return TokenEncode(token);
+            return EncodeForWeb(token);
         }
 
-        private string TokenEncode(string token)
+        private string EncodeForWeb(string code)
         {
-            var tokenEncoded = Encoding.UTF8.GetBytes(token);
-            return WebEncoders.Base64UrlEncode(tokenEncoded);
+            var encoded = Encoding.UTF8.GetBytes(code);
+            return WebEncoders.Base64UrlEncode(encoded);
         }
 
-        private static string TokenDecode(string code)
+        private static string DecodeFromWeb(string code)
         {
-            byte[] tokenDecode = WebEncoders.Base64UrlDecode(code);
-            return Encoding.UTF8.GetString(tokenDecode);
+            byte[] decode = WebEncoders.Base64UrlDecode(code);
+            return Encoding.UTF8.GetString(decode);
         }
     }
 

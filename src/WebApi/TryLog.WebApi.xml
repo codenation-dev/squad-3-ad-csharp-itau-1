@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TryLog.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:TryLog.WebApi.Controllers.V1.AccountController.Post(TryLog.Services.ViewModel.UserCreateView)">
+            <summary>
+            Cria um conta de usuário.
+            </summary>
+            <param name="user"></param>
+            <returns>ActionResult</returns>
+            <response code="201">Se a conta de usuário foi criada com sucesso.</response>
+            <response code="404">Se os dados para cadastro não forem válidos.</response>
+        </member>
+        <member name="M:TryLog.WebApi.Controllers.V1.AccountController.Delete(TryLog.Services.ViewModel.UserDeleteViewModel)">
+            <summary>
+            Define a propriedade Delete e EmailConfirmed para false.
+            </summary>
+            <returns>ActionResult</returns>
+            <response code="200">Retorna string indicando sucesso.</response>
+            <response code="204">Se o usuário não existir ou não estiver autenticado.</response>  
+        </member>
+    </members>
+</doc>

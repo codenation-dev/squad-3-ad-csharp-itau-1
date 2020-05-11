@@ -14,7 +14,7 @@
                 "To complete the password reset process, click on <a href = {0}>this link</a>.<br><b ></tbody><table><tbody>" +
                 "<tr><td>Username</td><td>{1}</td></tr><tr><td>Created</td><td>{2}</td></tr></tbody></table></body>";
 
-        public static string AccountEmailConfirmation = "Hi {0}.<br>You have been sent this email because you created an account on our website." +
+        public static string AccountEmailActivation = "Hi {0}.<br>You have been sent this email because you created an account on our website." +
             "<br>Please click on <a href = {1}>this link</a> to confirm your email address is correct.";
     }
 }

@@ -26,6 +26,12 @@ namespace TryLog.Infraestructure.Map
                    .HasColumnName("deleted")
                    .HasColumnType("bit")
                    .IsRequired();
+
+            builder.HasData(
+                new Status(1,"Arquivado"),
+                new Status(2,"Pendente"),
+                new Status(3,"Ignorado")
+            );
         }
     }
 }

@@ -18,6 +18,9 @@ using System.Collections.Generic;
 using TryLog.Services;
 using TryLog.Services.SettingObjects;
 using Microsoft.AspNetCore.Http;
+using System.Reflection;
+using System;
+using System.IO;
 
 namespace TryLog.WebApi
 {
@@ -49,6 +52,11 @@ namespace TryLog.WebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TryLog", Version = "v1" });
+                
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"Please enter into field the word 'Bearer' following by space and JWT",
@@ -57,6 +65,7 @@ namespace TryLog.WebApi
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
+
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
@@ -76,7 +85,6 @@ namespace TryLog.WebApi
                     }
                 });
             });
-
 
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<ILayerRepository, LayerRepository>();
@@ -111,8 +119,7 @@ namespace TryLog.WebApi
             {
                 opt.LowercaseQueryStrings = false;
                 opt.LowercaseUrls = true;
-            });
-            
+            });            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

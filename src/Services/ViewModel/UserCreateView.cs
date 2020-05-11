@@ -2,7 +2,7 @@
 
 namespace TryLog.Services.ViewModel
 {
-    public class UserCreateInView
+    public class UserCreateView
     {
         [Required(ErrorMessage = "Full name is required")]
         public string FullName { get; set; }

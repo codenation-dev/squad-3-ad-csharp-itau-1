@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TryLog.Core.Model;
 
 namespace TryLog.Infraestructure.Map
@@ -29,6 +26,12 @@ namespace TryLog.Infraestructure.Map
                    .HasColumnName("deleted")
                    .HasColumnType("bit")
                    .IsRequired();
+
+            builder.HasData(
+                new Severity(1, "Baixo"),
+                new Severity(2, "Médio"),
+                new Severity(3, "Alto")
+            );
         }
     }
 }

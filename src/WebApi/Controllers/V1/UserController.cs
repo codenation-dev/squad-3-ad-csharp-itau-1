@@ -14,12 +14,16 @@ namespace TryLog.WebApi.Controllers.V1
     public class UserController : ControllerBase
     {
         private readonly UserManagerService _service;
-
         public UserController(UserManagerService service)
         {
             _service = service;
         }
 
+        /// <summary>
+        /// Realiza o Login do Usuario
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginViewModel user)
@@ -27,6 +31,12 @@ namespace TryLog.WebApi.Controllers.V1
             var userLoginOut = await _service.Login(user);
             return Ok(userLoginOut);
         }
+
+        /// <summary>
+        /// Reseta senha do Usuario
+        /// </summary>
+        /// <param name="resetPassword"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("ResetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPassword)
@@ -39,6 +49,12 @@ namespace TryLog.WebApi.Controllers.V1
             return NotFound();
         }
 
+        /// <summary>
+        /// Confirma senha do Usuario
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("ConfirmPassword")]
         public async Task<IActionResult> ConfirmPassword(string id, string token)
@@ -46,6 +62,12 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok(await _service.ConfirmTokenPasswordReset(id, token));
         }
 
+        /// <summary>
+        /// Ativa email do Usuario
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Activate")]
         public async Task<IActionResult> Activate(string email, string token)

@@ -14,7 +14,6 @@ namespace TryLog.WebApi.Controllers.V1
     public class AccountController : ControllerBase
     {
         private readonly UserManagerService _service;
-
         public AccountController(UserManagerService service)
         {
             _service = service;
@@ -39,23 +38,37 @@ namespace TryLog.WebApi.Controllers.V1
 
             return Ok(new { message = userCreateOut.Description });
         }
+
+        /// <summary>
+        /// Lista todos os Usuários registrados
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200"> Se o Usuario existe.</response>
+        /// <response code="204"> Se o Usuario não existe</response>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(await _service.Get());
         }
+
+        /// <summary>
+        /// Altera um Usuário existente
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UserUpdateView user)
         {
             return Ok(await _service.Update(user));
         }
-        // DELETE api/account
+
         /// <summary>
         /// Define a propriedade Delete e EmailConfirmed para false.
         /// </summary>
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna string indicando sucesso.</response>
-        /// <response code="204">Se o usuário não existir ou não estiver autenticado.</response>  
+        /// <response code="204">Se o usuário não existir ou não estiver autenticado.</response>
+        // DELETE api/account
         [HttpDelete]
         public async Task<IActionResult> Delete(UserDeleteViewModel user)
         {

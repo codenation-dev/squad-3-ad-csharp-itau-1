@@ -16,6 +16,10 @@ namespace TryLog.WebApi.Controllers.V1
             _service = service;
         }
 
+        /// <summary>
+        /// Lista todos os Ambientes registrados
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Environment
         [HttpGet]
         public IActionResult Get()
@@ -23,6 +27,11 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok(_service.SelectAll());
         }
 
+        /// <summary>
+        /// Retorna o Ambiente solicitado por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Environment/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -35,11 +44,19 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok(environment);
         }
 
+        /// <summary>
+        /// Cria um novo Ambiente
+        /// </summary>
+        /// <param name="environmentViewModel"></param>
+        /// <returns></returns>
         // POST: api/Environment
         [HttpPost]
-        public IActionResult Post([FromBody] EnvironmentViewModel environmentDTO)
+        public IActionResult Post([FromBody] EnvironmentViewModel environmentViewModel)
         {
-            var environment = _service.Add(environmentDTO);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var environment = _service.Add(environmentViewModel);
 
             if (environment is null)
                 return NoContent();
@@ -47,11 +64,21 @@ namespace TryLog.WebApi.Controllers.V1
             return CreatedAtAction(nameof(Get), new { environment.Id }, environment);
         }
 
+        /// <summary>
+        /// Altera um Ambiente existente
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="environmentViewModel"></param>
+        /// <returns></returns>
         // PUT: api/Environment/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] EnvironmentViewModel environmentDTO)
+        public IActionResult Put(int id, [FromBody] EnvironmentViewModel environmentViewModel)
         {
-            bool resultUpdate = _service.Update(environmentDTO);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            environmentViewModel.Id = id;
+            bool resultUpdate = _service.Update(environmentViewModel);
 
             if (!resultUpdate)
                 return NoContent();
@@ -59,6 +86,11 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok();
         }
 
+        /// <summary>
+        /// Remove um Ambiente existente
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

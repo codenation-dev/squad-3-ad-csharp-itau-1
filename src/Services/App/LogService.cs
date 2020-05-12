@@ -17,15 +17,26 @@ namespace TryLog.Services.App
             _mapper = mapper;
         }
 
-        public LogViewModel Add(LogViewModel entity)
+        private LogViewModel Add(LogViewModel entity)
         {
             var log = _repo.Add(_mapper.Map<Log>(entity));
             return _mapper.Map<LogViewModel>(log);
         }
 
+        public LogViewModel Add(LogViewModel entity, string token)
+        {
+            entity.Token = token;
+            return Add(entity);
+        }
+
         public void Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
+            var log = _repo.Find(x => x.Id == entityId);
+            if (log != null)
+            {
+                log.Deleted = true;
+                _repo.Update(log);
+            }        
         }
 
         public LogViewModel Find(int entityId)
@@ -42,7 +53,7 @@ namespace TryLog.Services.App
 
         public LogViewModel Get(int entityId)
         {
-            var log = _repo.Get(entityId);
+            var log = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<LogViewModel>(log);
         }
 
@@ -54,7 +65,7 @@ namespace TryLog.Services.App
 
         public List<LogViewModel> SelectAll()
         {
-            var logs = _repo.SelectAll();
+            var logs = _repo.FindAll(x => x.Deleted == false);
             return _mapper.Map<List<LogViewModel>>(logs);
         }
         /*public List<LogViewModel> Filter()

@@ -11,12 +11,15 @@ namespace TryLog.WebApi.Controllers.V1
     public class VersionController : ControllerBase
     {
         private readonly IConfiguration _config;
-
         public VersionController(IConfiguration config)
         {
             _config = config;
         }
 
+        /// <summary>
+        /// Retorna Versao da Aplicação
+        /// </summary>
+        /// <returns></returns>
         //TODO: documentar o motivo deste endpoint
         [HttpGet]
         [Route("api/Version")]
@@ -27,6 +30,10 @@ namespace TryLog.WebApi.Controllers.V1
             return _config.GetValue<string>("ApplicationVersion");
         }
 
+        /// <summary>
+        /// Retorna token do Usuario autenticado de acordo com a Versão da Aplicação
+        /// </summary>
+        /// <returns></returns>
         //TODO: documentar o motivo deste endpoint
         [HttpGet]
         [Route("api/VersionWithAuthorization")]

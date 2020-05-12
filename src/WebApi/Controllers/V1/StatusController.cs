@@ -23,6 +23,10 @@ namespace TryLog.WebApi.Controllers.V1
             _service = service;
         }
 
+        /// <summary>
+        /// Lista todos os Status registrados
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Status
         [HttpGet]
         public IActionResult Get()
@@ -30,6 +34,11 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok(_service.SelectAll());
         }
 
+        /// <summary>
+        /// Retorna o Status solicitado por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Status/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -42,10 +51,18 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok(status);
         }
 
+        /// <summary>
+        /// Cria um novo Status
+        /// </summary>
+        /// <param name="statusViewModel"></param>
+        /// <returns></returns>
         // POST: api/Status
         [HttpPost]
         public IActionResult Post([FromBody] StatusViewModel statusViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var status = _service.Add(statusViewModel);
 
             if (status is null)
@@ -54,10 +71,20 @@ namespace TryLog.WebApi.Controllers.V1
             return CreatedAtAction(nameof(Get), new { status.Id }, status);
         }
 
+        /// <summary>
+        /// Altera um Status existente
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="statusViewModel"></param>
+        /// <returns></returns>
         // PUT: api/Status/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] StatusViewModel statusViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            statusViewModel.Id = id;
             bool resultUpdate = _service.Update(statusViewModel);
 
             if (!resultUpdate)
@@ -66,6 +93,11 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok();
         }
 
+        /// <summary>
+        /// Remove um Status existente
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

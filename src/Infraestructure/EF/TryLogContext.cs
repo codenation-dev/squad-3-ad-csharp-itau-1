@@ -30,12 +30,6 @@ namespace TryLog.Infraestructure.EF
             modelBuilder.ApplyConfiguration(new SeverityMap());
             modelBuilder.ApplyConfiguration(new StatusMap());
             modelBuilder.ApplyConfiguration(new UserMap());
-            modelBuilder.ApplyConfiguration(new IdentityRoleClaimMap());
-            modelBuilder.ApplyConfiguration(new IdentityRoleMap());
-            modelBuilder.ApplyConfiguration(new IdentityUserClaimMap());
-            modelBuilder.ApplyConfiguration(new IdentityUserLoginMap());
-            modelBuilder.ApplyConfiguration(new IdentityUserRoleMap());
-            modelBuilder.ApplyConfiguration(new IdentityUserTokenMap());
         }
     }
 }

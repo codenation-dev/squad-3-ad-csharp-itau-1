@@ -32,8 +32,11 @@ namespace TryLog.Services.App
         public void Delete(int entityId)
         {
             var log = _repo.Find(x => x.Id == entityId);
-            log.Deleted = true;
-            _repo.Update(log);
+            if (log != null)
+            {
+                log.Deleted = true;
+                _repo.Update(log);
+            }        
         }
 
         public LogViewModel Find(int entityId)
@@ -50,9 +53,7 @@ namespace TryLog.Services.App
 
         public LogViewModel Get(int entityId)
         {
-            var xpto = _mapper.Map<LogViewModel>(null);
             var log = _repo.Find(x => x.Id == entityId && x.Deleted == false);
-            
             return _mapper.Map<LogViewModel>(log);
         }
 

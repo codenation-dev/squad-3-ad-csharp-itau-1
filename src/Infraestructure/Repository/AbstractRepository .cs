@@ -47,7 +47,7 @@ namespace TryLog.Infraestructure.Repository
 
         public bool Update(T entity)
         {
-            _ =_context.Set<T>().Update(entity);           
+            _context.Set<T>().Update(entity);           
             return _context.SaveChanges() == 1;
         }
 

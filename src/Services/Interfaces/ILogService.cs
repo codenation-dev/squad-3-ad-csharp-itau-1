@@ -5,7 +5,7 @@ namespace TryLog.Services.Interfaces
 {
     public interface ILogService
     {
-        LogViewModel Add(LogViewModel entity);
+        LogViewModel Add(LogViewModel entity, string token);
         LogViewModel Get(int entityId);
         LogViewModel Find(int entityId);
         List<LogViewModel> FindAll(int entityId);

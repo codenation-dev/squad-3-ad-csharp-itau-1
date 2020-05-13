@@ -7,9 +7,7 @@ using TryLog.Services.ViewModel;
 namespace TryLog.WebApi.Controllers.V1
 {
     [Authorize]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    [ApiController]
+    [ApiController, Consumes("application/json"), Produces("application/json")]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
@@ -40,11 +38,9 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Lista todos os Usuários registrados
+        /// Retorna dados do usuário logado.
         /// </summary>
         /// <returns></returns>
-        /// <response code="200"> Se o Usuario existe.</response>
-        /// <response code="204"> Se o Usuario não existe</response>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -52,7 +48,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Altera um Usuário existente
+        /// Atribui novos valores para o usuário logado.
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -63,12 +59,10 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Define a propriedade Delete e EmailConfirmed para false.
+        /// Remove o usuário logado.
         /// </summary>
         /// <returns>ActionResult</returns>
-        /// <response code="200">Retorna string indicando sucesso.</response>
-        /// <response code="204">Se o usuário não existir ou não estiver autenticado.</response>
-        // DELETE api/account
+        /// <response code="200">Retorna uma string com o resultado.</response>
         [HttpDelete]
         public async Task<IActionResult> Delete(UserDeleteViewModel user)
         {

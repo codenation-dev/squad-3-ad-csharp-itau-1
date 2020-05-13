@@ -16,5 +16,8 @@
 
         public static string AccountEmailActivation = "Hi {0}.<br>You have been sent this email because you created an account on our website." +
             "<br>Please click on <a href = {1}>this link</a> to confirm your email address is correct.";
+    
+        public static string AccountReActivation = "Hi {0}.<br>Você solicitou a reativação de sua conta." +
+            "<br>Please click on <a href = {1}>this link</a> to confirm.";
     }
 }

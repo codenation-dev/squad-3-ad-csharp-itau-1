@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Description": "Desenvolvimento",
+    "DateRegister": "2020-05-01 22:16:10.213",
+    "Deleted": 0
+  },
+  {
+    "Id": 2,
+    "Description": "Homologação",
+    "DateRegister": "2020-05-01 22:16:11.213",
+    "Deleted": 0
+  },
+  {
+    "Id": 3,
+    "Description": "Produção",
+    "DateRegister": "2020-05-01 22:16:12.400",
+    "Deleted": 0
+  }
+]

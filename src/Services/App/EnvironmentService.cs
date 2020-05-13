@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using System.Linq;
 using TryLog.Core.Interfaces;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 using Environment = TryLog.Core.Model.Environment;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
 
 namespace TryLog.Services.App
 {
@@ -31,16 +25,14 @@ namespace TryLog.Services.App
 
         public bool Delete(int entityId)
         {
-            bool resultDelete = false;
             var environment = _repo.Find(x => x.Id == entityId && x.Deleted == false);
 
             if (environment != null)
             {
                 environment.Deleted = true;
-                resultDelete = _repo.Update(environment);
+                return _repo.Update(environment);
             }
-
-            return resultDelete;
+            return false;
         }
 
         public EnvironmentViewModel Get(int entityId)
@@ -51,15 +43,12 @@ namespace TryLog.Services.App
 
         public bool Update(EnvironmentViewModel entity)
         {
-            bool resultUpdate = false;
             var environment = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
             
             if (environment != null)
-            {
-                resultUpdate = _repo.Update(_mapper.Map<Environment>(entity));
-            }
+                return _repo.Update(_mapper.Map<Environment>(entity));
             
-            return resultUpdate;
+            return false;
         }
 
         public List<EnvironmentViewModel> SelectAll()

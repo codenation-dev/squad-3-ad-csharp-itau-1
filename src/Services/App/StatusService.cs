@@ -24,38 +24,42 @@ namespace TryLog.Services.App
             return _mapper.Map<StatusViewModel>(status);
         }
 
-        public void Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
-        }
+            bool resultDelete = false;
+            var status = _repo.Find(x => x.Id == entityId && x.Deleted == false);
 
-        public StatusViewModel Find(int entityId)
-        {
-            var status = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<StatusViewModel>(status);
-        }
+            if (status != null)
+            {
+                status.Deleted = true;
+                resultDelete = _repo.Update(status);
+            }
 
-        public List<StatusViewModel> FindAll(int entityId)
-        {
-            var status = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<StatusViewModel>>(status);
+            return resultDelete;
         }
 
         public StatusViewModel Get(int entityId)
         {
-            var status = _repo.Get(entityId);
+            var status = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<StatusViewModel>(status);
         }
 
         public bool Update(StatusViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Status>(entity));
+            bool resultUpdate = false;
+            var status = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+
+            if (status != null)
+            {
+                resultUpdate = _repo.Update(_mapper.Map<Status>(entity));
+            }
+           
             return resultUpdate;
         }
 
         public List<StatusViewModel> SelectAll()
         {
-            var status = _repo.SelectAll();
+            var status = _repo.FindAll(x => x.Deleted == false);
             return _mapper.Map<List<StatusViewModel>>(status);
         }
     }

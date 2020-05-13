@@ -10,10 +10,8 @@ namespace TryLog.Services.Interfaces
     {
         LayerViewModel Add(LayerViewModel entity);
         LayerViewModel Get(int entityId);
-        LayerViewModel Find(int entityId);
-        List<LayerViewModel> FindAll(int entityId);
         bool Update(LayerViewModel entity);
-        void Delete(int entityId);
+        bool Delete(int entityId);
         List<LayerViewModel> SelectAll();
     }
 }

@@ -10,10 +10,8 @@ namespace TryLog.Services.Interfaces
     {
         SeverityViewModel Add(SeverityViewModel entity);
         SeverityViewModel Get(int entityId);
-        SeverityViewModel Find(int entityId);
-        List<SeverityViewModel> FindAll(int entityId);
         bool Update(SeverityViewModel entity);
-        void Delete(int entityId);
+        bool Delete(int entityId);
         List<SeverityViewModel> SelectAll();
     }
 }

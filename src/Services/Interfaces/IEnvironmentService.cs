@@ -10,10 +10,8 @@ namespace TryLog.Services.Interfaces
     {
         EnvironmentViewModel Add(EnvironmentViewModel entity);
         EnvironmentViewModel Get(int entityId);
-        EnvironmentViewModel Find(int entityId);
-        List<EnvironmentViewModel> FindAll(int entityId);
         bool Update(EnvironmentViewModel entity);
-        void Delete(int entityId);
+        bool Delete(int entityId);
         List<EnvironmentViewModel> SelectAll();
     }
 }

@@ -24,38 +24,42 @@ namespace TryLog.Services.App
             return _mapper.Map<SeverityViewModel>(severity);
         }
 
-        public void Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
-        }
+            bool resultDelete = false;
+            var severity = _repo.Find(x => x.Id == entityId && x.Deleted == false);
 
-        public SeverityViewModel Find(int entityId)
-        {
-            var severity = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<SeverityViewModel>(severity);
-        }
+            if (severity != null)
+            {
+                severity.Deleted = true;
+                resultDelete = _repo.Update(severity);
+            }
 
-        public List<SeverityViewModel> FindAll(int entityId)
-        {
-            var severities = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<SeverityViewModel>>(severities);
+            return resultDelete;
         }
 
         public SeverityViewModel Get(int entityId)
         {
-            var severity = _repo.Get(entityId);
+            var severity = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<SeverityViewModel>(severity);
         }
 
         public bool Update(SeverityViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Severity>(entity));
+            bool resultUpdate = false;
+            var severity = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+
+            if (severity != null)
+            {
+                resultUpdate = _repo.Update(_mapper.Map<Severity>(entity));
+            }
+
             return resultUpdate;
         }
 
         public List<SeverityViewModel> SelectAll()
         {
-            var severities = _repo.SelectAll();
+            var severities = _repo.FindAll(x => x.Deleted == false);
             return _mapper.Map<List<SeverityViewModel>>(severities);
         }
     }

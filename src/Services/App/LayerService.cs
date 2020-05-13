@@ -20,42 +20,46 @@ namespace TryLog.Services.App
         }
         public LayerViewModel Add(LayerViewModel entity)
         {
-            var layer = _repo.Add(_mapper.Map<Core.Model.Layer>(entity));
+            var layer = _repo.Add(_mapper.Map<Layer>(entity));
             return _mapper.Map<LayerViewModel>(layer);
         }
 
-        public void Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
-        }
+            bool resultDelete = false;
+            var layer = _repo.Find(x => x.Id == entityId && x.Deleted == false);
+            
+            if (layer != null)
+            {
+                layer.Deleted = true;
+                resultDelete = _repo.Update(layer);
+            }
 
-        public LayerViewModel Find(int entityId)
-        {
-            var layer = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<LayerViewModel>(layer);
-        }
-
-        public List<LayerViewModel> FindAll(int entityId)
-        {
-            var layers = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<LayerViewModel>>(layers);
+            return resultDelete;
         }
 
         public LayerViewModel Get(int entityId)
         {
-            var layer = _repo.Get(entityId);
+            var layer = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<LayerViewModel>(layer);
         }
 
         public bool Update(LayerViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Core.Model.Layer>(entity));
+            bool resultUpdate = false;
+            var layer = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+
+            if (layer != null)
+            {
+                resultUpdate = _repo.Update(_mapper.Map<Layer>(entity));
+            }
+
             return resultUpdate;
         }
 
         public List<LayerViewModel> SelectAll()
         {
-            var layers = _repo.SelectAll();
+            var layers = _repo.FindAll(x => x.Deleted == false);
             return _mapper.Map<List<LayerViewModel>>(layers);
         }
     }

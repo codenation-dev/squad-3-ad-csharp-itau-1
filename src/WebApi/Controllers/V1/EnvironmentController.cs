@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
+using System;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -36,12 +37,7 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var environment = _service.Get(id);
-
-            if (environment is null)
-                return NoContent();
-
-            return Ok(environment);
+            return Ok(_service.Get(id));
         }
 
         /// <summary>
@@ -95,7 +91,16 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _service.Delete(id);
+            bool resultDelete = _service.Delete(id);
+
+            if (!resultDelete)
+            {
+                throw new InvalidOperationException(string.Format(
+                "The product with an ID of '{0}' could not be found.\n"
+                + "Make sure that Product exists.\n",
+                id));
+            }
+
             return Ok();
         }
     }

@@ -97,7 +97,16 @@ namespace TryLog.WebApi.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _service.Delete(id);
+            var resultDelete = _service.Delete(id);
+            
+            if (!resultDelete)
+            {
+                throw new InvalidOperationException(string.Format(
+                "The product with an ID of '{0}' could not be found.\n"
+                + "Make sure that Product exists.\n",
+                id));
+            }
+
             return Ok();
         }
     }

@@ -10,10 +10,8 @@ namespace TryLog.Services.Interfaces
     {
         StatusViewModel Add(StatusViewModel entity);
         StatusViewModel Get(int entityId);
-        StatusViewModel Find(int entityId);
-        List<StatusViewModel> FindAll(int entityId);
         bool Update(StatusViewModel entity);
-        void Delete(int entityId);
+        bool Delete(int entityId);
         List<StatusViewModel> SelectAll();
     }
 }

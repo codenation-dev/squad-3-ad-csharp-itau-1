@@ -7,6 +7,7 @@ using System.Linq;
 using TryLog.Services.ViewModel;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TryLog.Services.Interfaces;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace TryLog.Services.App
 {
@@ -26,12 +27,14 @@ namespace TryLog.Services.App
             
             var countError = new Dictionary<string, int>();
             
-            for (int i = 0; i < 24; i++)
+            for (int i = 1; i <= 24; i++)
             {
-                var hours = new TimeSpan(0, i, 0, 0);
+                var hours = new TimeSpan(0, i - 1, 0, 0);
+                var beforeHours = new TimeSpan(0, i - 1, 0, 0);
+
                 var afterDate = today.Subtract(hours);
                
-                countError.Add(afterDate.ToString("HH TT"), CountErrors(afterDate));    
+                countError.Add(afterDate.ToString("HH TT"), CountErrors(afterDate, beforeHours));    
             }
 
             return new ErrorViewModel { 
@@ -43,9 +46,9 @@ namespace TryLog.Services.App
             };
         }
 
-        private int CountErrors(DateTime date)
+        private int CountErrors(DateTime date, TimeSpan time)
         {
-            return _repo.FindAll(x => x.DateRegister <= DateTime.Now && x.DateRegister >= date)
+            return _repo.FindAll(x => x.DateRegister <= date.Add(time) && x.DateRegister >= date)
                                    .Select(x => x.Id)
                                    .Count();
         }
@@ -57,12 +60,13 @@ namespace TryLog.Services.App
             var countError = new List<int>();
             var countMonths = new List<string>();
 
-            for (int i = 0; i < 360; i += 30)
+            for (int i = 30; i < 390; i += 30)
             {
-                var hours = new TimeSpan(i, 0, 0, 0);
+                var beforeHours = new TimeSpan(i - 30, 0, 0, 0);
+                var hours = new TimeSpan(i -30, 0, 0, 0);
                 var afterDate = today.Subtract(hours);
 
-                countError.Add(CountErrors(afterDate));
+                countError.Add(CountErrors(afterDate, beforeHours));
                 countMonths.Add(afterDate.ToString("MMM"));
             }
 

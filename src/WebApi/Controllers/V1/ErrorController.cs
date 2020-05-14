@@ -15,9 +15,11 @@ namespace TryLog.WebApi.Controllers.V1
     public class ErrorController : ControllerBase
     {
         private readonly IErrorService _service;
-        public ErrorController(IErrorService service)
+        private readonly IStatisticsService _statistics;
+        public ErrorController(IErrorService service, IStatisticsService statistics)
         {
             _service = service;
+            _statistics = statistics;
         }
 
         // GET: api/Error
@@ -34,6 +36,14 @@ namespace TryLog.WebApi.Controllers.V1
         public IActionResult GetMouth()
         {
             return Ok(_service.MonthsErrors());
+        }
+
+        // GET: api/Error
+        [HttpGet]
+        [Route("statistics")]
+        public IActionResult GetStatistics()
+        {
+            return Ok(_statistics.Statistics());
         }
 
         //// GET: api/Error/5

@@ -55,5 +55,10 @@ namespace TryLog.Infraestructure.Repository
         {
             return _context.Set<T>().ToList();
         }
+
+        public int Count()
+        {
+            return _context.Set<T>().Count();
+        }
     }
 }

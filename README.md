@@ -31,7 +31,7 @@ Através desta modelo arquitetural, esperamos melhorar a forma como o projeto é
 
 Também nos serviu de base o material apresentado no livro Asp.NET Core Architecture e-book, disponível em [sítio Microsoft](https://dotnet.microsoft.com/download/e-book/aspnet/pdf).
 
-##### Camada de Infraestrutura
+#### Camada de Infraestrutura
 
 São itens desta camada, aqueles relativos à:
 
@@ -40,7 +40,7 @@ São itens desta camada, aqueles relativos à:
 * Implementações de acesso a dados (das Interfaces definidas no Core)
 * Serviços específicos de infraestrutura
 
-##### Camada de WebApi
+#### Camada de WebApi
 
 Esta camada será responsável por receber as requisições dos clientes e endereçá-las.
 
@@ -69,7 +69,7 @@ dotnet add .\src\WebApi\ package Microsoft.EntityFrameworkCore.InMemory
 Uma condição verifica quando o Environment é igual a Development e trata de registrar no container de dependência o provider de InMemory para o EF, ou, se Production, registra o SqlServer.
 
 
-##### Camada Core
+#### Camada Core
 
 Esta camada é responsável por armazenar as abstrações do nosso universo. Por exemplo, o que é um log de erro será representado aqui por uma classe.
 

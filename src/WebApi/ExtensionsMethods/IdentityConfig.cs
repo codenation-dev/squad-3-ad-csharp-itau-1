@@ -7,7 +7,7 @@ using System;
 using System.Text;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
-using TryLog.Services;
+using TryLog.Services.App;
 using TryLog.WebApi.CustomProviderConfimationToken;
 
 namespace TryLog.WebApi.ExtensionsMethods

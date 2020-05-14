@@ -29,17 +29,23 @@ namespace TryLog.Sentinela
                 .Options;
 
             DataFileNames.Add(typeof(Core.Model.Environment), $"FakeData{Path.DirectorySeparatorChar}environments.json");
+            DataFileNames.Add(typeof(EnvironmentViewModel), $"FakeData{Path.DirectorySeparatorChar}environments.json");
             DataFileNames.Add(typeof(Layer), $"FakeData{Path.DirectorySeparatorChar}layers.json");
+            DataFileNames.Add(typeof(LayerViewModel), $"FakeData{Path.DirectorySeparatorChar}layers.json");
+            DataFileNames.Add(typeof(Log), $"FakeData{Path.DirectorySeparatorChar}logs.json");
+            DataFileNames.Add(typeof(LogViewModel), $"FakeData{Path.DirectorySeparatorChar}logs.json");
             DataFileNames.Add(typeof(Severity), $"FakeData{Path.DirectorySeparatorChar}severities.json");
+            DataFileNames.Add(typeof(SeverityViewModel), $"FakeData{Path.DirectorySeparatorChar}severities.json");
             DataFileNames.Add(typeof(Status), $"FakeData{Path.DirectorySeparatorChar}statuses.json");
+            DataFileNames.Add(typeof(StatusViewModel), $"FakeData{Path.DirectorySeparatorChar}statuses.json");
 
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Core.Model.Environment, EnvironmentViewModel>().ReverseMap();
                 cfg.CreateMap<Layer, LayerViewModel>().ReverseMap();
+                cfg.CreateMap<Log, LogViewModel>().ReverseMap();
                 cfg.CreateMap<Severity, SeverityViewModel>().ReverseMap();
                 cfg.CreateMap<Status, StatusViewModel>().ReverseMap();
-
             });
 
             Mapper = configuration.CreateMapper();
@@ -49,6 +55,7 @@ namespace TryLog.Sentinela
         {
             FillWith<Core.Model.Environment>();
             FillWith<Layer>();
+            FillWith<Log>();
             FillWith<Severity>();
             FillWith<Status>();
         }
@@ -76,7 +83,7 @@ namespace TryLog.Sentinela
         {
             var service = new Mock<IEnvironmentService>();
 
-            service.Setup(x => x.Find(It.IsAny<int>()))
+            service.Setup(x => x.Get(It.IsAny<int>()))
                 .Returns((int id) => Get<EnvironmentViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
@@ -95,7 +102,7 @@ namespace TryLog.Sentinela
         {
             var service = new Mock<ILayerService>();
 
-            service.Setup(x => x.Find(It.IsAny<int>()))
+            service.Setup(x => x.Get(It.IsAny<int>()))
                 .Returns((int id) => Get<LayerViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
@@ -110,11 +117,30 @@ namespace TryLog.Sentinela
             return service;
         }
 
+        public Mock<ILogService> FakeLogService()
+        {
+            var service = new Mock<ILogService>();
+
+            service.Setup(x => x.Get(It.IsAny<int>()))
+                .Returns((int id) => Get<LogViewModel>()
+                .FirstOrDefault(x => x.Id == id));
+
+            service.Setup(x => x.Add(It.IsAny<LogViewModel>())).
+                Returns((LogViewModel log) =>
+                {
+                    if (log.Id == 0)
+                        log.Id = 999;
+                    return log;
+                });
+
+            return service;
+        }
+
         public Mock<ISeverityService> FakeSeverityService()
         {
             var service = new Mock<ISeverityService>();
 
-            service.Setup(x => x.Find(It.IsAny<int>()))
+            service.Setup(x => x.Get(It.IsAny<int>()))
                 .Returns((int id) => Get<SeverityViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
@@ -133,7 +159,7 @@ namespace TryLog.Sentinela
         {
             var service = new Mock<IStatusService>();
 
-            service.Setup(x => x.Find(It.IsAny<int>()))
+            service.Setup(x => x.Get(It.IsAny<int>()))
                 .Returns((int id) => Get<StatusViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
@@ -143,25 +169,6 @@ namespace TryLog.Sentinela
                     if (status.Id == 0)
                         status.Id = 999;
                     return status;
-                });
-
-            return service;
-        }
-
-        public Mock<ILogService> FakeLogService()
-        {
-            var service = new Mock<ILogService>();
-
-            service.Setup(x => x.Find(It.IsAny<int>()))
-                .Returns((int id) => Get<LogViewModel>()
-                .FirstOrDefault(x => x.Id == id));
-
-            service.Setup(x => x.Add(It.IsAny<LogViewModel>())).
-                Returns((LogViewModel log) =>
-                {
-                    if (log.Id == 0)
-                        log.Id = 999;
-                    return log;
                 });
 
             return service;

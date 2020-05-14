@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Collections.Generic;
+using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 
 namespace TryLog.Services.Interfaces
 {
     public interface ILogService
     {
-        LogViewModel Add(LogViewModel entity);
+        LogViewModel Add(LogViewModel entity, string token);
         LogViewModel Get(int entityId);
-        LogViewModel Find(int entityId);
-        List<LogViewModel> FindAll(int entityId);
         bool Update(LogViewModel entity);
-        void Delete(int entityId);
-        List<LogViewModel> SelectAll();
+        bool Delete(int entityId);
+        PaginationViewModel<LogViewModel> SelectAll(int pageStart = 1, int itemsPerPage = 10);
     }
 }

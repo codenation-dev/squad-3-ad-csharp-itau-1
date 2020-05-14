@@ -1,23 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TryLog.Services.ViewModel
+﻿namespace TryLog.Services.ViewModel
 {
     public class UserCreateOutView
     {
-        public UserCreateOutView(int status)
+        public UserCreateOutView(int statusCode, string description)
         {
-            Status = status;
+            StatusCode = statusCode;
+            Description = description;
         }
 
-        public UserCreateOutView(string email)
-        {
-            Email = email;
-        }
+        public int StatusCode { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        public int Status { get; set; }
+        public string Description { get; set; }
     }
 }

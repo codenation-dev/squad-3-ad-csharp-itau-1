@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TryLog.Core.Model;
+using Environment = TryLog.Core.Model.Environment;
 
 namespace TryLog.Infraestructure.Map
 {
-    public class EnvironmentMap : IEntityTypeConfiguration<Core.Model.Environment>
+    public class EnvironmentMap : IEntityTypeConfiguration<Environment>
     {
-        public void Configure(EntityTypeBuilder<Core.Model.Environment> builder)
+        public void Configure(EntityTypeBuilder<Environment> builder)
         {
             builder.ToTable("environment");
 
@@ -29,6 +26,12 @@ namespace TryLog.Infraestructure.Map
                    .HasColumnName("deleted")
                    .HasColumnType("bit")
                    .IsRequired();
+
+            builder.HasData(
+                new Environment(1, "Desenvolvimento"),
+                new Environment(2, "Homologação"),
+                new Environment(3, "Produção")
+            );
         }
     }
 }

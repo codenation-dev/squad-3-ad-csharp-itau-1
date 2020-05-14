@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
+using System.Linq;
 
 namespace TryLog.Services.App
 {
@@ -19,45 +18,57 @@ namespace TryLog.Services.App
             _mapper = mapper;
         }
 
-        public LogViewModel Add(LogViewModel entity)
+        private LogViewModel Add(LogViewModel entity)
         {
-            var log =_repo.Add(_mapper.Map<Log>(entity));
+            var log = _repo.Add(_mapper.Map<Log>(entity));
             return _mapper.Map<LogViewModel>(log);
         }
 
-        public void Delete(int entityId)
+        public LogViewModel Add(LogViewModel entity, string token)
         {
-            _repo.Delete(x => x.Id == entityId);
+            entity.Token = token;
+            return Add(entity);
         }
 
-        public LogViewModel Find(int entityId)
+        public bool Delete(int entityId)
         {
-            var log = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<LogViewModel>(log);
-        }
-
-        public List<LogViewModel> FindAll(int entityId)
-        {
-            var logs = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<LogViewModel>>(logs);
+            var log = _repo.Find(x => x.Id == entityId && x.Deleted == false);
+            
+            if (log != null)
+            {
+                log.Deleted = true;
+                return _repo.Update(log);
+            }
+            return false;
         }
 
         public LogViewModel Get(int entityId)
         {
-            var log = _repo.Get(entityId);
+            var log = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<LogViewModel>(log);
         }
 
         public bool Update(LogViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Log>(entity));
-            return resultUpdate;
+            var log = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+
+            if (log != null)
+                return _repo.Update(_mapper.Map<Log>(entity));
+           
+            return false;
         }
 
-        public List<LogViewModel> SelectAll()
+        public PaginationViewModel<LogViewModel> SelectAll(int pageStart = 1, int itemsPerPage = 10)
         {
-            var logs = _repo.SelectAll();
-            return _mapper.Map<List<LogViewModel>>(logs);
+            var logs = _repo.FindAll(x => x.Deleted == false).Skip(pageStart-1*itemsPerPage).Take(itemsPerPage);
+            var pagination = new PaginationViewModel<LogViewModel>()
+            {
+                Data = _mapper.Map<List<LogViewModel>>(logs),
+                Page = pageStart,
+                PageSize = itemsPerPage,
+                TotalItemCount = _repo.Count()
+            };
+            return pagination;
         }
     }
 }

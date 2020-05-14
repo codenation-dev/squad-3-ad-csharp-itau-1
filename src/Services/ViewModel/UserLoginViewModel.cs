@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TryLog.Services.ViewModel
 {
     public class UserLoginViewModel
     {
-        public UserLoginViewModel(string email, string password, string token)
+        public UserLoginViewModel(string email, string password)
         {
             Email = email;
             Password = password;
-            Token = token;
         }
 
-        public string Email { get; private set; }
-        public string Password { get; private set; }
-        public string Token { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
+        public string Password { get;  set; }
     }
 }

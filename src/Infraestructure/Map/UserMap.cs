@@ -4,21 +4,21 @@ using TryLog.Core.Model;
 
 namespace TryLog.Infraestructure.Map
 {
-    public class SeverityMap : IEntityTypeConfiguration<Severity>
+    public class UserMap : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Severity> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("severity");
+            builder.ToTable("user");
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Description)
-                   .HasColumnName("description")
+            builder.Property(x => x.CreatedAt)
+                   .HasColumnName("created_at")
                    .HasColumnType("varchar(500)")
                    .IsRequired();
 
-            builder.Property(x => x.DateRegister)
-                   .HasColumnName("data_register")
+            builder.Property(x => x.UpdatedAt)
+                   .HasColumnName("updated_at")
                    .HasColumnType("datetime")
                    .IsRequired();
 
@@ -26,12 +26,6 @@ namespace TryLog.Infraestructure.Map
                    .HasColumnName("deleted")
                    .HasColumnType("bit")
                    .IsRequired();
-
-            builder.HasData(
-                new Severity(1, "Baixo"),
-                new Severity(2, "Médio"),
-                new Severity(3, "Alto")
-            );
         }
     }
 }

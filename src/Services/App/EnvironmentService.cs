@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using System.Linq;
 using TryLog.Core.Interfaces;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 using Environment = TryLog.Core.Model.Environment;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
 
 namespace TryLog.Services.App
 {
@@ -29,38 +23,38 @@ namespace TryLog.Services.App
             return _mapper.Map<EnvironmentViewModel>(environment); 
         }
 
-        public void Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
-        }
+            var environment = _repo.Find(x => x.Id == entityId && x.Deleted == false);
 
-        public EnvironmentViewModel Find(int entityId)
-        {
-            var environment = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<EnvironmentViewModel>(environment);
-        }
-
-        public List<EnvironmentViewModel> FindAll(int entityId)
-        {
-            var environment = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<EnvironmentViewModel>>(environment);
+            if (environment != null)
+            {
+                environment.Deleted = true;
+                return _repo.Update(environment);
+            }
+            return false;
         }
 
         public EnvironmentViewModel Get(int entityId)
         {
-            var environment = _repo.Get(entityId);
+            var environment = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<EnvironmentViewModel>(environment);
         }
 
-        public bool Update(EnvironmentViewModel entityDTO)
+        public bool Update(EnvironmentViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Environment>(entityDTO));
-            return resultUpdate;
+            var environment = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+            
+            if (environment != null)
+                return _repo.Update(_mapper.Map<Environment>(entity));
+            
+            return false;
         }
 
         public List<EnvironmentViewModel> SelectAll()
         {
-            return _mapper.Map<List<EnvironmentViewModel>>(_repo.SelectAll());
+            var environments = _repo.FindAll(x => x.Deleted == false);
+            return _mapper.Map<List<EnvironmentViewModel>>(environments);
         }
     }
 }

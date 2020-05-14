@@ -1,8 +1,5 @@
-﻿using System;
-using TryLog.Core.Interfaces;
+﻿using TryLog.Core.Interfaces;
 using TryLog.Infraestructure.EF;
-using System.Linq.Expressions;
-using System.Collections.Generic;
 using Environment = TryLog.Core.Model.Environment;
 
 namespace TryLog.Infraestructure.Repository

@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
@@ -24,38 +22,37 @@ namespace TryLog.Services.App
             return _mapper.Map<SeverityViewModel>(severity);
         }
 
-        public void Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
-        }
+            var severity = _repo.Find(x => x.Id == entityId && x.Deleted == false);
 
-        public SeverityViewModel Find(int entityId)
-        {
-            var severity = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<SeverityViewModel>(severity);
-        }
-
-        public List<SeverityViewModel> FindAll(int entityId)
-        {
-            var severities = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<SeverityViewModel>>(severities);
+            if (severity != null)
+            {
+                severity.Deleted = true;
+                return _repo.Update(severity);
+            }
+            return false;
         }
 
         public SeverityViewModel Get(int entityId)
         {
-            var severity = _repo.Get(entityId);
+            var severity = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<SeverityViewModel>(severity);
         }
 
         public bool Update(SeverityViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Severity>(entity));
-            return resultUpdate;
+            var severity = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+
+            if (severity != null)
+                return _repo.Update(_mapper.Map<Severity>(entity));
+            
+            return false;
         }
 
         public List<SeverityViewModel> SelectAll()
         {
-            var severities = _repo.SelectAll();
+            var severities = _repo.FindAll(x => x.Deleted == false);
             return _mapper.Map<List<SeverityViewModel>>(severities);
         }
     }

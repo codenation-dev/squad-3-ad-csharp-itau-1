@@ -1,0 +1,29 @@
+[
+  {
+    "Id": 1,
+    "Description": "acceleration.Service.AddCandidate: acceleration.MongoRepository.Add",
+    "Token": "AJNjsnaijiNJAN98954",
+    "IdEnvironment": 1,
+    "IdLayer": 2,
+    "IdSeverity": 1,
+    "IdStatus": 1
+  },
+  {
+    "Id": 2,
+    "Description": "challenge.Service.AddChallenge: challenge.MongoRepository.Add",
+    "Token": "AJNjsnaijiNJAN98954",
+    "IdEnvironment": 1,
+    "IdLayer": 2,
+    "IdSeverity": 1,
+    "IdStatus": 1
+  },
+  {
+    "Id": 3,
+    "Description": "log.Service.AddLog: log.MongoRepository.Add",
+    "Token": "AJNjsnaijiNJAN98954",
+    "IdEnvironment": 1,
+    "IdLayer": 2,
+    "IdSeverity": 1,
+    "IdStatus": 1
+  }
+]

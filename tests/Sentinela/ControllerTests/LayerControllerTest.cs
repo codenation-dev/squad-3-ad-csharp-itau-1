@@ -6,7 +6,7 @@ using Xunit;
 
 namespace TryLog.Sentinela.ControllerTests
 {
-    public class EnvironmentControllerTest
+    public class LayerControllerTest
     {
         [Theory]
         [InlineData(1)]
@@ -14,19 +14,19 @@ namespace TryLog.Sentinela.ControllerTests
         [InlineData(3)]
         public void Should_Be_Ok_When_GetById(int id)
         {
-            var fakes = new FakeContext("EnvironmentControllerTest");
-            var fakeEnvironmentService = fakes.FakeEnvironmentService().Object;
-            var expected = fakeEnvironmentService.Get(id);
-            var controller = new EnvironmentController(fakeEnvironmentService);
+            var fakes = new FakeContext("LayerControllerTest");
+            var fakeLayerService = fakes.FakeLayerService().Object;
+            var expected = fakeLayerService.Get(id);
+            var controller = new LayerController(fakeLayerService);
 
             var result = controller.Get(id);
             var actionResult = result as OkObjectResult;
 
             Assert.IsType<OkObjectResult>(actionResult);
-            var actual = actionResult.Value as EnvironmentViewModel;
+            var actual = actionResult.Value as LayerViewModel;
 
             Assert.NotNull(actual);
-            Assert.Equal(expected, actual, new EnvironmentViewModelIDComparer());
+            Assert.Equal(expected, actual, new LayerViewModelIDComparer());
         }
     }
 }

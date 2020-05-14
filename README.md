@@ -40,7 +40,7 @@ São itens desta camada, aqueles relativos à:
 * Implementações de acesso a dados (das Interfaces definidas no Core)
 * Serviços específicos de infraestrutura
 
-##### Camada de Webapi
+##### Camada de WebApi
 
 Esta camada será responsável por receber as requisições dos clientes e endereçá-las.
 
@@ -81,14 +81,14 @@ Nesta camada você vai encontrar os seguintes itens:
 * DTOs
 
 
-#### Camada services
+#### Camada Services
 
 Embora não esteja descrita nos materiais de arquitetura mencionados, achamos por bem adicionar uma camada para isolar as funcionalidades do sistema. Nela você vai encontrar:
 
 * Funcionalidades descritas em casos de uso
 
 
-#### Tests
+#### Camada Tests
 
 Por fim uma camada para separar os testes será utilizada.
 
@@ -101,3 +101,8 @@ Infraestructure | dotnet new classlib -n TryLog.Infraestructure -o ./src/Infraes
 Services| dotnet new classlib -n TryLog.Services -o ./src/Services
 WebApi | dotnet new webapi -n TryLog.WebApi -o ./src/WebApi
 Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
+
+## Desenvolvedores
+| ![alt text](https://i.imgur.com/IANhQsC.png)  | ![alt text](https://i.imgur.com/CmUW8Xc.png)  | ![alt text](https://i.imgur.com/toIfWhr.png)  | ![alt text](https://i.imgur.com/w7PvwXm.png)  |  ![alt text](https://i.imgur.com/8IHGOcL.png)
+| :------------: | :------------: | :------------: | :------------: | :------------: |
+| [Luiz Nogueira](https://www.linkedin.com/in/loon/)  | [Maira Barbosa](https://www.linkedin.com/in/mahdame/)  | [Moyses Souza](https://www.linkedin.com/in/moyses-souza-programador/)  | [Rafael Pinto](https://linkedin.com/in/rafael-pinto-853b6bab/)  |  [Vinicius Santos](https://www.linkedin.com/in/vinicius-dos-santos-aguiar/) |

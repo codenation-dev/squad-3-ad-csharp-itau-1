@@ -3,13 +3,13 @@ using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 using Microsoft.Extensions.Primitives;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TryLog.WebApi.Controllers.V1
 {
-    [Consumes("application/json")]
-    [Produces("application/json")]
+    [ApiController, Produces("application/json"), Consumes("application/json")]
     [Route("api/[controller]")]
-    [ApiController]
+    [Authorize]
     public class LogController : ControllerBase
     {
         private readonly ILogService _service;
@@ -23,9 +23,11 @@ namespace TryLog.WebApi.Controllers.V1
         /// <returns></returns>
         // GET: api/Log
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int pageStart=1, int itemsPerPage=10)
         {
-            return Ok(_service.SelectAll());
+            var paginattedResult = _service.SelectAll();
+            HttpContext.Response.Headers.Add("X-TOTAL-COUNT", paginattedResult.TotalItemCount.ToString());
+            return Ok(paginattedResult);
         }
 
         /// <summary>

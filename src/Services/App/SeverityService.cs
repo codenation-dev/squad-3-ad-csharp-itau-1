@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
@@ -26,16 +24,14 @@ namespace TryLog.Services.App
 
         public bool Delete(int entityId)
         {
-            bool resultDelete = false;
             var severity = _repo.Find(x => x.Id == entityId && x.Deleted == false);
 
             if (severity != null)
             {
                 severity.Deleted = true;
-                resultDelete = _repo.Update(severity);
+                return _repo.Update(severity);
             }
-
-            return resultDelete;
+            return false;
         }
 
         public SeverityViewModel Get(int entityId)
@@ -46,15 +42,12 @@ namespace TryLog.Services.App
 
         public bool Update(SeverityViewModel entity)
         {
-            bool resultUpdate = false;
             var severity = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
 
             if (severity != null)
-            {
-                resultUpdate = _repo.Update(_mapper.Map<Severity>(entity));
-            }
-
-            return resultUpdate;
+                return _repo.Update(_mapper.Map<Severity>(entity));
+            
+            return false;
         }
 
         public List<SeverityViewModel> SelectAll()

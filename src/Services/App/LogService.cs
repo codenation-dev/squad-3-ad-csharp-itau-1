@@ -4,6 +4,7 @@ using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
+using System.Linq;
 
 namespace TryLog.Services.App
 {
@@ -31,16 +32,14 @@ namespace TryLog.Services.App
 
         public bool Delete(int entityId)
         {
-            bool resultDelete = false;
             var log = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             
             if (log != null)
             {
                 log.Deleted = true;
-                resultDelete = _repo.Update(log);
+                return _repo.Update(log);
             }
-
-            return resultDelete;
+            return false;
         }
 
         public LogViewModel Get(int entityId)
@@ -51,21 +50,25 @@ namespace TryLog.Services.App
 
         public bool Update(LogViewModel entity)
         {
-            bool resultUpdate = false;
             var log = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
 
             if (log != null)
-            {
-                resultUpdate = _repo.Update(_mapper.Map<Log>(entity));
-            }
+                return _repo.Update(_mapper.Map<Log>(entity));
            
-            return resultUpdate;
+            return false;
         }
 
-        public List<LogViewModel> SelectAll()
+        public PaginationViewModel<LogViewModel> SelectAll(int pageStart = 1, int itemsPerPage = 10)
         {
-            var logs = _repo.FindAll(x => x.Deleted == false);
-            return _mapper.Map<List<LogViewModel>>(logs);
+            var logs = _repo.FindAll(x => x.Deleted == false).Skip(pageStart-1*itemsPerPage).Take(itemsPerPage);
+            var pagination = new PaginationViewModel<LogViewModel>()
+            {
+                Data = _mapper.Map<List<LogViewModel>>(logs),
+                Page = pageStart,
+                PageSize = itemsPerPage,
+                TotalItemCount = _repo.Count()
+            };
+            return pagination;
         }
     }
 }

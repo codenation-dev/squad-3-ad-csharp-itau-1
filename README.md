@@ -81,17 +81,12 @@ Nesta camada você vai encontrar os seguintes itens:
 * DTOs
 
 
-#### Camada UseCases
+#### Camada services
 
 Embora não esteja descrita nos materiais de arquitetura mencionados, achamos por bem adicionar uma camada para isolar as funcionalidades do sistema. Nela você vai encontrar:
 
 * Funcionalidades descritas em casos de uso
 
-#### MessageBroker
-
-Vamos utilizar o conceito de MessageBroker para dar confiabilidade na entrega e gravação dos logs, fazendo com que nossa API apenas faça uma publicação do log em sistema de fila. Este, por sua vez, será o responsável por acionar a gravação do banco de dados.
-
-Esperamos assim, resolver possíveis problemas com não gravação de log, ou inconsistência e perda de logs.
 
 #### Tests
 
@@ -103,7 +98,6 @@ Camada | Comando |
 ------ | --------
 Core | dotnet new classlib -n TryLog.Core -o ./src/Core
 Infraestructure | dotnet new classlib -n TryLog.Infraestructure -o ./src/Infraestructure
-UseCase | dotnet new classlib -n TryLog.UseCase -o ./src/UseCase
+Services| dotnet new classlib -n TryLog.Services -o ./src/Services
 WebApi | dotnet new webapi -n TryLog.WebApi -o ./src/WebApi
-MessageBroker | dotnet new console -n TryLog.MessageBroker -o ./src/MessageBroker
 Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela

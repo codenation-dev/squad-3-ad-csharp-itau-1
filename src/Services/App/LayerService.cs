@@ -26,16 +26,14 @@ namespace TryLog.Services.App
 
         public bool Delete(int entityId)
         {
-            bool resultDelete = false;
             var layer = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             
             if (layer != null)
             {
                 layer.Deleted = true;
-                resultDelete = _repo.Update(layer);
+                return _repo.Update(layer);
             }
-
-            return resultDelete;
+            return false;
         }
 
         public LayerViewModel Get(int entityId)
@@ -46,15 +44,12 @@ namespace TryLog.Services.App
 
         public bool Update(LayerViewModel entity)
         {
-            bool resultUpdate = false;
             var layer = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
 
             if (layer != null)
-            {
-                resultUpdate = _repo.Update(_mapper.Map<Layer>(entity));
-            }
+                return _repo.Update(_mapper.Map<Layer>(entity));
 
-            return resultUpdate;
+            return false;
         }
 
         public List<LayerViewModel> SelectAll()

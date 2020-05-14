@@ -14,6 +14,7 @@ namespace TryLog.Core.Interfaces
         bool Update(T entity);
         void Delete(Expression<Func<T, bool>> predicate);
         List<T> SelectAll();
+        int Count();
 
     }
 }

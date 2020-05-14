@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "description": "Arquivado",
+    "date_register": "2020-05-01 22:16:10.213",
+    "deleted": 0
+  },
+  {
+    "Id": 2,
+    "description": "Pendente",
+    "date_register": "2020-05-01 22:16:11.213",
+    "deleted": 0
+  },
+  {
+    "Id": 3,
+    "description": "Ignorado",
+    "date_register": "2020-05-01 22:16:12.400",
+    "deleted": 0
+  }
+]

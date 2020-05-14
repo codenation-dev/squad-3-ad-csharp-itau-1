@@ -1,41 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace TryLog.WebApi.Controllers.V1
 {
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    [ApiController]
+    [ApiController, Produces("application/json"), Consumes("application/json")]
+    [Route("api/[controller]")]
     public class VersionController : ControllerBase
     {
         private readonly IConfiguration _config;
-
         public VersionController(IConfiguration config)
         {
             _config = config;
         }
 
-        //TODO: documentar o motivo deste endpoint
+        /// <summary>
+        /// Retornar de maneira anonima a versão da api
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        [Route("api/Version")]
-        [AllowAnonymous]
         public string Get()
         {
-            //Resolvendo conflito, removi as demais ações neste endpoint.
-            //TODO: retornar de maneira anonima a versão da api
-            return "Tudo Certo!";
-        }
-
-        //TODO: documentar o motivo deste endpoint
-        [HttpGet]
-        [Route("api/VersionWithAuthirization")]
-        [Authorize]
-        public string GetWithAuthirization()
-        {
-            //Resolvendo conflito, removi as demais ações neste endpoint.
-            //TODO: retornar de maneira anonima a versão da api
-            return "Tudo Certo!";
+            return _config.GetValue<string>("ApplicationVersion");
         }
     }
 }

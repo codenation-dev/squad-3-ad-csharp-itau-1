@@ -20,42 +20,41 @@ namespace TryLog.Services.App
         }
         public LayerViewModel Add(LayerViewModel entity)
         {
-            var layer = _repo.Add(_mapper.Map<Core.Model.Layer>(entity));
+            var layer = _repo.Add(_mapper.Map<Layer>(entity));
             return _mapper.Map<LayerViewModel>(layer);
         }
 
-        public void Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
-        }
-
-        public LayerViewModel Find(int entityId)
-        {
-            var layer = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<LayerViewModel>(layer);
-        }
-
-        public List<LayerViewModel> FindAll(int entityId)
-        {
-            var layers = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<LayerViewModel>>(layers);
+            var layer = _repo.Find(x => x.Id == entityId && x.Deleted == false);
+            
+            if (layer != null)
+            {
+                layer.Deleted = true;
+                return _repo.Update(layer);
+            }
+            return false;
         }
 
         public LayerViewModel Get(int entityId)
         {
-            var layer = _repo.Get(entityId);
+            var layer = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<LayerViewModel>(layer);
         }
 
         public bool Update(LayerViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Core.Model.Layer>(entity));
-            return resultUpdate;
+            var layer = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+
+            if (layer != null)
+                return _repo.Update(_mapper.Map<Layer>(entity));
+
+            return false;
         }
 
         public List<LayerViewModel> SelectAll()
         {
-            var layers = _repo.SelectAll();
+            var layers = _repo.FindAll(x => x.Deleted == false);
             return _mapper.Map<List<LayerViewModel>>(layers);
         }
     }

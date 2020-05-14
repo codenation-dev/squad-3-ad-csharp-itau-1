@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
@@ -24,38 +22,37 @@ namespace TryLog.Services.App
             return _mapper.Map<StatusViewModel>(status);
         }
 
-        public void Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            _repo.Delete(x => x.Id == entityId);
-        }
+            var status = _repo.Find(x => x.Id == entityId && x.Deleted == false);
 
-        public StatusViewModel Find(int entityId)
-        {
-            var status = _repo.Find(x => x.Id == entityId);
-            return _mapper.Map<StatusViewModel>(status);
-        }
-
-        public List<StatusViewModel> FindAll(int entityId)
-        {
-            var status = _repo.FindAll(x => x.Id == entityId);
-            return _mapper.Map<List<StatusViewModel>>(status);
+            if (status != null)
+            {
+                status.Deleted = true;
+                return _repo.Update(status);
+            }
+            return false;
         }
 
         public StatusViewModel Get(int entityId)
         {
-            var status = _repo.Get(entityId);
+            var status = _repo.Find(x => x.Id == entityId && x.Deleted == false);
             return _mapper.Map<StatusViewModel>(status);
         }
 
         public bool Update(StatusViewModel entity)
         {
-            bool resultUpdate = _repo.Update(_mapper.Map<Status>(entity));
-            return resultUpdate;
+            var status = _repo.Find(x => x.Id == entity.Id && x.Deleted == false);
+
+            if (status != null)
+                return _repo.Update(_mapper.Map<Status>(entity));
+           
+            return false;
         }
 
         public List<StatusViewModel> SelectAll()
         {
-            var status = _repo.SelectAll();
+            var status = _repo.FindAll(x => x.Deleted == false);
             return _mapper.Map<List<StatusViewModel>>(status);
         }
     }

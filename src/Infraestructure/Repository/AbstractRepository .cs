@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Linq;
 using TryLog.Core.Interfaces;
 using TryLog.Infraestructure.EF;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace TryLog.Infraestructure.Repository
 {
@@ -20,7 +19,6 @@ namespace TryLog.Infraestructure.Repository
            T resultEntity = _context.Set<T>().Add(entity).Entity;
             _context.SaveChanges();
             return resultEntity;
-
         }
 
         public void Delete(Expression<Func<T, bool>> predicate)
@@ -49,13 +47,18 @@ namespace TryLog.Infraestructure.Repository
 
         public bool Update(T entity)
         {
-            var e =_context.Set<T>().Update(entity);           
+            _context.Set<T>().Update(entity);           
             return _context.SaveChanges() == 1;
         }
 
         public List<T> SelectAll()
         {
             return _context.Set<T>().ToList();
+        }
+
+        public int Count()
+        {
+            return _context.Set<T>().Count();
         }
     }
 }

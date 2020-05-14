@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using TryLog.Core.Interfaces;
+﻿using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 

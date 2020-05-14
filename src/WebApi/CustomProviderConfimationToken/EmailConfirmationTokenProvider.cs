@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace TryLog.WebApi.CustomProviderConfimationToken
 {
@@ -13,17 +12,11 @@ namespace TryLog.WebApi.CustomProviderConfimationToken
             IOptions<EmailConfirmationTokenProviderOptions> options,
             ILogger<DataProtectorTokenProvider<TUser>> logger)
                                               : base(dataProtectionProvider, options, logger)
-        {
-
-        }
+        {}
     }
     public class EmailConfirmationTokenProviderOptions : DataProtectionTokenProviderOptions
     {
         public EmailConfirmationTokenProviderOptions()
-        {
-            Name = "EmailDataProtectorTokenProvider";
-            TokenLifespan = TimeSpan.FromHours(4);
-
-        }
+        {}
     }
 }

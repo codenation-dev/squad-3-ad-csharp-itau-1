@@ -3,13 +3,13 @@ using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 using Microsoft.Extensions.Primitives;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TryLog.WebApi.Controllers.V1
 {
-    [Consumes("application/json")]
-    [Produces("application/json")]
+    [ApiController, Produces("application/json"), Consumes("application/json")]
     [Route("api/[controller]")]
-    [ApiController]
+    [Authorize]
     public class LogController : ControllerBase
     {
         private readonly ILogService _service;

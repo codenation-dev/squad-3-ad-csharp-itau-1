@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\TryLog.Core.csproj" />
+    <ProjectReference Include="..\Services\TryLog.Services.csproj" />
   </ItemGroup>
 
 </Project>

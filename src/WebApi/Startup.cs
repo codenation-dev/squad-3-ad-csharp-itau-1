@@ -12,7 +12,6 @@ using TryLog.Infraestructure.Repository;
 using TryLog.Core.Interfaces;
 using TryLog.Services.Interfaces;
 using TryLog.Services.App;
-using TryLog.UseCase.Mapper;
 using AutoMapper;
 using System.Collections.Generic;
 using TryLog.Services;
@@ -21,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using System.Reflection;
 using System;
 using System.IO;
+using TryLog.Services.Mapper;
 
 namespace TryLog.WebApi
 {
@@ -105,7 +105,7 @@ namespace TryLog.WebApi
             services.AddTransient<EmailService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<AuthenticatedUser>();
+            services.AddTransient<AuthenticatedUserService>();
 
             services.AddIdentityConfiguration();
 

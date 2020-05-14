@@ -2,13 +2,13 @@
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TryLog.WebApi.Controllers.V1
 {
-    [Consumes("application/json")]
-    [Produces("application/json")]
+    [ApiController, Produces("application/json"), Consumes("application/json")]
     [Route("api/[controller]")]
-    [ApiController]
+    [Authorize]
     public class EnvironmentController : ControllerBase
     {
         private readonly IEnvironmentService _service;

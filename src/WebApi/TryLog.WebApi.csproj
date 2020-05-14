@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infraestructure\TryLog.Infraestructure.csproj" />
-    <ProjectReference Include="..\MessageBroker\TryLog.MessageBroker.csproj" />
     <ProjectReference Include="..\Services\TryLog.Services.csproj" />
   </ItemGroup>
 

@@ -17,8 +17,8 @@ namespace TryLog.Services.App
             _repo = repo;
             _mapper = mapper;
         }
-
-        private LogViewModel Add(LogViewModel entity)
+        //alterado add para public e incluido na interface para o teste funcionar
+        public LogViewModel Add(LogViewModel entity)
         {
             var log = _repo.Add(_mapper.Map<Log>(entity));
             return _mapper.Map<LogViewModel>(log);

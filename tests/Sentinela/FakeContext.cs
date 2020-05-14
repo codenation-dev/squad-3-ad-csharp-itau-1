@@ -87,14 +87,16 @@ namespace TryLog.Sentinela
                 .Returns((int id) => Get<EnvironmentViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
-            service.Setup(x => x.Add(It.IsAny<EnvironmentViewModel>())).
-                Returns((EnvironmentViewModel environment) =>
+            service.Setup(x => x.SelectAll())
+                .Returns(() => Get<EnvironmentViewModel>().ToList());
+
+            service.Setup(x => x.Add(It.IsAny<EnvironmentViewModel>()))
+                .Returns((EnvironmentViewModel environment) =>
                 {
                     if (environment.Id == 0)
                         environment.Id = 999;
                     return environment;
                 });
-
             return service;
         }
 
@@ -106,8 +108,8 @@ namespace TryLog.Sentinela
                 .Returns((int id) => Get<LayerViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
-            service.Setup(x => x.Add(It.IsAny<LayerViewModel>())).
-                Returns((LayerViewModel layer) =>
+            service.Setup(x => x.Add(It.IsAny<LayerViewModel>()))
+                .Returns((LayerViewModel layer) =>
                 {
                     if (layer.Id == 0)
                         layer.Id = 999;
@@ -125,8 +127,9 @@ namespace TryLog.Sentinela
                 .Returns((int id) => Get<LogViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
-            service.Setup(x => x.Add(It.IsAny<LogViewModel>())).
-                Returns((LogViewModel log) =>
+
+            service.Setup(x => x.Add(It.IsAny<LogViewModel>()))
+                .Returns((LogViewModel log) =>
                 {
                     if (log.Id == 0)
                         log.Id = 999;

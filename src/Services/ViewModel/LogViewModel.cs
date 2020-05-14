@@ -18,6 +18,5 @@ namespace TryLog.Services.ViewModel
         public int IdSeverity { get; set; }
         [Required]
         public int IdStatus { get; set; }
-       
     }
 }

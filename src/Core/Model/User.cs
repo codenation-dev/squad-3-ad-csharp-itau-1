@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace TryLog.Core.Model
 {
     /// <summary>
-    /// Representa o usu�rio da aplica��o.
+    /// Representa o usuário da aplicação.
     /// </summary>
+
 
     public class User:IdentityUser<string>
     {
@@ -16,14 +16,14 @@ namespace TryLog.Core.Model
             Id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
             FullName = fullName;
             Email = userName;
-            CreatedAt = DateTime.UtcNow ;
+            CreatedAt = DateTime.UtcNow;
             UpdatedAt = CreatedAt;
             Deleted = false;
         }
+
         public string FullName { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public bool Deleted { get; set; }
     }
-
 }

@@ -6,15 +6,15 @@ namespace TryLog.Services
 {
     public class EmailService
     {
-        private readonly EmailSettings _Settings;
+        private readonly EmailSettings _settings;
         public EmailService(IOptions<EmailSettings> emailSettings)
         {
-            _Settings = emailSettings.Value;
+            _settings = emailSettings.Value;
         }
         public void Send(string name, string mailTo, string subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("TeamTryLog", _Settings.FromEmail));
+            message.From.Add(new MailboxAddress("TeamTryLog", _settings.FromEmail));
             message.To.Add(new MailboxAddress(name, mailTo));
             message.Subject = subject;
 
@@ -24,10 +24,9 @@ namespace TryLog.Services
             };
 
             using var client = new SmtpClient();
-            client.Connect(_Settings.PrimaryDomain, _Settings.PrimaryPort, false);
+            client.Connect(_settings.PrimaryDomain, _settings.PrimaryPort, false);
 
-            // Note: only needed if the SMTP server requires authentication
-            client.Authenticate(_Settings.Email, _Settings.Password);
+            client.Authenticate(_settings.Email, _settings.Password);
 
             client.Send(message);
             client.Disconnect(true);

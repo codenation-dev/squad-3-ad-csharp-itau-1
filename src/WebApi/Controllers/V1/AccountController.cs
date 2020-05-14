@@ -6,9 +6,9 @@ using TryLog.Services.ViewModel;
 
 namespace TryLog.WebApi.Controllers.V1
 {
-    [Authorize]
-    [ApiController, Consumes("application/json"), Produces("application/json")]
+    [ApiController, Produces("application/json"), Consumes("application/json")]
     [Route("api/[controller]")]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly UserManagerService _service;
@@ -30,7 +30,7 @@ namespace TryLog.WebApi.Controllers.V1
         {
             string callBack = Url.Action("Activate", "User", null, Request.Scheme);  
             var userCreateOut = await _service.Create(user, callBack);
-
+            
             if (userCreateOut is null) 
                 return NotFound(new { message = "Invalid username or password."});
 

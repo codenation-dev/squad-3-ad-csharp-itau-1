@@ -14,7 +14,7 @@ using TryLog.Services.Email;
 using TryLog.Services.SettingObjects;
 using TryLog.Services.ViewModel;
 
-namespace TryLog.Services
+namespace TryLog.Services.App
 {
     public class UserManagerService
     {
@@ -23,10 +23,10 @@ namespace TryLog.Services
         private readonly IOptions<TokenSettings> _options;
         private readonly IMapper _mapper;
         private readonly EmailService _emailService;
-        private readonly AuthenticatedUser _authenticatedUser;
+        private readonly AuthenticatedUserService _authenticatedUser;
 
         public UserManagerService(UserManager<User> userManager, SignInManager<User> signInManager,
-            IOptions<TokenSettings> options, IMapper mapper, EmailService emailService, AuthenticatedUser authenticatedUser)
+            IOptions<TokenSettings> options, IMapper mapper, EmailService emailService, AuthenticatedUserService authenticatedUser)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -47,13 +47,13 @@ namespace TryLog.Services
         {
             User user = _mapper.Map<User>(userCreate);
 
-            IdentityResult result = await _userManager.CreateAsync(user, user.Password);
+            IdentityResult result = await _userManager.CreateAsync(user, userCreate.Password);
             if (!result.Succeeded)
                 return new UserCreateOutView(400, result.ToString());
 
-            StayEmptyPasswordField(user);
             var token= await CreateTokenEmailConfirmation(user);
-            string bodyMessage = CreateBodyEmail(callback, user, token);
+            string bodyMessage =
+                CreateBodyEmail(Messages.AccountEmailActivation, user.FullName, callback, user.Email, token);
 
             _emailService.Send(user.FullName, user.Email, "Account activation.", bodyMessage);
 
@@ -61,38 +61,36 @@ namespace TryLog.Services
         }
 
         /// <summary>
-        /// Cria o corpo de uma mensagem de email com link de confirmação.
+        /// Cria o corpo de uma mensagem de email com ou sem link de confirmação.
         /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="user"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        private string CreateBodyEmail(string callback, User user, string token)
+        /// <param name="message"></param>
+        /// <param name="values"></param>
+        /// <returns>Cadeia de caracteres do corpo do email.</returns>
+        private string CreateBodyEmail(string message, params object[] values)
         {
-            string linkCallBack = string.Format("{0}?email={1}&token={2}", callback, user.Email, token);
-            string bodyMessage = string.Format(Messages.AccountEmailActivation, user.FullName, linkCallBack);
-            return bodyMessage;
+            return string.Format(message, values);
         }
 
         /// <summary>
         /// Envia token de confirmação para reset de senha.
         /// </summary>
-        /// <param name="userReactive"></param>
+        /// <param name="userReactivate"></param>
         /// <param name="callback"></param>
-        public async void ReActivate(UserReactivateAccountView userReactive, string callback)
+        public async Task<bool> SendReactivationEmail(UserReactivateAccountView userReactivate, string callback)
         {
-            if (_authenticatedUser.IsAuthenticated()) return;
-            User user = await _userManager.FindByEmailAsync(userReactive.Email);
-            bool checkPass =
-                await _userManager.CheckPasswordAsync(user, userReactive.Password);
-            if (checkPass){
-                var code = await CreateTokenEmailConfirmation(user);
-                string linkCallBack = string.Format("{0}?email={1}&token={2}", callback, user.Email, code);
-                string bodyMessage = string.Format(Messages.AccountReActivation, user.FullName, linkCallBack);
+            if (_authenticatedUser.IsAuthenticated()) return false;
+            User user = await _userManager.FindByEmailAsync(userReactivate.Email);
+            if (!user.Deleted) return false;
 
+            bool checkPass = await _userManager.CheckPasswordAsync(user, userReactivate.Password);
+
+            if (checkPass){
+                var token = await CreateTokenEmailConfirmation(user);
+                var bodyMessage = 
+                    CreateBodyEmail(Messages.AccountReActivation,user.FullName, callback, user.Email, token);
                 _emailService.Send(user.FullName, user.Email, "Account Re-activation.", bodyMessage);
             }
-
+            return true;
         }
 
         /// <summary>
@@ -114,16 +112,6 @@ namespace TryLog.Services
         }
 
         /// <summary>
-        /// Atribui uma cadeia de caracter vazia para a propriedade User.Password.
-        /// </summary>
-        /// <param name="user"></param>
-        private async void StayEmptyPasswordField(User user)
-        {
-            user.Password = "";
-            await _userManager.UpdateAsync(user);
-        }
-
-        /// <summary>
         /// Retorna os dados do usuário logado.
         /// </summary>
         /// <returns></returns>
@@ -132,6 +120,26 @@ namespace TryLog.Services
             var mail =_authenticatedUser.GetEmail();
             User user = await _userManager.FindByEmailAsync(mail);
             return _mapper.Map<UserGetView>(user);
+        }
+        /// <summary>
+        /// Executa a troca de senha do usuário autenticado.
+        /// </summary>
+        /// <param name="userChange"></param>
+        /// <returns></returns>
+        public async Task<UserChangePasswordOutViewModel> ChangePassword(UserChangePasswordViewModel userChange)
+        {
+            if (userChange.CurrentPassword == userChange.NewPassword)
+                return new UserChangePasswordOutViewModel() { Code = 204, Description = "New password should be different than current password." };
+            var mail = _authenticatedUser.GetEmail();
+            var user = await _userManager.FindByEmailAsync(mail);
+            var result = await _userManager.ChangePasswordAsync(user, userChange.CurrentPassword, userChange.NewPassword);
+            if (!result.Succeeded)
+                return new UserChangePasswordOutViewModel()
+                { Code = 204, Description = "Could not change password."};
+            
+            return new UserChangePasswordOutViewModel()
+            { Code = 200, Description = "New password registered."};
+
         }
 
         /// <summary>
@@ -149,9 +157,9 @@ namespace TryLog.Services
             string newPassword = RandomPassword();
             var result = await _userManager.ResetPasswordAsync(user, tokenDecoded, newPassword);
             if (result.Succeeded) {
-                string body = string.Format(Messages.PasswordChangeConfirmation, user.UserName, user.CreatedAt.ToLocalTime(),newPassword);
-                _emailService.Send(user.FullName, user.Email, "Password change confirmation", body);
-                StayEmptyPasswordField(user);
+                string bodyMessage = 
+                    CreateBodyEmail(Messages.PasswordChangeConfirmation, user.Email, newPassword, user.CreatedAt.ToLocalTime().ToString());
+                _emailService.Send(user.FullName, user.Email, "Password change confirmation.", bodyMessage);
             }
             return result.Succeeded;
         }
@@ -239,10 +247,10 @@ namespace TryLog.Services
             if (user is null) return false;
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
             string tokenEncoded = EncodeForWeb(token);
-            string linkCallback = string.Format("{0}?id={1}&token={2}", callback, user.Id, tokenEncoded);
-            string body = string.Format(Messages.PasswordResetConfirmation, linkCallback, user.UserName, user.CreatedAt.ToLocalTime());
+            string bodyMessage = 
+                CreateBodyEmail(Messages.PasswordResetConfirmation, callback, user.Id, tokenEncoded, user.CreatedAt.ToLocalTime().ToString(), user.Email);
             
-            _emailService.Send(user.FullName, email, "Password Reset Confirmation", body);
+            _emailService.Send(user.FullName, email, "Password Reset Confirmation.", bodyMessage);
 
             return true;
         }
@@ -255,7 +263,7 @@ namespace TryLog.Services
         public async Task<UserLoginOutViewModel> Login(UserLoginViewModel userLoginInView)
         {
             if (_authenticatedUser.IsAuthenticated())
-                return new UserLoginOutViewModel("Sucess", "User already authenticated.");
+                return new UserLoginOutViewModel("Success", "User already authenticated.");
 
             User user = await _userManager.FindByEmailAsync(userLoginInView.Email);
 

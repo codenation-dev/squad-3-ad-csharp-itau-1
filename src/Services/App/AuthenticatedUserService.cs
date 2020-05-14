@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace TryLog.Services
+namespace TryLog.Services.App
 {
-    public class AuthenticatedUser
+    public class AuthenticatedUserService
     {
 		private readonly IHttpContextAccessor _accessor;
 
-		public AuthenticatedUser(IHttpContextAccessor accessor)
+		public AuthenticatedUserService(IHttpContextAccessor accessor)
 		{
 			_accessor = accessor;
 		}

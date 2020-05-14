@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TryLog.Core.Interfaces;
-using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TryLog.WebApi.Controllers.V1
 {
-    [Consumes("application/json")]
-    [Produces("application/json")]
+    [ApiController, Produces("application/json"), Consumes("application/json")]
     [Route("api/[controller]")]
-    [ApiController]
+    [Authorize]
     public class StatusController : ControllerBase
     {
         private readonly IStatusService _service;

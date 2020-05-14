@@ -20,7 +20,7 @@ namespace TryLog.UseCase.Mapper
         {
             CreateMap<Environment, EnvironmentViewModel>().ReverseMap();
             CreateMap<Layer, LayerViewModel>().ReverseMap();
-            CreateMap<Log, LogViewModel>().ReverseMap();
+            CreateMap<Log, LogViewModel>().ForMember(dest => dest.RegisterDate, opt => opt.MapFrom(src => src.DateRegister)).ReverseMap();
             CreateMap<Severity, SeverityViewModel>().ReverseMap();
             CreateMap<Status, StatusViewModel>().ReverseMap();
             CreateMap<UserCreateView, User>()

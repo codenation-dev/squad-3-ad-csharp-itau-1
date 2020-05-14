@@ -105,6 +105,7 @@ namespace TryLog.WebApi
             services.AddScoped<ISeverityService, SeverityService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IErrorService, ErrorService>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 

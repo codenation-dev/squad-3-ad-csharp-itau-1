@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 
 namespace TryLog.Services.Interfaces
@@ -9,6 +10,6 @@ namespace TryLog.Services.Interfaces
         LogViewModel Get(int entityId);
         bool Update(LogViewModel entity);
         bool Delete(int entityId);
-        List<LogViewModel> SelectAll();
+        PaginationViewModel<LogViewModel> SelectAll(int pageStart = 1, int itemsPerPage = 10);
     }
 }

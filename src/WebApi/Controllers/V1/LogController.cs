@@ -23,9 +23,11 @@ namespace TryLog.WebApi.Controllers.V1
         /// <returns></returns>
         // GET: api/Log
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int pageStart=1, int itemsPerPage=10)
         {
-            return Ok(_service.SelectAll());
+            var paginattedResult = _service.SelectAll();
+            HttpContext.Response.Headers.Add("X-TOTAL-COUNT", paginattedResult.TotalItemCount.ToString());
+            return Ok(paginattedResult);
         }
 
         /// <summary>

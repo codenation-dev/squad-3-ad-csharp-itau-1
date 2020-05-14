@@ -4,6 +4,7 @@ using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
+using System.Linq;
 
 namespace TryLog.Services.App
 {
@@ -57,10 +58,17 @@ namespace TryLog.Services.App
             return false;
         }
 
-        public List<LogViewModel> SelectAll()
+        public PaginationViewModel<LogViewModel> SelectAll(int pageStart = 1, int itemsPerPage = 10)
         {
-            var logs = _repo.FindAll(x => x.Deleted == false);
-            return _mapper.Map<List<LogViewModel>>(logs);
+            var logs = _repo.FindAll(x => x.Deleted == false).Skip(pageStart-1*itemsPerPage).Take(itemsPerPage);
+            var pagination = new PaginationViewModel<LogViewModel>()
+            {
+                Data = _mapper.Map<List<LogViewModel>>(logs),
+                Page = pageStart,
+                PageSize = itemsPerPage,
+                TotalItemCount = _repo.Count()
+            };
+            return pagination;
         }
     }
 }

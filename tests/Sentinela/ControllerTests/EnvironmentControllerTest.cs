@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using TryLog.Sentinela.Comparers;
 using TryLog.Services.ViewModel;
 using TryLog.WebApi.Controllers.V1;
@@ -27,6 +29,41 @@ namespace TryLog.Sentinela.ControllerTests
 
             Assert.NotNull(actual);
             Assert.Equal(expected, actual, new EnvironmentViewModelIDComparer());
+        }
+
+        [Fact]
+        public void Should_Be_Ok_When_SelectAll()
+        {
+            var fakes = new FakeContext("EnvironmentControllerTest");
+            var fakeEnvironmentService = fakes.FakeEnvironmentService().Object;
+            var expected = fakeEnvironmentService.SelectAll();
+            var controller = new EnvironmentController(fakeEnvironmentService);
+
+            var result = controller.Get();
+            var actionResult = result as OkObjectResult;
+
+            Assert.IsType<OkObjectResult>(actionResult);
+            var actual = actionResult.Value as List<EnvironmentViewModel>;
+
+            Assert.NotNull(actual);
+            Assert.Equal(expected, actual, new EnvironmentViewModelIDComparer());
+        }
+
+        [Fact]
+        public void Should_Be_Ok_When_Posting()
+        {
+            var fakes = new FakeContext("EnvironmentControllerTest");
+            var fakeEnvironmentService = fakes.FakeEnvironmentService().Object;
+            List<EnvironmentViewModel> expected = fakes.Get<EnvironmentViewModel>();
+            var controller = new EnvironmentController(fakeEnvironmentService);
+
+            foreach (var item in expected)
+            {
+                var result = controller.Post(item);
+
+                Assert.NotNull(result);
+                Assert.IsType<CreatedAtActionResult>(result);
+            }
         }
     }
 }

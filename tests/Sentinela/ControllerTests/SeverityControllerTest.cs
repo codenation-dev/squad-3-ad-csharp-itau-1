@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TryLog.Sentinela.Comparers;
 using TryLog.Services.ViewModel;
 using TryLog.WebApi.Controllers.V1;
@@ -27,6 +28,41 @@ namespace TryLog.Sentinela.ControllerTests
 
             Assert.NotNull(actual);
             Assert.Equal(expected, actual, new SeverityViewModelIDComparer());
+        }
+
+        [Fact]
+        public void Should_Be_Ok_When_SelectAll()
+        {
+            var fakes = new FakeContext("SeverityControllerTest");
+            var fakeSeverityService = fakes.FakeSeverityService().Object;
+            var expected = fakeSeverityService.SelectAll();
+            var controller = new SeverityController(fakeSeverityService);
+
+            var result = controller.Get();
+            var actionResult = result as OkObjectResult;
+
+            Assert.IsType<OkObjectResult>(actionResult);
+            var actual = actionResult.Value as List<SeverityViewModel>;
+
+            Assert.NotNull(actual);
+            Assert.Equal(expected, actual, new SeverityViewModelIDComparer());
+        }
+
+        [Fact]
+        public void Should_Be_Ok_When_Posting()
+        {
+            var fakes = new FakeContext("SeverityControllerTest");
+            var fakeSeverityService = fakes.FakeSeverityService().Object;
+            List<SeverityViewModel> expected = fakes.Get<SeverityViewModel>();
+            var controller = new SeverityController(fakeSeverityService);
+
+            foreach (var item in expected)
+            {
+                var result = controller.Post(item);
+
+                Assert.NotNull(result);
+                Assert.IsType<CreatedAtActionResult>(result);
+            }
         }
     }
 }

@@ -91,7 +91,7 @@ Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
 | [Luiz Nogueira](https://www.linkedin.com/in/loon/)  | [Maira Barbosa](https://www.linkedin.com/in/mahdame/)  | [Moyses Souza](https://www.linkedin.com/in/moyses-souza-programador/)  | [Rafael Pinto](https://linkedin.com/in/rafael-pinto-853b6bab/)  |  [Vinicius Santos](https://www.linkedin.com/in/vinicius-dos-santos-aguiar/) |
 
 ## Agradecimentos
-[![](https://i.imgur.com/QKqVD95.png)](https://codenation.dev/)
+[![](https://i.imgur.com/E4HkJtE.png)](https://codenation.dev/)
 
-[![](https://i.imgur.com/pQ96rPR.png)](https://www.itau.com.br/)
+[![](https://i.imgur.com/fuj6mh7.png)](https://www.itau.com.br/)
 

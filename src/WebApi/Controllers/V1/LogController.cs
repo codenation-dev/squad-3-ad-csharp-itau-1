@@ -18,7 +18,7 @@ namespace TryLog.WebApi.Controllers.V1
             _service = service;
         }
         /// <summary>
-        /// Listar todos os Logs Registrados
+        /// Listar todos os Logs Registrados.
         /// </summary>
         /// <returns></returns>
         // GET: api/Log
@@ -33,7 +33,7 @@ namespace TryLog.WebApi.Controllers.V1
             return Ok(paginattedResult);
         }
         /// <summary>
-        /// Retorna o Log solicitado por Id
+        /// Retorna o Log solicitado por Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -45,7 +45,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Cria um novo Log
+        /// Cria um novo Log.
         /// </summary>
         /// <param name="logViewModel"></param>
         /// <returns></returns>
@@ -66,7 +66,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Altera um Log existente
+        /// Altera um Log existente.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="logViewModel"></param>
@@ -88,7 +88,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Remove um Log existente
+        /// Remove um Log existente.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

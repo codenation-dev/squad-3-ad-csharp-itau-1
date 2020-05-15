@@ -21,6 +21,10 @@ namespace TryLog.WebApi.Controllers.V1
             _service = service;
         }
 
+        /// <summary>
+        /// Lista os logs Pendentes, logs não arquivados e a quantidade de tempo desde o primeiro log foi registrado.
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Statistics
         [HttpGet]
         public IActionResult Get()

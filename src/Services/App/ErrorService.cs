@@ -7,6 +7,7 @@ using System.Linq;
 using TryLog.Services.ViewModel;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TryLog.Services.Interfaces;
+using System.Globalization;
 
 namespace TryLog.Services.App
 {
@@ -30,8 +31,8 @@ namespace TryLog.Services.App
             
             for (int i = 0; i < lastTimeInterval; i++)
             {
-                var hours = new TimeSpan(0, hour, 0, 0);
-                var afterDate = today.Subtract(hours);
+                var hour = new TimeSpan(0, i, 0, 0);
+                var afterDate = today.Subtract(hour);
                
                  countError.Add(afterDate.ToString("HH"), dbLogs
                                                             .Where(x => x.DateRegister.Date == afterDate.Date && x.DateRegister.Hour == afterDate.Hour)
@@ -48,26 +49,50 @@ namespace TryLog.Services.App
             };
         }
 
-        public ErrorViewModel MonthsErrors()
+        public ErrorViewModel MonthsErrors(int lastMonthInterval)
         {
             var today = DateTime.Now;
 
             var countErrorMounth = new Dictionary<string, int>();
 
-            for (int days = 0; days < 360; days += 30)
-            {
-                var mounth = new TimeSpan(days, 0, 0, 0);
-                var afterDate = today.Subtract(mounth);
+            var grouppedDbLog = (from l in _repo.AsQueryable().Where(x => x.DateRegister >= today.AddMonths(-lastMonthInterval))
+                                 group l by new
+                          {
+                              Year = l.DateRegister.Year,
+                              Month = l.DateRegister.Month
+                          } into g
+                          select new
+                          {
+                              Year = g.Key.Year,
+                              Month = g.Key.Month,
+                              Total = g.Count(),
+                          }
+                          ).AsEnumerable()
+                          .Select(g => new
+                          {
+                              Month = g.Month,
+                              TotalLogs = g.Total
+                          });
 
-                countErrorMounth.Add(afterDate.ToString("MMM"), CountErrorsMonths(afterDate));
+
+            //var dbLog = _repo.AsQueryable().Where(x => x.DateRegister >= today.AddMonths(-lastMonthInterval)).GroupBy(x => x.DateRegister.Date);
+            //var dbLogs = _repo.FindAll(x => x.DateRegister >= DateTime.Now.AddMonths(-lastMonthInterval));
+
+            for (int monthIterator = 0; monthIterator < lastMonthInterval; monthIterator++)
+            {
+                var actualMonth = today.AddMonths(-(monthIterator)).Month;
+                countErrorMounth.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(actualMonth).Substring(0,3), 
+                                                            grouppedDbLog
+                                                            .Where(x => x.Month == actualMonth)
+                                                            .Select(x => x.TotalLogs).FirstOrDefault());
             }
 
             return new ErrorViewModel
             {
                 Title = "Erros mês",
-                Errors = countErrorMounth.Select(x => x.Value).ToList(),
+                Errors = countErrorMounth.Select(x => x.Value).Reverse().ToList(),
                 Color = "cyan",
-                Labels = countErrorMounth.Select(x => x.Key).ToList()
+                Labels = countErrorMounth.Select(x => x.Key).Reverse().ToList()
             };
         }
 

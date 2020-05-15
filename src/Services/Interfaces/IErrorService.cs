@@ -8,6 +8,6 @@ namespace TryLog.Services.Interfaces
     public interface IErrorService
     {
         ErrorViewModel GetHoursErrors(int lastTimeInterval=24);
-        ErrorViewModel MonthsErrors();
+        ErrorViewModel MonthsErrors(int lastMonthInterval=12);
     }
 }

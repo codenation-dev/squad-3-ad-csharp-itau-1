@@ -9,7 +9,7 @@ namespace TryLog.Infraestructure.Repository
 {
     public abstract class AbstractRepository<T> : IDefaultRepository<T> where T : class
     {
-        private readonly TryLogContext _context;
+        protected readonly TryLogContext _context;
         public AbstractRepository(TryLogContext context)
         {
             _context = context;

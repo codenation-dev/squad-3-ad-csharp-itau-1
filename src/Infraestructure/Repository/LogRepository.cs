@@ -1,4 +1,5 @@
-﻿using TryLog.Core.Interfaces;
+﻿using System.Linq;
+using TryLog.Core.Interfaces;
 using TryLog.Core.Model;
 using TryLog.Infraestructure.EF;
 
@@ -10,6 +11,9 @@ namespace TryLog.Infraestructure.Repository
         {
         }
 
-
+        public IQueryable<Log> AsQueryable()
+        {
+            return _context.Log.AsQueryable();
+        }
     }
 }

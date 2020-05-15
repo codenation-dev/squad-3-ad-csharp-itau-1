@@ -21,6 +21,8 @@ using System.Reflection;
 using System;
 using System.IO;
 using TryLog.Services.Mapper;
+using System.Linq;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace TryLog.WebApi
 {
@@ -47,11 +49,11 @@ namespace TryLog.WebApi
             services.AddCors();
 
             services.AddDbContext<TryLogContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TryLogDb")));
-            
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TryLog", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TryLog", Version = "v1" });
 
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -119,8 +121,17 @@ namespace TryLog.WebApi
             {
                 opt.LowercaseQueryStrings = false;
                 opt.LowercaseUrls = true;
-            });            
+            });
+
+            //Configurando a compactação de resposta
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/json" });
+            });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -156,6 +167,9 @@ namespace TryLog.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            //Ative a compactação de resposta 
+            app.UseResponseCompression();
 
             app.UseEndpoints(endpoints =>
             {

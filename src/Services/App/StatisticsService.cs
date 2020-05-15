@@ -10,12 +10,11 @@ namespace TryLog.Services.App
 {
     public class StatisticsService : IStatisticsService
     {
-        private readonly IStatusRepository _status;
-        private readonly ISeverityRepository _severity;
-        public StatisticsService(IStatusRepository status, ISeverityRepository severity)
+        private readonly ILogRepository _repo;
+        
+        public StatisticsService(ILogRepository repo)
         {
-            _status = status;
-            _severity = severity;
+            _repo = repo;
         }
 
 
@@ -23,24 +22,32 @@ namespace TryLog.Services.App
         {
             var statistics = new List<StatisticsViewModel>();
 
-            var countError = _severity.FindAll(x => x.Description == "error").Count();
+            var logsPendentes = _repo.FindAll(x => x.IdStatus == 2).Count();
             
             statistics.Add( new StatisticsViewModel { 
-                Title = "Erros",
-                TitleToolTip = "Soma dos erros, apenas Classificados como erro",
-                Value = countError.ToString()
+                Title = "Logs pendentes",
+                TitleToolTip = "Soma dos logs com status de pendentes",
+                Value = logsPendentes.ToString()
             });
 
 
-            var openError = _status.FindAll(x => x.Description != "Arquivado").Count();
+            var logsArquivados = _repo.FindAll(x => x.IdStatus == 1).Count();
 
             statistics.Add(new StatisticsViewModel
             {
-                Title = "Erros abertos",
-                TitleToolTip = "Quantidade de erros não arquivados",
-                Value = openError.ToString()
+                Title = "Logs arquivados",
+                TitleToolTip = "Quantidade de logs não arquivados",
+                Value = logsArquivados.ToString()
             });
 
+            var tempoDesdePrimeiroLog = _repo.AsQueryable().Where(x => x.DateRegister.Date != DateTime.MinValue.Date).Min(x => x.DateRegister);
+
+            statistics.Add(new StatisticsViewModel()
+            {
+                Title = "Dias desde o primeiro regsitro",
+                TitleToolTip = "Quantidade de tempo desde o primeiro log foi registrado",
+                Value = DateTime.Now.Subtract(tempoDesdePrimeiroLog).Days.ToString()+" dias"
+            });
 
             return statistics;
         }

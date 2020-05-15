@@ -16,11 +16,10 @@ namespace TryLog.WebApi.Controllers.V1
     public class ErrorController : ControllerBase
     {
         private readonly IErrorService _service;
-        private readonly IStatisticsService _statistics;
-        public ErrorController(IErrorService service, IStatisticsService statistics)
+        
+        public ErrorController(IErrorService service)
         {
             _service = service;
-            _statistics = statistics;
         }
 
         // GET: api/Error
@@ -30,48 +29,8 @@ namespace TryLog.WebApi.Controllers.V1
             var result = new List<ErrorViewModel>();
             result.Add(_service.GetHoursErrors());
             result.Add(_service.MonthsErrors());
+            //TODO: include week
             return Ok(result);
         }
-
-        // GET: api/Error
-        [HttpGet]
-        [Route("Mouth")]
-        public IActionResult GetMouth()
-        {
-            return Ok(_service.MonthsErrors());
-        }
-
-        // GET: api/Error
-        [HttpGet]
-        [Route("statistics")]
-        public IActionResult GetStatistics()
-        {
-            return Ok(_statistics.Statistics());
-        }
-
-        //// GET: api/Error/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST: api/Error
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Error/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

@@ -74,10 +74,6 @@ namespace TryLog.Services.App
                               TotalLogs = g.Total
                           });
 
-
-            //var dbLog = _repo.AsQueryable().Where(x => x.DateRegister >= today.AddMonths(-lastMonthInterval)).GroupBy(x => x.DateRegister.Date);
-            //var dbLogs = _repo.FindAll(x => x.DateRegister >= DateTime.Now.AddMonths(-lastMonthInterval));
-
             for (int monthIterator = 0; monthIterator < lastMonthInterval; monthIterator++)
             {
                 var actualMonth = today.AddMonths(-(monthIterator)).Month;
@@ -96,33 +92,7 @@ namespace TryLog.Services.App
             };
         }
 
-        //private int CountErrorsWeek(DateTime date)
-        //{
-        //    //return _repo.FindAll(x => x.DateRegister.Year == date.Year && x.DateRegister.Month == date.Month && x.DateRegister == date.Year)
-        //    //            .Select(x => x.Id)
-        //    //            .Count();
-        //}
-        //public ErrorViewModel WeekErrors()
-        //{
-        //    var today = DateTime.Now;
 
-        //    var countErrorMounth = new Dictionary<string, int>();
-
-        //    for (int days = 0; days < 360; days += 30)
-        //    {
-        //        var mounth = new TimeSpan(days, 0, 0, 0);
-        //        var afterDate = today.Subtract(mounth);
-
-        //        countErrorMounth.Add(afterDate.ToString("MMM"), CountErrorsWeek(afterDate));
-        //    }
-
-        //    return new ErrorViewModel
-        //    {
-        //        Title = "Erros mês",
-        //        Errors = countErrorMounth.Select(x => x.Value).ToList(),
-        //        Color = "cyan",
-        //        Labels = countErrorMounth.Select(x => x.Key).ToList()
-        //    };
-        //}
+        
     }
 }

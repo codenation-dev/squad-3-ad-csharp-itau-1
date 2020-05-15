@@ -96,8 +96,7 @@ namespace TryLog.WebApi.Controllers.V1
             if (!resultDelete)
             {
                 throw new InvalidOperationException(string.Format(
-                "The product with an ID of '{0}' could not be found.\n"
-                + "Make sure that Product exists.\n",
+                "The layer with an ID of '{0}' could not be found. Make sure that layer exists.",
                 id));
             }
 

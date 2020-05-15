@@ -96,7 +96,7 @@ namespace TryLog.WebApi.Controllers.V1
             if (!resultDelete)
             {
                 throw new InvalidOperationException(string.Format(
-                "The log with an ID of '{0}' could not be found. Make sure that log exists.",
+                "The environment with an ID of '{0}' could not be found. Make sure that environment exists.",
                 id));
             }
 

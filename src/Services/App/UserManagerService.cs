@@ -55,7 +55,7 @@ namespace TryLog.Services.App
             string bodyMessage =
                 CreateBodyEmail(Messages.AccountEmailActivation, user.FullName, callback, user.Email, token);
 
-            _emailService.Send(user.FullName, user.Email, "Account activation.", bodyMessage);
+            await _emailService.SendEmailAsync(user.FullName, user.Email, "Account activation.", bodyMessage);
 
             return new UserCreateOutView(201, "Waiting for activation.");
         }
@@ -88,7 +88,7 @@ namespace TryLog.Services.App
                 var token = await CreateTokenEmailConfirmation(user);
                 var bodyMessage = 
                     CreateBodyEmail(Messages.AccountReActivation,user.FullName, callback, user.Email, token);
-                _emailService.Send(user.FullName, user.Email, "Account Re-activation.", bodyMessage);
+                await _emailService.SendEmailAsync(user.FullName, user.Email, "Account Re-activation.", bodyMessage);
             }
             return true;
         }
@@ -159,7 +159,7 @@ namespace TryLog.Services.App
             if (result.Succeeded) {
                 string bodyMessage = 
                     CreateBodyEmail(Messages.PasswordChangeConfirmation, user.Email, newPassword, user.CreatedAt.ToLocalTime().ToString());
-                _emailService.Send(user.FullName, user.Email, "Password change confirmation.", bodyMessage);
+                await _emailService.SendEmailAsync(user.FullName, user.Email, "Password change confirmation.", bodyMessage);
             }
             return result.Succeeded;
         }
@@ -250,7 +250,7 @@ namespace TryLog.Services.App
             string bodyMessage = 
                 CreateBodyEmail(Messages.PasswordResetConfirmation, callback, user.Id, tokenEncoded, user.CreatedAt.ToLocalTime().ToString(), user.Email);
             
-            _emailService.Send(user.FullName, email, "Password Reset Confirmation.", bodyMessage);
+            await _emailService.SendEmailAsync(user.FullName, email, "Password Reset Confirmation.", bodyMessage);
 
             return true;
         }

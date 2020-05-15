@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TryLog.Services;
+using TryLog.Services.App;
 using TryLog.Services.ViewModel;
 
 namespace TryLog.WebApi.Controllers.V1

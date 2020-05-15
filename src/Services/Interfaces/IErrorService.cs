@@ -9,5 +9,6 @@ namespace TryLog.Services.Interfaces
     {
         ErrorViewModel GetHoursErrors(int lastTimeInterval=24);
         ErrorViewModel MonthsErrors(int lastMonthInterval=12);
+        ErrorViewModel WeeksErrors(int lastMonthInterval = 1);
     }
 }

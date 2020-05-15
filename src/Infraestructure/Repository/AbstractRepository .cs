@@ -9,7 +9,7 @@ namespace TryLog.Infraestructure.Repository
 {
     public abstract class AbstractRepository<T> : IDefaultRepository<T> where T : class
     {
-        private readonly TryLogContext _context;
+        protected readonly TryLogContext _context;
         public AbstractRepository(TryLogContext context)
         {
             _context = context;
@@ -34,7 +34,7 @@ namespace TryLog.Infraestructure.Repository
                  .Where(predicate)
                  .FirstOrDefault();
         }
-        public List<T> FindAll(Expression<Func<T, bool>> predicate)
+        public virtual List<T> FindAll(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>()
                  .Where(predicate)

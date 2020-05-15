@@ -89,7 +89,7 @@ namespace TryLog.WebApi
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<ILayerRepository, LayerRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
-            services.AddScoped<ISeverityRepository, SeverityRepository>();
+            services.AddScoped<Core.Interfaces.ISeverityRepository, SeverityRepository>();
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
 
@@ -98,6 +98,8 @@ namespace TryLog.WebApi
             services.AddScoped<ISeverityService, SeverityService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IErrorService, ErrorService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 

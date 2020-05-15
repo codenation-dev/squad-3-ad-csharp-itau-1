@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS8632: A anotação para tipos de referência anuláveis deve ser usada apenas em código dentro de um contexto de anotações '#nullable'.
+dotnet_diagnostic.CS8632.severity = none

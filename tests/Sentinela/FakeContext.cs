@@ -109,7 +109,7 @@ namespace TryLog.Sentinela
                 .Returns((int id) => Get<LogViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
-            service.Setup(x => x.Add(It.IsAny<LogViewModel>()))
+            service.Setup(x => x.Add(It.IsAny<LogViewModel>(),It.IsAny<string>()))
                 .Returns((LogViewModel log) =>
                 {
                     if (log.Id == 0)

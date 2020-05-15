@@ -106,7 +106,7 @@ namespace TryLog.Services.App
             {
                 var weekDateFinal = DateTime.Now.AddDays(-week);
 
-                countErrorWeek.Add($"week {weekCounter++}", dbLogs.Where(x => x.DateRegister.Date <= weekDateInital.Date && x.DateRegister.Date > weekDateFinal.Date)
+                countErrorWeek.Add($"Semana {weekCounter++}", dbLogs.Where(x => x.DateRegister.Date <= weekDateInital.Date && x.DateRegister.Date > weekDateFinal.Date)
                                                         .Select(x => x.Id)
                                                         .Count());
                 weekDateInital = weekDateFinal;

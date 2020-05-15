@@ -7,7 +7,6 @@ using TryLog.Services.Interfaces;
 using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using TryLog.Services.Util;
 
 namespace TryLog.Services.App
 {
@@ -78,7 +77,7 @@ namespace TryLog.Services.App
         {
             idsEnv = string.IsNullOrEmpty(idsEnv) ? "1" : idsEnv;
 
-            var ids = idsEnv.Split(",").Select(int.Parse).ToList();
+            var ids = idsEnv.Split(",").Where(x => x != "," && !string.IsNullOrEmpty(x)).Select(int.Parse).ToList();
 
             var logs = _repo.AsQueryable();
 

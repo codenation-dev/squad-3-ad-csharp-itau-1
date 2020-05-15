@@ -6,6 +6,8 @@ using TryLog.Services.ViewModel;
 using TryLog.Services.Interfaces;
 using System.Linq;
 using System;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using TryLog.Services.Util;
 
 namespace TryLog.Services.App
 {
@@ -34,7 +36,7 @@ namespace TryLog.Services.App
         public bool Delete(int entityId)
         {
             var log = _repo.Find(x => x.Id == entityId && x.Deleted == false);
-            
+
             if (log != null)
             {
                 log.Deleted = true;
@@ -55,13 +57,13 @@ namespace TryLog.Services.App
 
             if (log != null)
                 return _repo.Update(_mapper.Map<Log>(entity));
-           
+
             return false;
         }
 
         public enum OrderFor
         {
-            Level=1, Descricao, Origem
+            Level = 1, Descricao, Origem
         }
         /// <summary>
         /// Retorna Log's paginados
@@ -72,34 +74,39 @@ namespace TryLog.Services.App
         /// <param name="pageStart"></param>
         /// <param name="itemsPerPage"></param>
         /// <returns></returns>
-        public PaginationViewModel<OutLogViewModel> SelectAll(string? search, string idsEnv= "1", int order=1, int pageStart = 1, int itemsPerPage = 10)
+        public PaginationViewModel<OutLogViewModel> SelectAll(string? search, string idsEnv = "1", int order = 1, int pageStart = 1, int itemsPerPage = 10)
         {
+            idsEnv = string.IsNullOrEmpty(idsEnv) ? "1" : idsEnv;
+
             var ids = idsEnv.Split(",").Select(int.Parse).ToList();
 
-            var logs = _repo.FindAll(x => x.Deleted == false)
-            
-            if(ids.Count > 0)
-              logs.Where(x => ids.Any(y => y == x.IdEnvironment))
-            
-            if (!string.IsNullOrEmpty(search))
-                    logs = logs.Where(x => x.Description.Contains(search, StringComparison.InvariantCultureIgnoreCase));            
+            var logs = _repo.AsQueryable();
 
-            if (logs.Count() > 0)
+            if (ids.Count > 0)
+                logs = logs.Where(x => ids.Contains(x.IdEnvironment));
+
+            if (!string.IsNullOrEmpty(search))
+                logs = logs.Where(x => x.Description.Contains(search, StringComparison.InvariantCultureIgnoreCase));
+
+            if (order != default)
             {
-                if (order == 1) logs= logs.OrderBy(x => x.IdSeverity);
-                if (order == 2) logs= logs.OrderBy(x => x.Description);
-                if (order == 3) logs= logs.OrderBy(x => x.IdEnvironment);
+                switch (order)
+                {
+                    case 1: logs = logs.OrderBy(x => x.IdSeverity); break;
+                    case 2: logs = logs.OrderBy(x => x.Description); break;
+                    default: logs = logs.OrderBy(x => x.IdEnvironment); break;
+                }
             }
-            
-            logs.Skip(pageStart-1*itemsPerPage).Take(itemsPerPage);
-            
+            var logsBeforeSkip = logs;
+            logs = logs.Skip((pageStart - 1) * itemsPerPage).Take(itemsPerPage);
+
             var pagination = new PaginationViewModel<OutLogViewModel>()
 
             {
                 Data = _mapper.Map<List<OutLogViewModel>>(logs),
                 Page = pageStart,
                 PageSize = itemsPerPage,
-                TotalItemCount = _repo.Count()
+                TotalItemCount = logsBeforeSkip.Count()
             };
             return pagination;
         }

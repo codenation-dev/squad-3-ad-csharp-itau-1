@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TryLog.Core.Model;
 
 namespace TryLog.Core.Interfaces

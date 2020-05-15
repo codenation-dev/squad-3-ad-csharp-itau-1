@@ -28,6 +28,7 @@ namespace TryLog.Services.App
 
         public LogViewModel Add(LogViewModel entity, string token)
         {
+            entity.RegisterDate = DateTime.Now;
             entity.Token = token;
             return Add(entity);
         }
@@ -96,6 +97,7 @@ namespace TryLog.Services.App
                     default: logs = logs.OrderBy(x => x.IdEnvironment); break;
                 }
             }
+            
             var logsBeforeSkip = logs;
             logs = logs.Skip((pageStart - 1) * itemsPerPage).Take(itemsPerPage);
             

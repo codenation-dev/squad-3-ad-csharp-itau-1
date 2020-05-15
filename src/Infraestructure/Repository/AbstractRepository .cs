@@ -34,7 +34,7 @@ namespace TryLog.Infraestructure.Repository
                  .Where(predicate)
                  .FirstOrDefault();
         }
-        public List<T> FindAll(Expression<Func<T, bool>> predicate)
+        public virtual List<T> FindAll(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>()
                  .Where(predicate)

@@ -47,7 +47,7 @@ namespace TryLog.Services.App
                 Title = "Dias desde o primeiro regsitro",
                 TitleToolTip = "Quantidade de tempo desde o primeiro log foi registrado",
                 Value = DateTime.Now.Subtract(tempoDesdePrimeiroLog).Days.ToString()+" dias"
-            });
+            });           
 
             return statistics;
         }

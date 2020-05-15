@@ -58,12 +58,12 @@ namespace TryLog.Services.App
             return false;
         }
 
-        public PaginationViewModel<LogViewModel> SelectAll(int pageStart = 1, int itemsPerPage = 10)
+        public PaginationViewModel<OutLogViewModel> SelectAll(int pageStart = 1, int itemsPerPage = 10)
         {
             var logs = _repo.FindAll(x => x.Deleted == false).Skip(pageStart-1*itemsPerPage).Take(itemsPerPage);
-            var pagination = new PaginationViewModel<LogViewModel>()
+            var pagination = new PaginationViewModel<OutLogViewModel>()
             {
-                Data = _mapper.Map<List<LogViewModel>>(logs),
+                Data = _mapper.Map<List<OutLogViewModel>>(logs),
                 Page = pageStart,
                 PageSize = itemsPerPage,
                 TotalItemCount = _repo.Count()

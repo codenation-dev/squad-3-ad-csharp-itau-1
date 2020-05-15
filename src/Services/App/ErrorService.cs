@@ -101,12 +101,12 @@ namespace TryLog.Services.App
 
             var countErrorWeek = new Dictionary<string, int>();
             var weekDateInital = today;
-
+            var weekCounter = 1;
             for (int week = 7; week < DateTime.DaysInMonth(today.Year, today.Month); week += 7)
             {
                 var weekDateFinal = DateTime.Now.AddDays(-week);
 
-                countErrorWeek.Add($"week {week}", dbLogs.Where(x => x.DateRegister.Date <= weekDateInital.Date && x.DateRegister.Date > weekDateFinal.Date)
+                countErrorWeek.Add($"week {weekCounter++}", dbLogs.Where(x => x.DateRegister.Date <= weekDateInital.Date && x.DateRegister.Date > weekDateFinal.Date)
                                                         .Select(x => x.Id)
                                                         .Count());
                 weekDateInital = weekDateFinal;
@@ -115,9 +115,9 @@ namespace TryLog.Services.App
             return new ErrorViewModel
             {
                 Title = "Erros semana",
-                Errors = countErrorWeek.Select(x => x.Value).ToList(),
+                Errors = countErrorWeek.Select(x => x.Value).Reverse().ToList(),
                 Color = "grey",
-                Labels = countErrorWeek.Select(x => x.Key).ToList()
+                Labels = countErrorWeek.Select(x => x.Key).Reverse().ToList()
             };
 
 

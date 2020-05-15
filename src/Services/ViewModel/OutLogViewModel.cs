@@ -7,7 +7,7 @@ namespace TryLog.Services.ViewModel
     {
         public int Id { get; set; }        
         public string Description { get; set; }
-        public DateTime RegisterDate { get; set; }
+        public DateTime DateRegister { get; set; }
         public string Token { get; set; }        
         public EnvironmentViewModel Environment { get; set; }        
         public LayerViewModel Layer { get; set; }        

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="StatusManagerService.cs" />
+    <Compile Remove="ViewModel\FilterViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

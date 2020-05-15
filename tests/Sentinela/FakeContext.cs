@@ -125,7 +125,7 @@ namespace TryLog.Sentinela
                 .Returns((int id) => Get<LogViewModel>()
                 .FirstOrDefault(x => x.Id == id));
 
-            service.Setup(x => x.Add(It.IsAny<LogViewModel>())).
+            service.Setup(x => x.Add(It.IsAny<LogViewModel>(),"123!@sad_#")).
                 Returns((LogViewModel log) =>
                 {
                     if (log.Id == 0)

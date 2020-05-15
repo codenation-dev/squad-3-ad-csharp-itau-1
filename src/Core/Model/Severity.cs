@@ -16,7 +16,7 @@ namespace TryLog.Core.Model
         {
             Id = id;
             Description = description;
-            DateRegister = DateTime.Now;
+            DateRegister = DateTime.UtcNow;
             Deleted = false;
         }
 

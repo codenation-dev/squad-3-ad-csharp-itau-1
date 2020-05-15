@@ -23,13 +23,15 @@ namespace TryLog.WebApi.Controllers.V1
         /// <returns></returns>
         // GET: api/Log
         [HttpGet]
-        public IActionResult Get(int pageStart=1, int itemsPerPage=10)
+        public IActionResult Get(string idsEnv,
+            int order, string search,  int pageStart = 1, int itemsPerPage = 10)
         {
-            var paginattedResult = _service.SelectAll();
+            var paginattedResult = _service.SelectAll(search,idsEnv, order, pageStart, itemsPerPage);
+            var nextRequest = Url.Action(nameof(Get), "Log", new { ID=4}, Request.Scheme);
             HttpContext.Response.Headers.Add("X-TOTAL-COUNT", paginattedResult.TotalItemCount.ToString());
+            //HttpContext.Response.Headers.Add("X-NEXT-REQUEST", nextRequest);
             return Ok(paginattedResult);
         }
-
         /// <summary>
         /// Retorna o Log solicitado por Id
         /// </summary>

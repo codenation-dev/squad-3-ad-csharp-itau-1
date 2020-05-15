@@ -9,7 +9,7 @@ namespace TryLog.Core.Model
     {
         public Log()
         {
-            DateRegister = DateTime.Now;
+            DateRegister = DateTime.UtcNow;
             Deleted = false;
         }
 

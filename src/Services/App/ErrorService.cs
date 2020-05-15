@@ -21,34 +21,32 @@ namespace TryLog.Services.App
             _mapper = mapper;
         }
 
-        public ErrorViewModel HoursErrors()
+        public ErrorViewModel GetHoursErrors(int lastTimeInterval=12)
         {
             var today = DateTime.Now;
-            
+
+            var dbLogs = _repo.FindAll(x => x.DateRegister >= DateTime.Now.AddHours(-lastTimeInterval));
+
             var countError = new Dictionary<string, int>();
             
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < lastTimeInterval; i++)
             {
                 var hours = new TimeSpan(0, i, 0, 0);
                 var afterDate = today.Subtract(hours);
                
-                countError.Add(afterDate.ToString("HH tt"), CountErrorsHours(afterDate));    
+                 countError.Add(afterDate.ToString("HH"), dbLogs
+                                                            .Where(x => x.DateRegister.Date == afterDate.Date && x.DateRegister.Hour == afterDate.Hour)
+                                                            .Select(x => x.Id)
+                                                            .Count());    
             }
 
             return new ErrorViewModel { 
                 
                 Title = "Erros hora",
-                Errors = countError.Select(x => x.Value).ToList(),
+                Errors = countError.Select(x => x.Value).Reverse().ToList(),
                 Color = "purple",
-                Labels = countError.Select(x => x.Key).ToList()
+                Labels = countError.Select(x => x.Key).Reverse().ToList()
             };
-        }
-
-        private int CountErrorsHours(DateTime date)
-        {
-            return _repo.FindAll(x => x.DateRegister.Date == date.Date && x.DateRegister.Hour == date.Hour)
-                        .Select(x => x.Id)
-                        .Count();
         }
 
         public ErrorViewModel MonthsErrors()

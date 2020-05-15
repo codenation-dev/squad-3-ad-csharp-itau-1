@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TryLog.Services.Interfaces;
+using TryLog.Services.ViewModel;
 
 namespace TryLog.WebApi.Controllers.V1
 {
@@ -24,10 +25,12 @@ namespace TryLog.WebApi.Controllers.V1
 
         // GET: api/Error
         [HttpGet]
-        [Route("hours")]
         public IActionResult Get()
         {
-            return Ok(_service.HoursErrors());
+            var result = new List<ErrorViewModel>();
+            result.Add(_service.GetHoursErrors());
+            result.Add(_service.MonthsErrors());
+            return Ok(result);
         }
 
         // GET: api/Error

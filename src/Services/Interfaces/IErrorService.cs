@@ -7,7 +7,7 @@ namespace TryLog.Services.Interfaces
 {
     public interface IErrorService
     {
-        ErrorViewModel HoursErrors();
+        ErrorViewModel GetHoursErrors(int lastTimeInterval=24);
         ErrorViewModel MonthsErrors();
     }
 }

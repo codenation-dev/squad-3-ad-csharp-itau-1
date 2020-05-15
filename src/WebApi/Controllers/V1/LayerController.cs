@@ -18,7 +18,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Lista todas as Camadas registradas
+        /// Lista todas as Camadas registradas.
         /// </summary>
         /// <returns></returns>
         // GET: api/Layer
@@ -29,7 +29,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Retorna a Camada solicitada por Id
+        /// Retorna a Camada solicitada por Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -41,7 +41,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Cria uma nova Camada
+        /// Cria uma nova Camada.
         /// </summary>
         /// <param name="layerViewModel"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Altera uma Camada existente
+        /// Altera uma Camada existente.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="layerViewModel"></param>
@@ -83,7 +83,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Remove uma Camada existente
+        /// Remove uma Camada existente.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

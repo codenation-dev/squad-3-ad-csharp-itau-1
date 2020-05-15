@@ -18,7 +18,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Lista todos os Status registrados
+        /// Lista todos os Status registrados.
         /// </summary>
         /// <returns></returns>
         // GET: api/Status
@@ -29,7 +29,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Retorna o Status solicitado por Id
+        /// Retorna o Status solicitado por Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -41,7 +41,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Cria um novo Status
+        /// Cria um novo Status.
         /// </summary>
         /// <param name="statusViewModel"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Altera um Status existente
+        /// Altera um Status existente.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="statusViewModel"></param>
@@ -83,7 +83,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Remove um Status existente
+        /// Remove um Status existente.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

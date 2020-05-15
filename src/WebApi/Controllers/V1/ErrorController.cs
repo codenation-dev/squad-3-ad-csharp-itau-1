@@ -22,6 +22,10 @@ namespace TryLog.WebApi.Controllers.V1
             _service = service;
         }
 
+        /// <summary>
+        /// Lista estatísticas de Erros por horas, semanas e meses.
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Error
         [HttpGet]
         public IActionResult Get()

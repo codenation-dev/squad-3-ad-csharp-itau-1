@@ -84,7 +84,7 @@ Services| dotnet new classlib -n TryLog.Services -o ./src/Services
 WebApi | dotnet new webapi -n TryLog.WebApi -o ./src/WebApi
 Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
 
-## Desenvolvedores :tw-1f465:
+## Desenvolvedores
 | [![](https://i.imgur.com/IANhQsC.png)](https://www.linkedin.com/in/loon/)  | [![alt text](https://i.imgur.com/CmUW8Xc.png)](https://www.linkedin.com/in/mahdame/)  | [![alt text](https://i.imgur.com/toIfWhr.png)](https://www.linkedin.com/in/moyses-souza-programador/)  | [![alt text](https://i.imgur.com/w7PvwXm.png)](https://linkedin.com/in/rafael-pinto-853b6bab/)  |  [![alt text](https://i.imgur.com/8IHGOcL.png)](https://www.linkedin.com/in/vinicius-dos-santos-aguiar/)
 | :------------: | :------------: | :------------: | :------------: | :------------: |
 | [Luiz Nogueira](https://www.linkedin.com/in/loon/)  | [Maira Barbosa](https://www.linkedin.com/in/mahdame/)  | [Moyses Souza](https://www.linkedin.com/in/moyses-souza-programador/)  | [Rafael Pinto](https://linkedin.com/in/rafael-pinto-853b6bab/)  |  [Vinicius Santos](https://www.linkedin.com/in/vinicius-dos-santos-aguiar/) |
@@ -95,7 +95,7 @@ Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
 | [Front-end](http://191.238.215.147/ "Front-end")  | [Swagger](https://trylog.azurewebsites.net/swagger "Swagger")  |
 
 
-## Agradecimentos :tw-1f44f:
+## Agradecimentos
 [![](https://i.imgur.com/E4HkJtE.png)](https://codenation.dev/)
 
 [![](https://i.imgur.com/fuj6mh7.png)](https://www.itau.com.br/)

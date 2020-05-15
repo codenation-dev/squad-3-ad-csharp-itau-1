@@ -18,7 +18,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Lista todas as Severidades registradas
+        /// Lista todas as Severidades registradas.
         /// </summary>
         /// <returns></returns>
         // GET: api/Severity
@@ -29,7 +29,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Retorna a Severidade por Id
+        /// Retorna a Severidade por Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -41,7 +41,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Cria uma nova Severidade
+        /// Cria uma nova Severidade.
         /// </summary>
         /// <param name="severityViewModel"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Altera uma Severidade existente
+        /// Altera uma Severidade existente.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="severityViewModel"></param>
@@ -83,7 +83,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Remove uma Severidade existente
+        /// Remove uma Severidade existente.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

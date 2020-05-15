@@ -14,7 +14,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Retornar de maneira anonima a versão da api
+        /// Retornar de maneira anonima a versão da api.
         /// </summary>
         /// <returns></returns>
         [HttpGet]

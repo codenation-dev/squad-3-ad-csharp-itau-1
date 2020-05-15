@@ -18,7 +18,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Lista todos os Ambientes registrados
+        /// Lista todos os Ambientes registrados.
         /// </summary>
         /// <returns></returns>
         // GET: api/Environment
@@ -29,7 +29,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Retorna o Ambiente solicitado por Id
+        /// Retorna o Ambiente solicitado por Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -41,7 +41,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Cria um novo Ambiente
+        /// Cria um novo Ambiente.
         /// </summary>
         /// <param name="environmentViewModel"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Altera um Ambiente existente
+        /// Altera um Ambiente existente.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="environmentViewModel"></param>
@@ -83,7 +83,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Remove um Ambiente existente
+        /// Remove um Ambiente existente.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

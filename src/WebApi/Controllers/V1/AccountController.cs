@@ -19,7 +19,7 @@ namespace TryLog.WebApi.Controllers.V1
         }
 
         /// <summary>
-        /// Cria um conta de usuário.
+        /// Cria uma conta de usuário.
         /// </summary>
         /// <param name="user"></param>
         /// <returns>ActionResult</returns>

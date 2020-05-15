@@ -4,7 +4,6 @@ O [TryLog é uma Central de Erros](https://is.gd/y85CbV), responsável por centr
 
 A inspiração para o desenvolvimento do TryLog foi atender ambientes complexos (vários serviços, diversas aplicações com diferentes camadas). Tais ambientes são comuns em grandes empresas como o Banco Itaú, por isso, imaginamos possíveis cenários em que o TryLog poderia ser utilizado, como por exemplo: identificar falhas, intermitências e gargalos. Estas informações contribuiriam na evolução das aplicações, tanto para desenvolvimento como no gerenciamento das mesmas.
 
-
 ### Propósito do projeto
 Este projeto deve servir para capturar erros vindos de qualquer aplicação. Para permitir que isso aconteça,  disponibilizaremos endpoints REST para tratar as mensagens de erro capturadas em diversas plataformas, como: mobile, site e o próprio backend desta aplicação. Tentaremos seguir o mais próximo da teoria REST apresentada por Roy Fielding.
 
@@ -85,12 +84,18 @@ Services| dotnet new classlib -n TryLog.Services -o ./src/Services
 WebApi | dotnet new webapi -n TryLog.WebApi -o ./src/WebApi
 Sentinela | dotnet new xunit -n TryLog.Sentinela -o ./tests/Sentinela
 
-## Desenvolvedores
+## Desenvolvedores :tw-1f465:
 | [![](https://i.imgur.com/IANhQsC.png)](https://www.linkedin.com/in/loon/)  | [![alt text](https://i.imgur.com/CmUW8Xc.png)](https://www.linkedin.com/in/mahdame/)  | [![alt text](https://i.imgur.com/toIfWhr.png)](https://www.linkedin.com/in/moyses-souza-programador/)  | [![alt text](https://i.imgur.com/w7PvwXm.png)](https://linkedin.com/in/rafael-pinto-853b6bab/)  |  [![alt text](https://i.imgur.com/8IHGOcL.png)](https://www.linkedin.com/in/vinicius-dos-santos-aguiar/)
 | :------------: | :------------: | :------------: | :------------: | :------------: |
 | [Luiz Nogueira](https://www.linkedin.com/in/loon/)  | [Maira Barbosa](https://www.linkedin.com/in/mahdame/)  | [Moyses Souza](https://www.linkedin.com/in/moyses-souza-programador/)  | [Rafael Pinto](https://linkedin.com/in/rafael-pinto-853b6bab/)  |  [Vinicius Santos](https://www.linkedin.com/in/vinicius-dos-santos-aguiar/) |
 
-## Agradecimentos
+### QR Code
+| [![](https://i.imgur.com/7nM7gLC.jpg)](http://191.238.215.147/)  | [![](https://i.imgur.com/qRMQ28h.jpg)](https://trylog.azurewebsites.net/swagger)  |
+| :------------: | :------------: |
+| [Front-end](http://191.238.215.147/ "Front-end")  | [Swagger](https://trylog.azurewebsites.net/swagger "Swagger")  |
+
+
+## Agradecimentos :tw-1f44f:
 [![](https://i.imgur.com/E4HkJtE.png)](https://codenation.dev/)
 
 [![](https://i.imgur.com/fuj6mh7.png)](https://www.itau.com.br/)

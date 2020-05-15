@@ -7,7 +7,6 @@ using System.Linq;
 using TryLog.Services.ViewModel;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TryLog.Services.Interfaces;
-using Org.BouncyCastle.Asn1.Cms;
 
 namespace TryLog.Services.App
 {
@@ -31,7 +30,7 @@ namespace TryLog.Services.App
             
             for (int i = 0; i < lastTimeInterval; i++)
             {
-                var hours = new TimeSpan(0, i, 0, 0);
+                var hours = new TimeSpan(0, hour, 0, 0);
                 var afterDate = today.Subtract(hours);
                
                  countError.Add(afterDate.ToString("HH"), dbLogs
@@ -53,27 +52,52 @@ namespace TryLog.Services.App
         {
             var today = DateTime.Now;
 
-            var countError = new List<int>();
-            var countMonths = new List<string>();
+            var countErrorMounth = new Dictionary<string, int>();
 
-            for (int i = 0; i < 360; i += 30)
+            for (int days = 0; days < 360; days += 30)
             {
-                //var beforeHours = new TimeSpan(i - 30, 0, 0, 0);
-                var hours = new TimeSpan(i, 0, 0, 0);
-                var afterDate = today.Subtract(hours);
+                var mounth = new TimeSpan(days, 0, 0, 0);
+                var afterDate = today.Subtract(mounth);
 
-                //countError.Add(CountErrors(afterDate));
-                countMonths.Add(afterDate.ToString("MMM"));
+                countErrorMounth.Add(afterDate.ToString("MMM"), CountErrorsMonths(afterDate));
             }
 
             return new ErrorViewModel
             {
-
                 Title = "Erros mês",
-                Errors = countError.ToList(),
+                Errors = countErrorMounth.Select(x => x.Value).ToList(),
                 Color = "cyan",
-                Labels = countMonths.ToList()
+                Labels = countErrorMounth.Select(x => x.Key).ToList()
             };
         }
+
+        //private int CountErrorsWeek(DateTime date)
+        //{
+        //    //return _repo.FindAll(x => x.DateRegister.Year == date.Year && x.DateRegister.Month == date.Month && x.DateRegister == date.Year)
+        //    //            .Select(x => x.Id)
+        //    //            .Count();
+        //}
+        //public ErrorViewModel WeekErrors()
+        //{
+        //    var today = DateTime.Now;
+
+        //    var countErrorMounth = new Dictionary<string, int>();
+
+        //    for (int days = 0; days < 360; days += 30)
+        //    {
+        //        var mounth = new TimeSpan(days, 0, 0, 0);
+        //        var afterDate = today.Subtract(mounth);
+
+        //        countErrorMounth.Add(afterDate.ToString("MMM"), CountErrorsWeek(afterDate));
+        //    }
+
+        //    return new ErrorViewModel
+        //    {
+        //        Title = "Erros mês",
+        //        Errors = countErrorMounth.Select(x => x.Value).ToList(),
+        //        Color = "cyan",
+        //        Labels = countErrorMounth.Select(x => x.Key).ToList()
+        //    };
+        //}
     }
 }

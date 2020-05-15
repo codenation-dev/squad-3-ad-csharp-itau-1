@@ -28,5 +28,22 @@ namespace TryLog.Sentinela.ControllerTests
             Assert.NotNull(actual);
             Assert.Equal(expected, actual, new LogViewModelIDComparer());
         }
+
+        //[Theory]
+        //[InlineData(1)]
+        //[InlineData(2)]
+        //[InlineData(3)]
+        //public void Should_Be_Ok_When_Delete(int id)
+        //{
+        //    var fakes = new FakeContext("LogControllerTest");
+        //    var fakeLogService = fakes.FakeLogService().Object;
+
+        //    var controller = new LogController(fakeLogService);
+
+        //    var result = controller.Delete(id);
+
+        //    Assert.NotNull(result);
+        //    Assert.IsType<OkResult>(result);
+        //}
     }
 }

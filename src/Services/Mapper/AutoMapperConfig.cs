@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using TryLog.Core.Model;
 using TryLog.Services.ViewModel;
 using Environment = TryLog.Core.Model.Environment;
@@ -22,7 +23,7 @@ namespace TryLog.Services.Mapper
                 .ForCtorParam("fullName", opt => opt.MapFrom(x => x.FullName))
                 .ForCtorParam("userName", opt => opt.MapFrom(x => x.Email)).ReverseMap();
             CreateMap<User, UserGetView>();
-            CreateMap<Log, OutLogViewModel>().ReverseMap();
+            CreateMap<Log, OutLogViewModel>().ForMember(x => x.Frequency, opt => opt.MapFrom(x => new Random().Next(0,90))).ReverseMap();
         }
     }
 }

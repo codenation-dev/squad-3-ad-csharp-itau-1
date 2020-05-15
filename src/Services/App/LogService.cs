@@ -85,7 +85,7 @@ namespace TryLog.Services.App
                 logs = logs.Where(x => ids.Contains(x.IdEnvironment));
 
             if (!string.IsNullOrEmpty(search))
-                logs = logs.Where(x => x.Description.Contains(search, StringComparison.InvariantCultureIgnoreCase));
+                logs = logs.Where(x => x.Description.ToLower().Contains(search.ToLower()));
 
             if (order != default)
             {
@@ -98,14 +98,14 @@ namespace TryLog.Services.App
             }
             var logsBeforeSkip = logs;
             logs = logs.Skip((pageStart - 1) * itemsPerPage).Take(itemsPerPage);
-
+            
             var pagination = new PaginationViewModel<OutLogViewModel>()
 
             {
                 Data = _mapper.Map<List<OutLogViewModel>>(logs),
                 Page = pageStart,
                 PageSize = itemsPerPage,
-                TotalItemCount = logsBeforeSkip.Count()
+                TotalItemCount = logsBeforeSkip.Count()                
             };
             return pagination;
         }

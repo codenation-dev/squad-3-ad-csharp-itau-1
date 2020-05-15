@@ -28,8 +28,8 @@ namespace TryLog.WebApi.Controllers.V1
         {
             var result = new List<ErrorViewModel>();
             result.Add(_service.GetHoursErrors());
-            result.Add(_service.MonthsErrors());
             result.Add(_service.WeeksErrors());
+            result.Add(_service.MonthsErrors());
             return Ok(result);
         }
     }

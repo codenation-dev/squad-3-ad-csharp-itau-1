@@ -13,5 +13,6 @@ namespace TryLog.Services.ViewModel
         public LayerViewModel Layer { get; set; }        
         public SeverityViewModel Severity { get; set; }        
         public StatusViewModel Status { get; set; }
+        public int Frequency { get; set; }
     }
 }

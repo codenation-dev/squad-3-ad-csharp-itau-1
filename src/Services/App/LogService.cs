@@ -72,28 +72,31 @@ namespace TryLog.Services.App
         /// <param name="pageStart"></param>
         /// <param name="itemsPerPage"></param>
         /// <returns></returns>
-        public PaginationViewModel<LogViewModel> SelectAll(string? search, string idsEnv= "1", int order=1, int pageStart = 1, int itemsPerPage = 10)
+        public PaginationViewModel<OutLogViewModel> SelectAll(string? search, string idsEnv= "1", int order=1, int pageStart = 1, int itemsPerPage = 10)
         {
             var ids = idsEnv.Split(",").Select(int.Parse).ToList();
 
             var logs = _repo.FindAll(x => x.Deleted == false)
-                .Where(x => ids.Any(y => y == x.IdEnvironment));
+            
+            if(ids.Count > 0)
+              logs.Where(x => ids.Any(y => y == x.IdEnvironment))
+            
+            if (!string.IsNullOrEmpty(search))
+                    logs = logs.Where(x => x.Description.Contains(search, StringComparison.InvariantCultureIgnoreCase));            
 
             if (logs.Count() > 0)
             {
                 if (order == 1) logs= logs.OrderBy(x => x.IdSeverity);
                 if (order == 2) logs= logs.OrderBy(x => x.Description);
                 if (order == 3) logs= logs.OrderBy(x => x.IdEnvironment);
-
-                if (!string.IsNullOrEmpty(search))
-                    logs = logs.Where(x => x.Description
-                     .Contains(search, StringComparison.InvariantCultureIgnoreCase));
             }
+            
+            logs.Skip(pageStart-1*itemsPerPage).Take(itemsPerPage);
+            
+            var pagination = new PaginationViewModel<OutLogViewModel>()
 
-            logs=logs.Skip(pageStart-1*itemsPerPage).Take(itemsPerPage);
-            var pagination = new PaginationViewModel<LogViewModel>()
             {
-                Data = _mapper.Map<List<LogViewModel>>(logs),
+                Data = _mapper.Map<List<OutLogViewModel>>(logs),
                 Page = pageStart,
                 PageSize = itemsPerPage,
                 TotalItemCount = _repo.Count()

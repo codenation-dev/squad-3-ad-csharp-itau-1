@@ -22,6 +22,7 @@ namespace TryLog.Services.Mapper
                 .ForCtorParam("fullName", opt => opt.MapFrom(x => x.FullName))
                 .ForCtorParam("userName", opt => opt.MapFrom(x => x.Email)).ReverseMap();
             CreateMap<User, UserGetView>();
+            CreateMap<Log, OutLogViewModel>().ReverseMap();
         }
     }
 }
